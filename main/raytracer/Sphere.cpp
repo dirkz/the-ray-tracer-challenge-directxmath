@@ -13,15 +13,17 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
     XMStoreFloat4(&floatsA, va);
     float a = floatsA.x;
 
-    XMVECTOR vb = XMVectorScale(XMVector4Dot(ray.Direction(), sphereToRay), 2);
-    XMFLOAT4 floatsB;
-    XMStoreFloat4(&floatsB, vb);
-    float b = floatsB.x;
+    XMVECTOR vDirectionRayDot = XMVector4Dot(ray.Direction(), sphereToRay);
+    XMFLOAT4 floatsDirectionRayDot;
+    XMStoreFloat4(&floatsDirectionRayDot, vDirectionRayDot);
 
-    XMVECTOR vc = XMVectorSubtract(XMVector4Dot(sphereToRay, sphereToRay), XMVectorReplicate(1));
-    XMFLOAT4 floatsC;
-    XMStoreFloat4(&floatsC, vc);
-    float c = floatsC.x;
+    float b = 2 * floatsDirectionRayDot.x;
+
+    XMVECTOR vDotSphereToRay = XMVector4Dot(sphereToRay, sphereToRay);
+    XMFLOAT4 floatsSphereToRay;
+    XMStoreFloat4(&floatsSphereToRay, vDotSphereToRay);
+
+    float c = floatsSphereToRay.x - 1;
 
     float discriminant = b * b - 4 * a * c;
 
@@ -41,7 +43,7 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
         }
         else
         {
-            return {t2, t2};
+            return {t2, t1};
         }
     }
 }
