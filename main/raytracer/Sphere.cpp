@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-#include "Tuple.h"
+#include "Vector.h"
 
 namespace zrt
 {

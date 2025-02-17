@@ -1,7 +1,7 @@
 add_library(raytracer OBJECT
 	Ray.h
 	Ray.cpp
-	Tuple.h
+	Vector.h
 	Intersectable.h
 	Sphere.h
 	Sphere.cpp)
