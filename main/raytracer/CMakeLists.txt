@@ -1,7 +1,7 @@
 add_library(raytracer OBJECT
 	Ray.h
 	Ray.cpp
-	Tuple.h)
+	Tuple.h "Intersectable.h")
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
