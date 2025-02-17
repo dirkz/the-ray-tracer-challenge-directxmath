@@ -39,4 +39,22 @@ inline bool XM_CALLCONV IsEqual(FXMVECTOR v1, FXMVECTOR v2)
     return isnan(components.x) && isnan(components.y) && isnan(components.z) && isnan(components.w);
 }
 
+inline float XM_CALLCONV ExtractDot(FXMVECTOR v1, FXMVECTOR v2)
+{
+    XMVECTOR v = XMVector4Dot(v1, v2);
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, v);
+
+#ifdef _DEBUG
+    if (!std::isnan(floats.x))
+    {
+        assert(floats.x == floats.y);
+        assert(floats.y == floats.z);
+        assert(floats.z == floats.w);
+    }
+#endif
+
+    return floats.x;
+}
+
 } // namespace zrt

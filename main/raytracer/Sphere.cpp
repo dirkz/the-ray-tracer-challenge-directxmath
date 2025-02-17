@@ -1,5 +1,7 @@
 #include "Sphere.h"
 
+#include "Tuple.h"
+
 namespace zrt
 {
 
@@ -8,22 +10,9 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
     // The sphere is at the origin
     XMVECTOR sphereToRay = ray.Origin();
 
-    XMVECTOR va = XMVector4Dot(ray.Direction(), ray.Direction());
-    XMFLOAT4 floatsA;
-    XMStoreFloat4(&floatsA, va);
-    float a = floatsA.x;
-
-    XMVECTOR vDirectionRayDot = XMVector4Dot(ray.Direction(), sphereToRay);
-    XMFLOAT4 floatsDirectionRayDot;
-    XMStoreFloat4(&floatsDirectionRayDot, vDirectionRayDot);
-
-    float b = 2 * floatsDirectionRayDot.x;
-
-    XMVECTOR vDotSphereToRay = XMVector4Dot(sphereToRay, sphereToRay);
-    XMFLOAT4 floatsSphereToRay;
-    XMStoreFloat4(&floatsSphereToRay, vDotSphereToRay);
-
-    float c = floatsSphereToRay.x - 1;
+    float a = ExtractDot(ray.Direction(), ray.Direction());
+    float b = 2 * ExtractDot(ray.Direction(), sphereToRay);
+    float c = ExtractDot(sphereToRay, sphereToRay) - 1;
 
     float discriminant = b * b - 4 * a * c;
 
