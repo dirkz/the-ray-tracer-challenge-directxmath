@@ -10,9 +10,9 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
     // The sphere is at the origin
     XMVECTOR sphereToRay = ray.Origin();
 
-    float a = ExtractDot(ray.Direction(), ray.Direction());
-    float b = 2 * ExtractDot(ray.Direction(), sphereToRay);
-    float c = ExtractDot(sphereToRay, sphereToRay) - 1;
+    float a = DotProduct(ray.Direction(), ray.Direction());
+    float b = 2 * DotProduct(ray.Direction(), sphereToRay);
+    float c = DotProduct(sphereToRay, sphereToRay) - 1;
 
     float discriminant = b * b - 4 * a * c;
 

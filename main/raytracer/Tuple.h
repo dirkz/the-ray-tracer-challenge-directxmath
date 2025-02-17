@@ -39,7 +39,7 @@ inline bool XM_CALLCONV IsEqual(FXMVECTOR v1, FXMVECTOR v2)
     return isnan(components.x) && isnan(components.y) && isnan(components.z) && isnan(components.w);
 }
 
-inline float XM_CALLCONV ExtractDot(FXMVECTOR v1, FXMVECTOR v2)
+inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
 {
     XMVECTOR v = XMVector4Dot(v1, v2);
     XMFLOAT4 floats;
