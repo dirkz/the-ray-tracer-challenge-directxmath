@@ -19,6 +19,12 @@ struct Ray
         return XMLoadFloat4(&m_direction);
     }
 
+    inline XMVECTOR XM_CALLCONV Position(float t) const
+    {
+        XMVECTOR direction = XMVectorScale(Direction(), t);
+        return XMVectorAdd(Origin(), direction);
+    }
+
   private:
     XMFLOAT4 m_origin;
     XMFLOAT4 m_direction;

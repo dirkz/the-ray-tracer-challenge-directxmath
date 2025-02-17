@@ -4,6 +4,7 @@ add_executable(
 
 target_link_libraries(
   raytracer_tests
+  common
   raytracer
   gtest_main)
 

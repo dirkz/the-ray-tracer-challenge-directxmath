@@ -3,4 +3,6 @@ add_library(raytracer OBJECT
 	Ray.cpp
 	Tuple.h)
 
+target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
 target_link_libraries(raytracer PRIVATE common)
