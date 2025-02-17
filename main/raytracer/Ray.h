@@ -5,9 +5,8 @@
 namespace zrt
 {
 
-	struct Ray
-	{
+struct Ray
+{
+};
 
-	};
-
-}
+} // namespace zrt
