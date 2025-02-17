@@ -9,16 +9,21 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
     XMVECTOR sphereToRay = ray.Origin();
 
     XMVECTOR va = XMVector4Dot(ray.Direction(), ray.Direction());
+    XMFLOAT4 floatsA;
+    XMStoreFloat4(&floatsA, va);
+    float a = floatsA.x;
+
     XMVECTOR vb = XMVectorScale(XMVector4Dot(ray.Direction(), sphereToRay), 2);
+    XMFLOAT4 floatsB;
+    XMStoreFloat4(&floatsB, vb);
+    float b = floatsB.x;
+
     XMVECTOR vc = XMVectorSubtract(XMVector4Dot(sphereToRay, sphereToRay), XMVectorReplicate(1));
+    XMFLOAT4 floatsC;
+    XMStoreFloat4(&floatsC, vc);
+    float c = floatsC.x;
 
-    XMVECTOR vDiscriminant =
-        XMVectorSubtract(XMVectorMultiply(vb, vb), XMVectorScale(XMVectorMultiply(va, vc), 2));
-
-    XMFLOAT4 floatsD;
-    XMStoreFloat4(&floatsD, vDiscriminant);
-
-    float discriminant = floatsD.x;
+    float discriminant = b * b - 4 * a * c;
 
     if (discriminant < 0)
     {
@@ -26,13 +31,6 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
     }
     else
     {
-        XMFLOAT4 floatsA, floatsB;
-        XMStoreFloat4(&floatsA, va);
-        XMStoreFloat4(&floatsB, vb);
-
-        float a = floatsA.x;
-        float b = floatsB.x;
-
         float rootD = sqrt(discriminant);
         float t1 = (-b - rootD) / (2 * a);
         float t2 = (-b + rootD) / (2 * a);
