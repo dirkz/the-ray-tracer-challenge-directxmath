@@ -17,4 +17,10 @@ TEST(RayTest, CreatingAndQueryingRays)
     ASSERT_TRUE(IsEqual(direction, ray.Direction()));
 }
 
+TEST(RayTest, ComputingPointFromDistance)
+{
+    auto ray = Ray(Point(2, 3, 4), Vector(1, 0, 0));
+    ASSERT_TRUE(IsEqual(ray.Position(0), Point(2, 3, 4)));
+}
+
 } // namespace zrt
