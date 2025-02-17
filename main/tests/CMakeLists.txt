@@ -1,11 +1,11 @@
 add_executable(
-  hello_test
-  HelloTest.cpp)
+  raytracer_tests
+  RayTest.cpp)
 
 target_link_libraries(
-  hello_test
+  raytracer_tests
   raytracer
   gtest_main)
 
 include(GoogleTest)
-gtest_discover_tests(hello_test)
+gtest_discover_tests(raytracer_tests)
