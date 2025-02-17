@@ -5,8 +5,6 @@
 namespace zrt
 {
 
-constexpr float AllBitsFloat = 0xFFFFFFFF;
-
 inline XMVECTOR XM_CALLCONV Tuple(float x, float y, float z, float w)
 {
     return XMVectorSet(x, y, z, w);
@@ -34,10 +32,11 @@ inline bool XM_CALLCONV IsVector(FXMVECTOR v)
 
 inline bool XM_CALLCONV IsEqual(FXMVECTOR v1, FXMVECTOR v2)
 {
+    using std::isnan;
+
     XMFLOAT4 components;
     XMStoreFloat4(&components, XMVectorEqual(v1, v2));
-    return components.x == AllBitsFloat && components.y == AllBitsFloat &&
-           components.z == AllBitsFloat && components.w == AllBitsFloat;
+    return isnan(components.x) && isnan(components.y) && isnan(components.z) && isnan(components.w);
 }
 
 } // namespace zrt
