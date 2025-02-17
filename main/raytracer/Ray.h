@@ -9,12 +9,12 @@ struct Ray
 {
     Ray(FXMVECTOR origin, FXMVECTOR direction);
 
-    inline XMVECTOR Origin() const
+    inline XMVECTOR XM_CALLCONV Origin() const
     {
         return XMLoadFloat4(&m_origin);
     }
 
-    inline XMVECTOR Direction() const
+    inline XMVECTOR XM_CALLCONV Direction() const
     {
         return XMLoadFloat4(&m_direction);
     }
