@@ -20,4 +20,14 @@ inline XMVECTOR XM_CALLCONV Tuple(float x, float y, float z)
     return Tuple(x, y, z, 1);
 }
 
+inline bool XM_CALLCONV IsPoint(FXMVECTOR v)
+{
+    return XMVectorGetW(v) == 1.f;
+}
+
+inline bool XM_CALLCONV IsVector(FXMVECTOR v)
+{
+    return XMVectorGetW(v) == 0.f;
+}
+
 } // namespace zrt
