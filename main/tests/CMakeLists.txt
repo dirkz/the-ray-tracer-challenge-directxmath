@@ -4,6 +4,7 @@ add_executable(
 
 target_link_libraries(
   hello_test
+  raytracer
   gtest_main)
 
 include(GoogleTest)
