@@ -7,8 +7,10 @@ namespace zrt
 
 std::vector<float> Sphere::Intersect(const Ray &ray)
 {
-    // The sphere is at the origin
-    XMVECTOR sphereToRay = ray.Origin();
+    // The sphere is at the origin, so the vector to the ray is simply
+    // the ray's origin. But we have to set w = 0, hence the subtraction
+    // of the origin as a point.
+    XMVECTOR sphereToRay = XMVectorSubtract(ray.Origin(), Point(0, 0, 0));
 
     float a = DotProduct(ray.Direction(), ray.Direction());
     float b = 2 * DotProduct(ray.Direction(), sphereToRay);

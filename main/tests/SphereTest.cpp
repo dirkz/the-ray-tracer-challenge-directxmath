@@ -42,7 +42,7 @@ TEST(SphereTest, RayOriginatesInsideSphere)
     auto xs = s.Intersect(r);
     ASSERT_EQ(xs.size(), 2);
     ASSERT_EQ(xs[0], -1);
-    ASSERT_EQ(xs[1], 0);
+    ASSERT_EQ(xs[1], 1);
 }
 
 TEST(SphereTest, SphereIsBehindRay)
