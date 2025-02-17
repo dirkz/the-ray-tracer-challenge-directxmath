@@ -2,28 +2,20 @@
 
 #include "stdafx.h"
 
-#include "Intersectable.h"
-
 namespace zrt
 {
 
+struct Intersectable;
+
 struct Intersection
 {
-    inline Intersection(const Intersectable *pIntersectable, float t)
-        : m_intersectable{pIntersectable}, m_t{t} {};
+    Intersection(const Intersectable &intersectable, float t);
 
-    const Intersectable *Object() const
-    {
-        return m_intersectable;
-    }
-
-    inline float T() const
-    {
-        return m_t;
-    }
+    const Intersectable &Object() const;
+    float T() const;
 
   private:
-    const Intersectable *m_intersectable;
+    const Intersectable &m_intersectable;
     float m_t;
 };
 

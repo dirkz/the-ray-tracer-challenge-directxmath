@@ -5,7 +5,7 @@ add_library(raytracer OBJECT
 	Intersectable.h
 	Sphere.h
 	Sphere.cpp
-	Intersection.h)
+	Intersection.h "Intersection.cpp")
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 

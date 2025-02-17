@@ -5,7 +5,7 @@
 namespace zrt
 {
 
-std::vector<float> Sphere::Intersect(const Ray &ray)
+std::vector<Intersection> Sphere::Intersect(const Ray &ray)
 {
     // The sphere is at the origin, so the vector to the ray is simply
     // the ray's origin. But we have to set w = 0, hence the subtraction
@@ -28,13 +28,16 @@ std::vector<float> Sphere::Intersect(const Ray &ray)
         float t1 = (-b - rootD) / (2 * a);
         float t2 = (-b + rootD) / (2 * a);
 
+        Intersection i1{*this, t1};
+        Intersection i2{*this, t2};
+
         if (t1 < t2)
         {
-            return {t1, t2};
+            return {i1, i2};
         }
         else
         {
-            return {t2, t1};
+            return {i2, i1};
         }
     }
 }

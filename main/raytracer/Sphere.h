@@ -9,7 +9,7 @@ namespace zrt
 
 struct Sphere : public Intersectable
 {
-    std::vector<float> Intersect(const Ray &ray) override;
+    std::vector<Intersection> Intersect(const Ray &ray) override;
 };
 
 } // namespace zrt

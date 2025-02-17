@@ -13,8 +13,8 @@ TEST(SphereTest, RayIntersectsSphereTwoPoints)
     Sphere s{};
     auto xs = s.Intersect(r);
     ASSERT_EQ(xs.size(), 2);
-    ASSERT_EQ(xs[0], 4);
-    ASSERT_EQ(xs[1], 6);
+    ASSERT_EQ(xs[0].T(), 4);
+    ASSERT_EQ(xs[1].T(), 6);
 }
 
 TEST(SphereTest, RayIntersectsSphereAtTangent)
@@ -23,8 +23,8 @@ TEST(SphereTest, RayIntersectsSphereAtTangent)
     Sphere s{};
     auto xs = s.Intersect(r);
     ASSERT_EQ(xs.size(), 2);
-    ASSERT_EQ(xs[0], 5);
-    ASSERT_EQ(xs[1], 5);
+    ASSERT_EQ(xs[0].T(), 5);
+    ASSERT_EQ(xs[1].T(), 5);
 }
 
 TEST(SphereTest, RayMissesSphere)
@@ -41,8 +41,8 @@ TEST(SphereTest, RayOriginatesInsideSphere)
     Sphere s{};
     auto xs = s.Intersect(r);
     ASSERT_EQ(xs.size(), 2);
-    ASSERT_EQ(xs[0], -1);
-    ASSERT_EQ(xs[1], 1);
+    ASSERT_EQ(xs[0].T(), -1);
+    ASSERT_EQ(xs[1].T(), 1);
 }
 
 TEST(SphereTest, SphereIsBehindRay)
@@ -51,8 +51,8 @@ TEST(SphereTest, SphereIsBehindRay)
     Sphere s{};
     auto xs = s.Intersect(r);
     ASSERT_EQ(xs.size(), 2);
-    ASSERT_EQ(xs[0], -6);
-    ASSERT_EQ(xs[1], -4);
+    ASSERT_EQ(xs[0].T(), -6);
+    ASSERT_EQ(xs[1].T(), -4);
 }
 
 } // namespace zrt
