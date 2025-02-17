@@ -12,12 +12,12 @@ struct Intersection
     inline Intersection(const Intersectable *pIntersectable, float t)
         : m_intersectable{pIntersectable}, m_t{t} {};
 
-    const Intersectable *GetIntersectable() const
+    const Intersectable *Object() const
     {
         return m_intersectable;
     }
 
-    inline float GetT() const
+    inline float T() const
     {
         return m_t;
     }
