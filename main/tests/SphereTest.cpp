@@ -66,4 +66,12 @@ TEST(SphereTest, IntersectingScaledSphereWithRay)
     EXPECT_EQ(xs[1].T(), 7);
 }
 
+TEST(SphereTest, IntersectingTranslatedSphereWithRay)
+{
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    Sphere s{Translation(5, 0, 0)};
+    auto xs = s.Intersect(r);
+    EXPECT_EQ(xs.size(), 0);
+}
+
 } // namespace zrt
