@@ -35,4 +35,13 @@ TEST(TransformationTest, RotatingPointAroundY)
     EXPECT_EQ(Floats(XMVector4Transform(p, fullQuarter)), Floats(Point(1, 0, 0)));
 }
 
+TEST(TransformationTest, RotatingPointAroundZ)
+{
+    auto p = Point(0, 1, 0);
+    const XMMATRIX halfQuarter = RotationZ(pi / 4);
+    const XMMATRIX fullQuarter = RotationZ(pi / 2);
+    EXPECT_EQ(Floats(XMVector4Transform(p, halfQuarter)), Floats(Point(-halfSqrt, halfSqrt, 0)));
+    EXPECT_EQ(Floats(XMVector4Transform(p, fullQuarter)), Floats(Point(-1, 0, 0)));
+}
+
 } // namespace zrt
