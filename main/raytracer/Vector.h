@@ -57,4 +57,6 @@ inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
     return floats.x;
 }
 
+std::ostream & operator<<(std::ostream &os, FXMVECTOR v);
+
 } // namespace zrt
