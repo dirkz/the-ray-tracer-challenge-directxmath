@@ -2,6 +2,7 @@
 
 #include "Ray.h"
 #include "Vector.h"
+#include "Matrix.h"
 
 namespace zrt
 {
@@ -30,6 +31,10 @@ TEST(RayTest, ComputingPointFromDistance)
 TEST(RayTest, TranslatingRay)
 {
     auto r = Ray{Point(1, 2, 3), Vector(0, 1, 0)};
+    auto m = Translation(3, 4, 5);
+    auto r2 = r.Transform(m);
+    ASSERT_EQ(Floats(r2.Origin()), Floats(Point(4, 6, 8)));
+    ASSERT_EQ(Floats(r2.Direction()), Floats(Vector(0, 1, 0)));
 }
 
 } // namespace zrt
