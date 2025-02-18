@@ -112,13 +112,20 @@ TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
     EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
 }
 
+TEST(SphereTest, ComputingEasyNormalOnTranslatedSphere)
+{
+    auto p = Point(1, 1, 0);
+    Sphere s{Translation(1, 0, 0)};
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(Vector(0, 1, 0)));
+}
+
 TEST(SphereTest, ComputingNormalOnTranslatedSphere)
 {
-    constexpr float Value = 1.70711f;
-    auto p = Point(0, Value, -Value);
+    auto p = Point(0, 1.70711, -0.70711);
     Sphere s{Translation(0, 1, 0)};
     auto n = s.Normal(p);
-    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+    EXPECT_EQ(Floats(n), Floats(Vector(0, 0.70711, - 0.70711)));
 }
 
 TEST(SphereTest, ComputingNormalOnTransformedSphere)
