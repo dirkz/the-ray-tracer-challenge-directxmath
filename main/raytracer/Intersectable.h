@@ -29,7 +29,11 @@ struct Intersectable
     virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) = 0;
 
     void XM_CALLCONV Transform(CXMMATRIX transform);
-    XMMATRIX XM_CALLCONV Transform();
+
+    inline XMMATRIX XM_CALLCONV Transform()
+    {
+        return XMLoadFloat4x4(&m_transform);
+    }
 
   protected:
     inline XMMATRIX XM_CALLCONV InverseTransform()

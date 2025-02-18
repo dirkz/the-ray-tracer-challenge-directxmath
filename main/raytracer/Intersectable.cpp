@@ -19,11 +19,6 @@ void XM_CALLCONV Intersectable::Transform(CXMMATRIX transform)
     CreateDerivedTransforms(transform);
 }
 
-XMMATRIX XM_CALLCONV Intersectable::Transform()
-{
-    return XMLoadFloat4x4(&m_transform);
-}
-
 void Intersectable::CreateDerivedTransforms(CXMMATRIX transform)
 {
     XMMATRIX inverse = XMMatrixInverse(nullptr, transform);
