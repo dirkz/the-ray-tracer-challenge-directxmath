@@ -3,7 +3,7 @@ add_executable(
   RayTest.cpp
   SphereTest.cpp
   IntersectionTest.cpp
-  TransformationTest.cpp)
+  TransformationTest.cpp "Constants.h")
 
 target_link_libraries(
   raytracer_tests

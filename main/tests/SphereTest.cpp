@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "Constants.h"
 #include "Matrix.h"
 #include "Ray.h"
 #include "Sphere.h"
@@ -109,6 +110,25 @@ TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
     auto n = s.Normal(p);
     EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
     EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+}
+
+TEST(SphereTest, ComputingNormalOnTranslatedSphere)
+{
+    constexpr float Value = 1.70711f;
+    auto p = Point(0, Value, -Value);
+    Sphere s{Translation(0, 1, 0)};
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+}
+
+TEST(SphereTest, ComputingNormalOnTransformedSphere)
+{
+    auto p = Point(0, HalfSqrt, -HalfSqrt);
+    auto v = Vector(0, 0.97014f, -0.24254f);
+    auto transform = XMMatrixMultiply(Scaling(1, 0.5, 1), RotationZ(PIFifth));
+    Sphere s{transform};
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(v));
 }
 
 } // namespace zrt
