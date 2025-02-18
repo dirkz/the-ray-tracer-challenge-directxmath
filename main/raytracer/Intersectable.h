@@ -21,6 +21,7 @@ struct Intersectable
 
     virtual std::vector<Intersection> Intersect(const Ray &ray) = 0;
 
+    void XM_CALLCONV Transform(CXMMATRIX transform);
     XMMATRIX XM_CALLCONV Transform();
 
   private:

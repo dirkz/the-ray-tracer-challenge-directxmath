@@ -12,6 +12,11 @@ Intersectable::Intersectable(CXMMATRIX transform)
     XMStoreFloat4x4(&m_transform, transform);
 }
 
+void XM_CALLCONV Intersectable::Transform(CXMMATRIX transform)
+{
+    XMStoreFloat4x4(&m_transform, transform);
+}
+
 XMMATRIX XM_CALLCONV Intersectable::Transform()
 {
     return XMLoadFloat4x4(&m_transform);
