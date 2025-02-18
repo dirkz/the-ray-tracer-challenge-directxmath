@@ -65,14 +65,16 @@ inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
     return floats;
 }
 
-std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v);
-
 } // namespace zrt
 
 namespace DirectX
 {
 
-bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2);
+inline bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2)
+{
+    return f1.x == f2.x && f1.y == f2.y && f1.z == f2.z && f1.w == f2.w;
+}
+
 std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f);
 
 }
