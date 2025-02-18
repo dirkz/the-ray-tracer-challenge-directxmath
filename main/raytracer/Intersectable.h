@@ -31,6 +31,17 @@ struct Intersectable
     void XM_CALLCONV Transform(CXMMATRIX transform);
     XMMATRIX XM_CALLCONV Transform();
 
+  protected:
+    inline XMMATRIX XM_CALLCONV InverseTransform()
+    {
+        XMLoadFloat4x4(&m_inverseTransform);
+    }
+
+    inline XMMATRIX XM_CALLCONV TransposedInverseTransform()
+    {
+        XMLoadFloat4x4(&m_transposedInverseTransform);
+    }
+
   private:
     XMFLOAT4X4 m_transform;
     XMFLOAT4X4 m_inverseTransform;
