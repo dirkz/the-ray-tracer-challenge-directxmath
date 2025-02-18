@@ -1,6 +1,6 @@
 #include "Vector.h"
 
-namespace zrt
+namespace DirectX
 {
 
 std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
@@ -13,4 +13,9 @@ std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
     return os;
 }
 
-} // namespace zrt
+void PrintTo(const XMVECTOR &v, ::std::ostream *os)
+{
+    *os << "\n";
+}
+
+} // namespace DirectX

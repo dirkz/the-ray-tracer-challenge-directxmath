@@ -9,6 +9,9 @@ namespace zrt
 TEST(RayTest, CreatingAndQueryingRays)
 {
     auto origin = Point(1, 2, 3);
+    
+    ASSERT_PRED1(IsPoint, origin);
+
     ASSERT_TRUE(IsPoint(origin));
     auto direction = Vector(4, 5, 6);
     ASSERT_TRUE(IsVector(direction));
