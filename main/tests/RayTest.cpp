@@ -9,7 +9,7 @@ namespace zrt
 TEST(RayTest, CreatingAndQueryingRays)
 {
     auto origin = Point(1, 2, 3);
-    ASSERT_TRUE(IsPoint(origin));
+    ASSERT_TRUE(IsPoint(origin)) << Floats(origin) << " must be a point\n";
     auto direction = Vector(4, 5, 6);
     ASSERT_TRUE(IsVector(direction));
     auto ray = Ray{origin, direction};

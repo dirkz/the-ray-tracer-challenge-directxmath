@@ -30,4 +30,10 @@ bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2)
     return f1.x == f2.x && f1.y == f2.y && f1.z == f2.z && f1.w == f2.w;
 }
 
+std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f)
+{
+    os << "[" << f.x << "," << f.y << "," << f.z << "," << f.w << "]";
+    return os;
+}
+
 } // namespace DirectX

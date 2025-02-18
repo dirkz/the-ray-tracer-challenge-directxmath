@@ -67,5 +67,6 @@ namespace DirectX
 {
 
 bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2);
+std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f);
 
 }
