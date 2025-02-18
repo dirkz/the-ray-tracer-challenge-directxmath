@@ -3,16 +3,6 @@
 namespace zrt
 {
 
-std::string XM_CALLCONV Printable(FXMVECTOR v)
-{
-    return "";
-}
-
-} // namespace zrt
-
-namespace DirectX
-{
-
 std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
 {
     XMFLOAT4 floats;
@@ -23,9 +13,4 @@ std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
     return os;
 }
 
-void PrintTo(const XMVECTOR &v, ::std::ostream *os)
-{
-    *os << v;
-}
-
-} // namespace DirectX
+} // namespace zrt
