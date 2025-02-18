@@ -27,4 +27,9 @@ TEST(RayTest, ComputingPointFromDistance)
     ASSERT_EQ(Floats(ray.Position(2.5)), Floats(Point(4.5, 3, 4)));
 }
 
+TEST(RayTest, TranslatingRay)
+{
+    auto r = Ray{Point(1, 2, 3), Vector(0, 1, 0)};
+}
+
 } // namespace zrt

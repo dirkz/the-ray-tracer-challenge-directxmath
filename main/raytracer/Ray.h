@@ -25,6 +25,13 @@ struct Ray
         return XMVectorAdd(Origin(), direction);
     }
 
+    inline Ray Transform(FXMMATRIX m)
+    {
+        XMVECTOR origin = XMVector4Transform(Origin(), m);
+        XMVECTOR direction = XMVector4Transform(Direction(), m);
+        return Ray{origin, direction};
+    }
+
   private:
     XMFLOAT4 m_origin;
     XMFLOAT4 m_direction;
