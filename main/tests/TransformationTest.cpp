@@ -1,15 +1,16 @@
 #include <gtest/gtest.h>
 
-#include "Vector.h"
 #include "Matrix.h"
+#include "Vector.h"
 
 namespace zrt
 {
 
+constexpr float pi = std::numbers::pi_v<float>;
+const float halfSqrt = sqrt(2.f) / 2;
+
 TEST(TransformationTest, RotatingPointAroundX)
 {
-    auto pi = std::numbers::pi_v<float>;
-    auto halfSqrt = sqrt(2.f) / 2;
     auto p = Point(0, 1, 0);
     auto halfQuarter = RotationX(pi / 4);
     auto fullQuarter = RotationX(pi / 2);
