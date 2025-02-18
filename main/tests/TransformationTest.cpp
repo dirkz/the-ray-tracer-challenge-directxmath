@@ -13,8 +13,8 @@ TEST(TransformationTest, RotatingPointAroundX)
     auto p = Point(0, 1, 0);
     auto halfQuarter = RotationX(pi / 4);
     auto fullQuarter = RotationX(pi / 2);
-    ASSERT_EQ(Floats(XMVector4Transform(p, halfQuarter)), Floats(Point(0, halfSqrt, halfSqrt)));
-    ASSERT_EQ(Floats(XMVector4Transform(p, fullQuarter)), Floats(Point(0, 0, 1)));
+    EXPECT_EQ(Floats(XMVector4Transform(p, halfQuarter)), Floats(Point(0, halfSqrt, halfSqrt)));
+    EXPECT_EQ(Floats(XMVector4Transform(p, fullQuarter)), Floats(Point(0, 0, 1)));
 }
 
 } // namespace zrt

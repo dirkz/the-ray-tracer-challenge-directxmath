@@ -47,8 +47,8 @@ TEST(IntersectionTest, HitIsAlwaysLowestNonnegativeIntersection)
     Intersection i4{s, 2};
     IntersectionList xs = intersections({i1, i2, i3, i4});
     const Intersection *pI = hit(xs);
-    ASSERT_NE(pI, nullptr);
-    ASSERT_EQ(*pI, i4);
+    EXPECT_NE(pI, nullptr);
+    EXPECT_EQ(*pI, i4);
 }
 
 } // namespace zrt
