@@ -31,7 +31,7 @@ struct IntersectionLess
 
 using IntersectionList = std::multiset<Intersection, IntersectionLess>;
 
-IntersectionList instersections(std::initializer_list<Intersection> intersections);
+IntersectionList intersections(std::initializer_list<Intersection> intersections);
 
 /// <summary>
 /// The first intersection with a distance > 0 from an order list of intersections.
