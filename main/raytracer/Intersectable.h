@@ -34,12 +34,12 @@ struct Intersectable
   protected:
     inline XMMATRIX XM_CALLCONV InverseTransform()
     {
-        XMLoadFloat4x4(&m_inverseTransform);
+        return XMLoadFloat4x4(&m_inverseTransform);
     }
 
     inline XMMATRIX XM_CALLCONV TransposedInverseTransform()
     {
-        XMLoadFloat4x4(&m_transposedInverseTransform);
+        return XMLoadFloat4x4(&m_transposedInverseTransform);
     }
 
   private:
