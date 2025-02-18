@@ -46,15 +46,10 @@ std::vector<Intersection> Sphere::Intersect(const Ray &ray)
 
 XMVECTOR XM_CALLCONV Sphere::Normal(FXMVECTOR p)
 {
-    auto p1 = Floats(p);
     XMVECTOR objectPoint = XMVector4Transform(p, InverseTransform());
-    auto p2 = Floats(objectPoint);
     XMVECTOR objectNormal = objectPoint - Point(0);
-    auto n1 = Floats(objectNormal);
     XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
-    auto n2 = Floats(worldNormal);
     worldNormal = XMVectorSetW(worldNormal, 0);
-    auto n3 = Floats(worldNormal);
     return XMVector3Normalize(worldNormal);
 }
 

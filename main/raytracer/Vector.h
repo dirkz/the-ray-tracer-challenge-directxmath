@@ -88,6 +88,11 @@ inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
     return floats;
 }
 
+inline XMVECTOR XM_CALLCONV Reflect(FXMVECTOR v, FXMVECTOR n)
+{
+    return XMVector4Reflect(v, n);
+}
+
 } // namespace zrt
 
 namespace DirectX

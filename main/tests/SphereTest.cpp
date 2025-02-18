@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "Constants.h"
 #include "Matrix.h"
 #include "Ray.h"
 #include "Sphere.h"
+#include "TestConstants.h"
 #include "Vector.h"
 
 namespace zrt
@@ -125,7 +125,7 @@ TEST(SphereTest, ComputingNormalOnTranslatedSphere)
     auto p = Point(0, 1.70711f, -0.70711f);
     Sphere s{Translation(0, 1, 0)};
     auto n = s.Normal(p);
-    EXPECT_EQ(Floats(n), Floats(Vector(0, 0.70711f, - 0.70711f)));
+    EXPECT_EQ(Floats(n), Floats(Vector(0, 0.70711f, -0.70711f)));
 }
 
 TEST(SphereTest, ComputingNormalOnTransformedSphere)

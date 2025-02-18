@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "Constants.h"
 #include "Matrix.h"
+#include "TestConstants.h"
 #include "Vector.h"
 
 namespace zrt
