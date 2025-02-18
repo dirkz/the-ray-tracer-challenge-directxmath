@@ -20,6 +20,8 @@ struct Intersection
     float m_t;
 };
 
+std::ostream &operator<<(std::ostream &os, const Intersection &i);
+
 bool operator==(const Intersection &s1, const Intersection &s2);
 
 struct IntersectionLess

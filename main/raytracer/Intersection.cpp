@@ -20,6 +20,12 @@ float Intersection::T() const
     return m_t;
 }
 
+std::ostream &operator<<(std::ostream &os, const Intersection &i)
+{
+    os << "Intersection t=" << i.T() << "\n";
+    return os;
+}
+
 bool operator==(const Intersection &s1, const Intersection &s2)
 {
     return s1.T() == s2.T() && s1.Object() == s2.Object();
