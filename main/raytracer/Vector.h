@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 
+#include "Floats.h"
+
 namespace zrt
 {
 
@@ -72,9 +74,10 @@ namespace DirectX
 
 inline bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2)
 {
-    return f1.x == f2.x && f1.y == f2.y && f1.z == f2.z && f1.w == f2.w;
+    using zrt::IsEqual;
+    return IsEqual(f1.x, f2.x) && IsEqual(f1.y, f2.y) && IsEqual(f1.z, f2.z) && IsEqual(f1.w, f2.w);
 }
 
 std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f);
 
-}
+} // namespace DirectX
