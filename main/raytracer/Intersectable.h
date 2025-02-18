@@ -27,6 +27,12 @@ struct Intersectable
     XMFLOAT4X4 m_transform;
 };
 
+/// <summary>
+/// Equality by identity (simple pointer comparison).
+/// </summary>
+/// <param name="i1"></param>
+/// <param name="i2"></param>
+/// <returns></returns>
 bool operator==(const Intersectable &i1, const Intersectable &i2);
 
 } // namespace zrt
