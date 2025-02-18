@@ -122,17 +122,22 @@ TEST(SphereTest, ComputingEasyNormalOnTranslatedSphere)
 
 TEST(SphereTest, ComputingNormalOnTranslatedSphere)
 {
-    auto p = Point(0, 1.70711, -0.70711);
+    auto p = Point(0, 1.70711f, -0.70711f);
     Sphere s{Translation(0, 1, 0)};
     auto n = s.Normal(p);
-    EXPECT_EQ(Floats(n), Floats(Vector(0, 0.70711, - 0.70711)));
+    EXPECT_EQ(Floats(n), Floats(Vector(0, 0.70711f, - 0.70711f)));
 }
 
 TEST(SphereTest, ComputingNormalOnTransformedSphere)
 {
     auto p = Point(0, HalfSqrt, -HalfSqrt);
     auto v = Vector(0, 0.97014f, -0.24254f);
-    auto transform = XMMatrixMultiply(Scaling(1, 0.5, 1), RotationZ(PIFifth));
+
+    // Note the order here: Rotate, Scale, Translate.
+    // If not DirectXMath, this would likely have to be reversed,
+    // as in the book.
+    auto transform = XMMatrixMultiply(RotationZ(PIFifth), Scaling(1, 0.5f, 1));
+
     Sphere s{transform};
     auto n = s.Normal(p);
     EXPECT_EQ(Floats(n), Floats(v));
