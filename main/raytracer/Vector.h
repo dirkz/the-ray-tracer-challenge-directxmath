@@ -57,8 +57,15 @@ inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
     return floats.x;
 }
 
-std::array<float, 4> XM_CALLCONV Floats(FXMVECTOR v);
+XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v);
 
 std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v);
 
 } // namespace zrt
+
+namespace DirectX
+{
+
+bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2);
+
+}
