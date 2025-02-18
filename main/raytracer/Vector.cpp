@@ -1,5 +1,15 @@
 #include "Vector.h"
 
+namespace zrt
+{
+
+std::string XM_CALLCONV Printable(FXMVECTOR v)
+{
+    return "";
+}
+
+} // namespace zrt
+
 namespace DirectX
 {
 
