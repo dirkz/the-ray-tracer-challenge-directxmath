@@ -26,7 +26,8 @@ struct IntersectionLess
     bool operator()(const Intersection &s1, const Intersection &s2) const;
 };
 
-std::multiset<Intersection, IntersectionLess> instersections(
-    std::initializer_list<Intersection> intersections);
+using IntersectionList = std::multiset<Intersection, IntersectionLess>;
+
+IntersectionList instersections(std::initializer_list<Intersection> intersections);
 
 } // namespace zrt
