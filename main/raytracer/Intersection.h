@@ -10,6 +10,7 @@ struct Intersectable;
 struct Intersection
 {
     Intersection(const Intersectable &intersectable, float t);
+    Intersection(const Intersection &other) = default;
 
     const Intersectable &Object() const;
     float T() const;
