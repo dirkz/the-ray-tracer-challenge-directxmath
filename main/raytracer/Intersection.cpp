@@ -35,4 +35,19 @@ IntersectionList instersections(std::initializer_list<Intersection> intersection
     return std::multiset<Intersection, IntersectionLess>{intersections};
 }
 
+const Intersection *hit(const IntersectionList &list)
+{
+    auto iterator =
+        std::find_if(list.begin(), list.end(), [](const Intersection &i) { return i.T() > 0; });
+
+    if (iterator == list.end())
+    {
+        return nullptr;
+    }
+    else
+    {
+        return &(*iterator);
+    }
+}
+
 } // namespace zrt
