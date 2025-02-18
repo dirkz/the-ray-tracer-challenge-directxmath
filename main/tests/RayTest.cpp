@@ -37,4 +37,13 @@ TEST(RayTest, TranslatingRay)
     ASSERT_EQ(Floats(r2.Direction()), Floats(Vector(0, 1, 0)));
 }
 
+TEST(RayTest, ScalingRay)
+{
+    auto r = Ray{Point(1, 2, 3), Vector(0, 1, 0)};
+    auto m = Scaling(2, 3, 4);
+    auto r2 = r.Transform(m);
+    ASSERT_EQ(Floats(r2.Origin()), Floats(Point(2, 6, 12)));
+    ASSERT_EQ(Floats(r2.Direction()), Floats(Vector(0, 3, 0)));
+}
+
 } // namespace zrt
