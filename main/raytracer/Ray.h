@@ -25,7 +25,7 @@ struct Ray
         return XMVectorAdd(Origin(), direction);
     }
 
-    inline Ray Transform(FXMMATRIX m)
+    inline Ray XM_CALLCONV Transform(FXMMATRIX m)
     {
         XMVECTOR origin = XMVector4Transform(Origin(), m);
         XMVECTOR direction = XMVector4Transform(Direction(), m);

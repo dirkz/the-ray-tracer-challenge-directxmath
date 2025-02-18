@@ -11,14 +11,20 @@ namespace zrt
 struct Intersectable
 {
     Intersectable();
+    Intersectable(CXMMATRIX transform);
 
     // Can't copy
     Intersectable(const Intersectable &other) = delete;
 
     // Can't copy
-    void operator= (const Intersectable &other) = delete;
+    void operator=(const Intersectable &other) = delete;
 
     virtual std::vector<Intersection> Intersect(const Ray &ray) = 0;
+
+    XMMATRIX XM_CALLCONV Transform();
+
+  private:
+    XMFLOAT4X4 m_transform;
 };
 
 bool operator==(const Intersectable &i1, const Intersectable &i2);

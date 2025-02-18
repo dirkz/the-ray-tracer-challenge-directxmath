@@ -5,27 +5,27 @@
 namespace zrt
 {
 
-inline XMMATRIX Translation(float x, float y, float z)
+inline XMMATRIX XM_CALLCONV Translation(float x, float y, float z)
 {
     return XMMatrixTranslation(x, y, z);
 }
 
-inline XMMATRIX Scaling(float x, float y, float z)
+inline XMMATRIX XM_CALLCONV Scaling(float x, float y, float z)
 {
     return XMMatrixScaling(x, y, z);
 }
 
-inline XMMATRIX RotationX(float angle)
+inline XMMATRIX XM_CALLCONV RotationX(float angle)
 {
     return XMMatrixRotationX(angle);
 }
 
-inline XMMATRIX RotationY(float angle)
+inline XMMATRIX XM_CALLCONV RotationY(float angle)
 {
     return XMMatrixRotationY(angle);
 }
 
-inline XMMATRIX RotationZ(float angle)
+inline XMMATRIX XM_CALLCONV RotationZ(float angle)
 {
     return XMMatrixRotationZ(angle);
 }
