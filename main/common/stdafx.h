@@ -16,6 +16,7 @@
 #include <map>
 #include <memory>
 #include <numbers>
+#include <set>
 #include <span>
 #include <stdexcept>
 #include <string>

@@ -18,4 +18,15 @@ float Intersection::T() const
     return m_t;
 }
 
+bool IntersectionLess::operator()(const Intersection &s1, const Intersection &s2) const
+{
+    return s1.T() < s2.T();
+}
+
+std::multiset<Intersection, IntersectionLess> instersections(
+    std::initializer_list<Intersection> intersections)
+{
+    return std::multiset<Intersection, IntersectionLess>{intersections};
+}
+
 } // namespace zrt
