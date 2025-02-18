@@ -3,13 +3,6 @@
 namespace zrt
 {
 
-XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
-{
-    XMFLOAT4 floats;
-    XMStoreFloat4(&floats, v);
-    return floats;
-}
-
 std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
 {
     XMFLOAT4 floats;

@@ -57,7 +57,13 @@ inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
     return floats.x;
 }
 
-XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v);
+inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
+{
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, v);
+
+    return floats;
+}
 
 std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v);
 
