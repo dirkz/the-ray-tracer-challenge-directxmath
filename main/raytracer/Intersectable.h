@@ -33,6 +33,10 @@ struct Intersectable
 
   private:
     XMFLOAT4X4 m_transform;
+    XMFLOAT4X4 m_inverseTransform;
+    XMFLOAT4X4 m_transposedInverseTransform;
+
+    void CreateDerivedTransforms(CXMMATRIX transform);
 };
 
 /// <summary>
