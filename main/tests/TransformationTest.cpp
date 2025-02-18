@@ -18,4 +18,12 @@ TEST(TransformationTest, RotatingPointAroundX)
     EXPECT_EQ(Floats(XMVector4Transform(p, fullQuarter)), Floats(Point(0, 0, 1)));
 }
 
+TEST(TransformationTest, InverseOfXRotationRotatesInOppositeDirection)
+{
+    auto p = Point(0, 1, 0);
+    auto halfQuarter = RotationX(pi / 4);
+    auto inv = XMMatrixInverse(nullptr, halfQuarter);
+    EXPECT_EQ(Floats(XMVector4Transform(p, inv)), Floats(Point(0, halfSqrt, -halfSqrt)));
+}
+
 } // namespace zrt
