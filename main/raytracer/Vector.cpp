@@ -15,7 +15,7 @@ std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
 
 void PrintTo(const XMVECTOR &v, ::std::ostream *os)
 {
-    *os << "\n";
+    *os << v;
 }
 
 } // namespace DirectX
