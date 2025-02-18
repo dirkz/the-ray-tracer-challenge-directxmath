@@ -1,7 +1,8 @@
 add_executable(
   raytracer_tests
   RayTest.cpp
-  SphereTest.cpp)
+  SphereTest.cpp
+  IntersectionTest.cpp)
 
 target_link_libraries(
   raytracer_tests
