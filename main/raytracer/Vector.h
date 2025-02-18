@@ -22,6 +22,27 @@ inline XMVECTOR XM_CALLCONV Point(float x, float y, float z)
     return Tuple(x, y, z, 1);
 }
 
+inline XMVECTOR XM_CALLCONV Point(float all)
+{
+    return Tuple(all, all, all, 1);
+}
+
+inline XMVECTOR XM_CALLCONV PointToVector(FXMVECTOR p)
+{
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, p);
+    floats.w = 0;
+    return XMLoadFloat4(&floats);
+}
+
+inline XMVECTOR XM_CALLCONV VectorToPoint(FXMVECTOR p)
+{
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, p);
+    floats.w = 1;
+    return XMLoadFloat4(&floats);
+}
+
 inline bool XM_CALLCONV IsPoint(FXMVECTOR v)
 {
     return XMVectorGetW(v) == 1.f;

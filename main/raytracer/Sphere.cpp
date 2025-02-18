@@ -44,4 +44,10 @@ std::vector<Intersection> Sphere::Intersect(const Ray &ray)
     }
 }
 
+XMVECTOR XM_CALLCONV Sphere::Normal(FXMVECTOR p)
+{
+    auto n = p - Point(0);
+    return n;
+}
+
 } // namespace zrt

@@ -21,6 +21,13 @@ struct Intersectable
 
     virtual std::vector<Intersection> Intersect(const Ray &ray) = 0;
 
+    /// <summary>
+    /// The normal vector at the given point, assumed to be part of the object's surface.
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) = 0;
+
     void XM_CALLCONV Transform(CXMMATRIX transform);
     XMMATRIX XM_CALLCONV Transform();
 

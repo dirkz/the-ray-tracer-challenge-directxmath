@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include "Matrix.h"
 #include "Ray.h"
 #include "Sphere.h"
 #include "Vector.h"
-#include "Matrix.h"
 
 namespace zrt
 {
@@ -72,6 +72,43 @@ TEST(SphereTest, IntersectingTranslatedSphereWithRay)
     Sphere s{Translation(5, 0, 0)};
     auto xs = s.Intersect(r);
     EXPECT_EQ(xs.size(), 0);
+}
+
+TEST(SphereTest, NormalOnSphereAtPointOnXAxis)
+{
+    Sphere s{};
+    auto p = Point(1, 0, 0);
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+}
+
+TEST(SphereTest, NormalOnSphereAtPointOnYAxis)
+{
+    Sphere s{};
+    auto p = Point(0, 1, 0);
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+}
+
+TEST(SphereTest, NormalOnSphereAtPointOnZAxis)
+{
+    Sphere s{};
+    auto p = Point(0, 0, 1);
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+}
+
+TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
+{
+    const float ThirdSqrt3 = sqrt(3.f) / 3.f;
+    Sphere s{};
+    auto p = Point(ThirdSqrt3);
+    auto n = s.Normal(p);
+    EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
+    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
 }
 
 } // namespace zrt
