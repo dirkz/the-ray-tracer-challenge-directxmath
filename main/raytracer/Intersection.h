@@ -19,6 +19,8 @@ struct Intersection
     float m_t;
 };
 
+bool operator==(const Intersection &s1, const Intersection &s2);
+
 struct IntersectionLess
 {
     bool operator()(const Intersection &s1, const Intersection &s2) const;

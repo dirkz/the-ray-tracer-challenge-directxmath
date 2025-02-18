@@ -7,9 +7,9 @@ Intersectable::Intersectable()
 {
 }
 
-bool Intersectable::operator==(const Intersectable &other)
+bool operator==(const Intersectable &i1, const Intersectable &i2)
 {
-    return this == &other;
+    return &i1 == &i2;
 }
 
 } // namespace zrt

@@ -1,5 +1,7 @@
 #include "Intersection.h"
 
+#include "Intersectable.h"
+
 namespace zrt
 {
 
@@ -16,6 +18,11 @@ const Intersectable &Intersection::Object() const
 float Intersection::T() const
 {
     return m_t;
+}
+
+bool operator==(const Intersection &s1, const Intersection &s2)
+{
+    return s1.T() == s2.T() && s1.Object() == s2.Object();
 }
 
 bool IntersectionLess::operator()(const Intersection &s1, const Intersection &s2) const

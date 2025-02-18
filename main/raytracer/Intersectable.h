@@ -19,13 +19,8 @@ struct Intersectable
     void operator= (const Intersectable &other) = delete;
 
     virtual std::vector<Intersection> Intersect(const Ray &ray) = 0;
-
-    /// <summary>
-    /// Equality by identity (objects' addresses).
-    /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    bool operator==(const Intersectable &other);
 };
+
+bool operator==(const Intersectable &i1, const Intersectable &i2);
 
 } // namespace zrt
