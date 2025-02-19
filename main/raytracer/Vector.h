@@ -53,15 +53,6 @@ inline bool XM_CALLCONV IsVector(FXMVECTOR v)
     return XMVectorGetW(v) == 0.f;
 }
 
-inline bool XM_CALLCONV IsEqual(FXMVECTOR v1, FXMVECTOR v2)
-{
-    using std::isnan;
-
-    XMFLOAT4 components;
-    XMStoreFloat4(&components, XMVectorEqual(v1, v2));
-    return isnan(components.x) && isnan(components.y) && isnan(components.z) && isnan(components.w);
-}
-
 inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
 {
     XMVECTOR v = XMVector4Dot(v1, v2);
@@ -80,14 +71,6 @@ inline float XM_CALLCONV DotProduct(FXMVECTOR v1, FXMVECTOR v2)
     return floats.x;
 }
 
-inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
-{
-    XMFLOAT4 floats;
-    XMStoreFloat4(&floats, v);
-
-    return floats;
-}
-
 inline XMVECTOR XM_CALLCONV Reflect(FXMVECTOR v, FXMVECTOR n)
 {
     return XMVector4Reflect(v, n);
@@ -100,15 +83,3 @@ inline XMVECTOR XM_CALLCONV Color(float r, float g, float b)
 
 } // namespace zrt
 
-namespace DirectX
-{
-
-inline bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2)
-{
-    using zrt::IsEqual;
-    return IsEqual(f1.x, f2.x) && IsEqual(f1.y, f2.y) && IsEqual(f1.z, f2.z) && IsEqual(f1.w, f2.w);
-}
-
-std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f);
-
-} // namespace DirectX

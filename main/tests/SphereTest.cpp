@@ -4,6 +4,7 @@
 #include "Ray.h"
 #include "Sphere.h"
 #include "TestConstants.h"
+#include "TestUtil.h"
 #include "Vector.h"
 
 namespace zrt

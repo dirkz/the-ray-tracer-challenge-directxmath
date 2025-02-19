@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "Ray.h"
-#include "Vector.h"
 #include "Matrix.h"
+#include "Ray.h"
+#include "TestUtil.h"
+#include "Vector.h"
 
 namespace zrt
 {

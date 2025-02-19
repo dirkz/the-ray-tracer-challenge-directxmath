@@ -18,10 +18,4 @@ std::ostream &XM_CALLCONV operator<<(std::ostream &os, FXMVECTOR v)
 namespace DirectX
 {
 
-std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f)
-{
-    os << "[" << f.x << "," << f.y << "," << f.z << "," << f.w << "]";
-    return os;
-}
-
 } // namespace DirectX

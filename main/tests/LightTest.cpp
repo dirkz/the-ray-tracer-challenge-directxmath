@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "PointLight.h"
+#include "TestUtil.h"
 #include "Vector.h"
 
 namespace zrt

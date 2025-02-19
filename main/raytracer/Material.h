@@ -2,12 +2,15 @@
 
 #include "stdafx.h"
 
+#include "Vector.h"
+
 namespace zrt
 {
 
 struct Material
 {
-    Material(FXMVECTOR color, float ambient, float diffuse, float specular, float shininess);
+    Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1, float diffuse = 0.9,
+             float specular = 0.9, float shininess = 200);
 
     inline XMVECTOR XM_CALLCONV Color() const
     {
