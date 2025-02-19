@@ -10,7 +10,9 @@ add_library(raytracer OBJECT
 	Intersectable.cpp
 	Vector.cpp
 	Matrix.h
-	Floats.h)
+	Floats.h
+	PointLight.h
+	PointLight.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
