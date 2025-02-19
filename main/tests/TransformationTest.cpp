@@ -74,7 +74,7 @@ TEST(TransformationTest, TransformationMatrixArbitrary)
 {
     auto from = Point(1, 3, 2);
     auto to = Point(4, -2, 8);
-    auto up = Vector(0, 1, 0);
+    auto up = Vector(1, 1, 0);
     auto t = ViewTransform(from, to, up);
     auto m =
         XMMATRIX{-0.50709f, 0.50709f, 0.67612f,  -2.36643, 0.76772f, 0.60609f, 0.12122f, -2.82843f,
