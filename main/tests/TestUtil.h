@@ -29,6 +29,14 @@ inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
     return floats;
 }
 
+inline XMFLOAT4X4 XM_CALLCONV Floats(FXMMATRIX m)
+{
+    XMFLOAT4X4 floats;
+    XMStoreFloat4x4(&floats, m);
+
+    return floats;
+}
+
 } // namespace zrt
 
 namespace DirectX
@@ -38,6 +46,26 @@ inline bool operator==(const XMFLOAT4 &f1, const XMFLOAT4 &f2)
 {
     using zrt::IsEqual;
     return IsEqual(f1.x, f2.x) && IsEqual(f1.y, f2.y) && IsEqual(f1.z, f2.z) && IsEqual(f1.w, f2.w);
+}
+
+inline bool operator==(const XMFLOAT4X4 &m1, const XMFLOAT4X4 &m2)
+{
+    using zrt::IsEqual;
+
+    for (auto r = 0; r < 3; ++r)
+    {
+        for (auto c = 0; c < 3; ++c)
+        {
+            float f1 = m1(r, c);
+            float f2 = m2(r, c);
+            if (!IsEqual(f1, f2))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 inline std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f)
