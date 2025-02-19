@@ -38,4 +38,18 @@ std::vector<Intersection> World::Intersect(const Ray &ray) const
     return intersections;
 }
 
+XMVECTOR World::ShadeHit(const Computations &comps) const
+{
+    XMVECTOR color = XMVectorZero();
+
+    for (const PointLight &light : Lights())
+    {
+        XMVECTOR c =
+            comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(), comps.Normal());
+        color = XMVectorAdd(color, c);
+    }
+
+    return color;
+}
+
 } // namespace zrt

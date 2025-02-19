@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 
+#include "Computations.h"
 #include "Intersectable.h"
 #include "PointLight.h"
 #include "Ray.h"
@@ -16,6 +17,7 @@ struct World
     World(World &&world) noexcept;
 
     std::vector<Intersection> Intersect(const Ray &ray) const;
+    XMVECTOR ShadeHit(const Computations &comps) const;
 
     inline std::vector<PointLight> Lights() const
     {

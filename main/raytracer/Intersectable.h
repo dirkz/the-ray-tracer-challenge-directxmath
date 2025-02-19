@@ -36,12 +36,12 @@ struct Intersectable
         return XMLoadFloat4x4(&m_transform);
     }
 
-    void Material(const Material &material);
-
-    inline zrt::Material &Material()
+    inline const zrt::Material &Material() const
     {
         return m_material;
     }
+
+    void Material(const zrt::Material &material);
 
   protected:
     inline XMMATRIX XM_CALLCONV InverseTransform() const

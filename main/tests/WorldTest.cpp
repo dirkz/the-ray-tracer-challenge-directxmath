@@ -12,10 +12,8 @@
 namespace zrt
 {
 
-static World DefaultWorld()
+static World DefaultWorld(const PointLight &light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)})
 {
-    PointLight light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)};
-
     constexpr float ambient = 0.1f;
     constexpr float diffuse = 0.7f;
     constexpr float specular = 0.2f;
@@ -63,6 +61,28 @@ TEST(WorldTest, IntersectWorldRay)
     EXPECT_EQ(xs[1].T(), 4.5f);
     EXPECT_EQ(xs[2].T(), 5.5f);
     EXPECT_EQ(xs[3].T(), 6);
+}
+
+TEST(WorldTest, ShadingIntersection)
+{
+    auto w = DefaultWorld();
+    auto r = Ray{Point(0, 0, -5), Vector(0, 0, 1)};
+    auto shape = w.Objects()[0];
+    Intersection i{shape, 4};
+    Computations comps{i, r};
+    auto c = w.ShadeHit(comps);
+    EXPECT_EQ(Floats(c), Floats(Color(0.38066f, 0.47583f, 0.2855f)));
+}
+
+TEST(WorldTest, ShadingIntersectionFromOutside)
+{
+    auto w = DefaultWorld(PointLight{Point(0, 0.25f, 0), Color(1, 1, 1)});
+    auto r = Ray{Point(0, 0, 0), Vector(0, 0, 1)};
+    auto shape = w.Objects()[1];
+    Intersection i{shape, 0.5};
+    Computations comps{i, r};
+    auto c = w.ShadeHit(comps);
+    EXPECT_EQ(Floats(c), Floats(Color(0.90498f, 0.90498f, 0.90498f)));
 }
 
 } // namespace zrt
