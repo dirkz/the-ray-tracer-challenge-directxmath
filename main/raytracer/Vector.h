@@ -2,8 +2,6 @@
 
 #include "stdafx.h"
 
-#include "Floats.h"
-
 namespace zrt
 {
 

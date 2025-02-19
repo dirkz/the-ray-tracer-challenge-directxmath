@@ -13,6 +13,26 @@ struct Computations
 {
     Computations(const Intersection &i, const Ray &r);
 
+    inline const Intersectable *Object() const
+    {
+        return m_pIntersectable;
+    }
+
+    inline XMVECTOR XM_CALLCONV Point() const
+    {
+        return XMLoadFloat4(&m_point);
+    }
+
+    inline XMVECTOR XM_CALLCONV EyeV() const
+    {
+        return XMLoadFloat4(&m_eyev);
+    }
+
+    inline XMVECTOR XM_CALLCONV Normal() const
+    {
+        return XMLoadFloat4(&m_normal);
+    }
+
   private:
     float m_t;
     const Intersectable *m_pIntersectable;

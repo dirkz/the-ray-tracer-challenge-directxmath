@@ -10,7 +10,6 @@ add_library(raytracer OBJECT
 	Intersectable.cpp
 	Vector.cpp
 	Matrix.h
-	Floats.h
 	PointLight.h
 	PointLight.cpp
 	Material.h

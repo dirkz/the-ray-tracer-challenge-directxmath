@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "Sphere.h"
+#include "Computations.h"
 #include "Intersection.h"
+#include "Sphere.h"
+#include "TestUtil.h"
 
 namespace zrt
 {
@@ -49,6 +51,18 @@ TEST(IntersectionTest, HitIsAlwaysLowestNonnegativeIntersection)
     const Intersection *pI = hit(xs);
     EXPECT_NE(pI, nullptr);
     EXPECT_EQ(*pI, i4);
+}
+
+TEST(IntersectionTest, PrecomputingStateOfIntersection)
+{
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    Sphere shape{};
+    Intersection i{&shape, 4};
+    Computations comps{i, r};
+    EXPECT_EQ(comps.Object(), i.Object());
+    EXPECT_EQ(Floats(comps.Point()), Floats(Point(0, 0, -1)));
+    EXPECT_EQ(Floats(comps.EyeV()), Floats(Vector(0, 0, -1)));
+    EXPECT_EQ(Floats(comps.Normal()), Floats(Vector(0, 0, -1)));
 }
 
 } // namespace zrt
