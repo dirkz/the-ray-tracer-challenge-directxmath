@@ -14,7 +14,7 @@ namespace zrt
 
 static World DefaultWorld()
 {
-    const PointLight *light = new PointLight{Point(-10, 10, -10), Color(1, 1, 1)};
+    PointLight light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)};
 
     constexpr float ambient = 0.1f;
     constexpr float diffuse = 0.7f;
@@ -29,7 +29,9 @@ static World DefaultWorld()
 
     World w{light, {s1, s2}};
 
-    EXPECT_EQ(w.Light(), light);
+    EXPECT_EQ(w.Lights().size(), 1);
+    PointLight light2 = w.Lights()[0];
+    EXPECT_EQ(light2, light);
 
     auto itS1 = std::find(w.Objects().begin(), w.Objects().end(), s1);
     auto itS2 = std::find(w.Objects().begin(), w.Objects().end(), s2);
@@ -42,7 +44,7 @@ static World DefaultWorld()
 TEST(WorldTest, CreatingWorld)
 {
     World w{};
-    EXPECT_EQ(w.Light(), nullptr);
+    EXPECT_TRUE(w.Lights().empty());
     EXPECT_TRUE(w.Objects().empty());
 }
 

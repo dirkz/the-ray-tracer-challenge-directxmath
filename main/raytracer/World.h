@@ -12,14 +12,14 @@ namespace zrt
 struct World
 {
     World();
-    World(const PointLight *light, std::initializer_list<Intersectable *> objects);
+    World(PointLight light, std::initializer_list<Intersectable *> objects);
     World(World &&world) noexcept;
 
     std::vector<Intersection> Intersect(const Ray &ray) const;
 
-    inline const PointLight *Light() const
+    inline std::vector<PointLight> Lights() const
     {
-        return m_light.get();
+        return m_lights;
     }
 
     inline const std::vector<const Intersectable *> &Objects() const
@@ -28,7 +28,7 @@ struct World
     }
 
   private:
-    std::unique_ptr<const PointLight> m_light;
+    std::vector<PointLight> m_lights;
     std::vector<const Intersectable *> m_objects;
     std::vector<std::unique_ptr<const Intersectable *>> m_ownedIntersectables;
 };

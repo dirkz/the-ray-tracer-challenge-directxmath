@@ -9,8 +9,7 @@ World::World()
 {
 }
 
-World::World(const PointLight *light, std::initializer_list<Intersectable *> objects)
-    : m_light{light}
+World::World(PointLight light, std::initializer_list<Intersectable *> objects) : m_lights{light}
 {
     for (auto intersectable : objects)
     {
@@ -19,7 +18,7 @@ World::World(const PointLight *light, std::initializer_list<Intersectable *> obj
     }
 }
 
-World::World(World &&world) noexcept : m_light{world.m_light.release()}
+World::World(World &&world) noexcept : m_lights{world.m_lights}
 {
     m_ownedIntersectables.swap(world.m_ownedIntersectables);
 }
