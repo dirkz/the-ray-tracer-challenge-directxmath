@@ -76,6 +76,7 @@ inline std::ostream &operator<<(std::ostream &os, const XMFLOAT4 &f)
 
 inline std::ostream &operator<<(std::ostream &os, const XMFLOAT4X4 &m)
 {
+	os << "\n";
     for (auto r = 0; r < 3; ++r)
     {
         for (auto c = 0; c < 3; ++c)
