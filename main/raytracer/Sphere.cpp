@@ -30,8 +30,8 @@ std::vector<Intersection> Sphere::Intersect(const Ray &ray) const
         float t1 = (-b - rootD) / (2 * a);
         float t2 = (-b + rootD) / (2 * a);
 
-        Intersection i1{*this, t1};
-        Intersection i2{*this, t2};
+        Intersection i1{this, t1};
+        Intersection i2{this, t2};
 
         if (t1 < t2)
         {

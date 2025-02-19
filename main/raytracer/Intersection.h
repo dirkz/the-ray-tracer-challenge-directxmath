@@ -9,12 +9,12 @@ struct Intersectable;
 
 struct Intersection
 {
-    Intersection(const Intersectable &intersectable, float t);
+    Intersection(const Intersectable *pIntersectable, float t);
     Intersection(const Intersection &other) = default;
 
-    inline const Intersectable &Object() const
+    inline const Intersectable *Object() const
     {
-        return m_intersectable;
+        return m_pIntersectable;
     }
 
     inline float T() const
@@ -22,8 +22,13 @@ struct Intersection
         return m_t;
     }
 
+    inline Intersection &operator=(const Intersection &other)
+    {
+        m_pIntersectable = other.m_pIntersectable;
+    }
+
   private:
-    const Intersectable &m_intersectable;
+    const Intersectable *m_pIntersectable;
     float m_t;
 };
 
