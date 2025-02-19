@@ -54,6 +54,7 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 
 XMVECTOR World::ColorAt(const Ray &ray)
 {
+    auto xs = Intersect(ray);
     return XMVectorZero();
 }
 
