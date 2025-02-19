@@ -16,10 +16,10 @@ constexpr float Ambient = 0.1f;
 constexpr float Diffuse = 0.7f;
 constexpr float Specular = 0.2f;
 
+static const Material M1 = Material{Color(0.8f, 1, 0.6f), Ambient, Diffuse, Specular};
+
 static World DefaultWorld(const PointLight &light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)},
-                          const Material &m1 = Material{Color(0.8f, 1, 0.6f), Ambient, Diffuse,
-                                                        Specular},
-                          const Material &m2 = Material{})
+                          const Material &m1 = M1, const Material &m2 = Material{})
 {
     Intersectable *s1 = new Sphere{XMMatrixIdentity(), m1};
     Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
