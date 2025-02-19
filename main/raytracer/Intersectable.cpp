@@ -7,7 +7,8 @@ Intersectable::Intersectable() : Intersectable(XMMatrixIdentity())
 {
 }
 
-Intersectable::Intersectable(CXMMATRIX transform)
+Intersectable::Intersectable(CXMMATRIX transform, const zrt::Material &material)
+    : m_material{material}
 {
     XMStoreFloat4x4(&m_transform, transform);
     CreateDerivedTransforms(transform);
@@ -17,6 +18,11 @@ void XM_CALLCONV Intersectable::Transform(CXMMATRIX transform)
 {
     XMStoreFloat4x4(&m_transform, transform);
     CreateDerivedTransforms(transform);
+}
+
+void Intersectable::Material(const zrt::Material &material)
+{
+    m_material = material;
 }
 
 void Intersectable::CreateDerivedTransforms(CXMMATRIX transform)

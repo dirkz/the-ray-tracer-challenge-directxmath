@@ -3,6 +3,7 @@
 #include "stdafx.h"
 
 #include "Intersection.h"
+#include "Material.h"
 #include "Ray.h"
 
 namespace zrt
@@ -11,7 +12,7 @@ namespace zrt
 struct Intersectable
 {
     Intersectable();
-    Intersectable(CXMMATRIX transform);
+    Intersectable(CXMMATRIX transform, const Material &material = zrt::Material{});
 
     // Can't copy
     Intersectable(const Intersectable &other) = delete;
@@ -35,6 +36,13 @@ struct Intersectable
         return XMLoadFloat4x4(&m_transform);
     }
 
+    void Material(const Material &material);
+
+    inline zrt::Material &Material()
+    {
+        return m_material;
+    }
+
   protected:
     inline XMMATRIX XM_CALLCONV InverseTransform()
     {
@@ -50,6 +58,7 @@ struct Intersectable
     XMFLOAT4X4 m_transform;
     XMFLOAT4X4 m_inverseTransform;
     XMFLOAT4X4 m_transposedInverseTransform;
+    zrt::Material m_material;
 
     void CreateDerivedTransforms(CXMMATRIX transform);
 };
