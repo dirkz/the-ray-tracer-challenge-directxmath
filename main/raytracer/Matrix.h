@@ -30,4 +30,6 @@ inline XMMATRIX XM_CALLCONV RotationZ(float angle)
     return XMMatrixRotationZ(angle);
 }
 
+XMMATRIX XM_CALLCONV ViewTransform(FXMVECTOR from, FXMVECTOR to, FXMVECTOR up);
+
 } // namespace zrt
