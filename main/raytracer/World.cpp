@@ -52,9 +52,14 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
     return color;
 }
 
-XMVECTOR World::ColorAt(const Ray &ray)
+XMVECTOR World::ColorAt(const Ray &ray) const
 {
     auto xs = Intersect(ray);
+    const Intersection *pI = Hit(xs);
+    if (!pI)
+    {
+        return XMVectorSet(0, 0, 0, 1);
+    }
     return XMVectorZero();
 }
 
