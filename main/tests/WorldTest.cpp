@@ -17,9 +17,10 @@ constexpr float Diffuse = 0.7f;
 constexpr float Specular = 0.2f;
 
 static const Material M1 = Material{Color(0.8f, 1, 0.6f), Ambient, Diffuse, Specular};
+static const PointLight PL{Point(-10, 10, -10), Color(1, 1, 1)};
 
-static World DefaultWorld(const PointLight &light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)},
-                          const Material &m1 = M1, const Material &m2 = Material{})
+static World DefaultWorld(const PointLight &light = PL, const Material &m1 = M1,
+                          const Material &m2 = Material{})
 {
     Intersectable *s1 = new Sphere{XMMatrixIdentity(), m1};
     Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
@@ -106,7 +107,14 @@ TEST(WorldTest, ColorWhenRayHits)
 
 TEST(WorldTest, ColorWithIntersectionBehindRay)
 {
-    auto w = DefaultWorld();
+    Material m1 = M1;
+    m1.Ambient(1);
+    Material m2{};
+    m2.Ambient(1);
+    auto w = DefaultWorld(PL, m1, m2);
+    Ray r{Point(0, 0, 0.75f), Vector(0, 0, -1)};
+    auto c = w.ColorAt(r);
+    EXPECT_EQ(Floats(c), Floats(m2.Color()));
 }
 
 } // namespace zrt
