@@ -56,11 +56,14 @@ XMVECTOR World::ColorAt(const Ray &ray) const
 {
     auto xs = Intersect(ray);
     const Intersection *pI = Hit(xs);
+
     if (!pI)
     {
         return XMVectorSet(0, 0, 0, 1);
     }
-    return XMVectorZero();
+
+    Computations comps{*pI, ray};
+    return ShadeHit(comps);
 }
 
 } // namespace zrt
