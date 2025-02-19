@@ -25,6 +25,7 @@ struct Intersection
     inline Intersection &operator=(const Intersection &other)
     {
         m_pIntersectable = other.m_pIntersectable;
+        m_t = other.m_t;
     }
 
   private:
