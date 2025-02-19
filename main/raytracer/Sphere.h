@@ -12,7 +12,7 @@ struct Sphere : public Intersectable
     using Intersectable::Intersectable;
 
     std::vector<Intersection> Intersect(const Ray &ray) const override;
-    XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) override;
+    XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) const override;
 };
 
 } // namespace zrt

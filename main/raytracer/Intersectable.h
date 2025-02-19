@@ -27,7 +27,7 @@ struct Intersectable
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
-    virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) = 0;
+    virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) const = 0;
 
     void XM_CALLCONV Transform(CXMMATRIX transform);
 
@@ -44,12 +44,12 @@ struct Intersectable
     }
 
   protected:
-    inline XMMATRIX XM_CALLCONV InverseTransform()
+    inline XMMATRIX XM_CALLCONV InverseTransform() const
     {
         return XMLoadFloat4x4(&m_inverseTransform);
     }
 
-    inline XMMATRIX XM_CALLCONV TransposedInverseTransform()
+    inline XMMATRIX XM_CALLCONV TransposedInverseTransform() const
     {
         return XMLoadFloat4x4(&m_transposedInverseTransform);
     }
