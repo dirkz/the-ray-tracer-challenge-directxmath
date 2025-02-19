@@ -5,7 +5,7 @@
 namespace zrt
 {
 
-std::vector<Intersection> Sphere::Intersect(const Ray &ray)
+std::vector<Intersection> Sphere::Intersect(const Ray &ray) const
 {
     Ray ray2 = ray.Transform(XMMatrixInverse(nullptr, Transform()));
 

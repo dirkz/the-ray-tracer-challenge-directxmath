@@ -10,16 +10,6 @@ Intersection::Intersection(const Intersectable &intersectable, float t)
 {
 }
 
-const Intersectable &Intersection::Object() const
-{
-    return m_intersectable;
-}
-
-float Intersection::T() const
-{
-    return m_t;
-}
-
 std::ostream &operator<<(std::ostream &os, const Intersection &i)
 {
     os << "Intersection t=" << i.T() << "\n";

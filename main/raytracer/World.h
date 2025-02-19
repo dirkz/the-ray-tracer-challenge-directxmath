@@ -4,6 +4,7 @@
 
 #include "Intersectable.h"
 #include "PointLight.h"
+#include "Ray.h"
 
 namespace zrt
 {
@@ -13,6 +14,8 @@ struct World
     World();
     World(const PointLight *light, std::initializer_list<Intersectable *> objects);
     World(World &&world) noexcept;
+
+    std::vector<Intersection> Intersect(const Ray &ray);
 
     inline const PointLight *Light() const
     {

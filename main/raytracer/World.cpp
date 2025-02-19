@@ -1,5 +1,7 @@
 #include "World.h"
 
+#include "Intersection.h"
+
 namespace zrt
 {
 
@@ -20,6 +22,21 @@ World::World(const PointLight *light, std::initializer_list<Intersectable *> obj
 World::World(World &&world) noexcept : m_light{world.m_light.release()}
 {
     m_ownedIntersectables.swap(world.m_ownedIntersectables);
+}
+
+std::vector<Intersection> World::Intersect(const Ray &ray)
+{
+    std::vector<Intersection> intersections{};
+
+    for (const Intersectable *pIntersectable : Objects())
+    {
+        std::vector<Intersection> objIntersections = pIntersectable->Intersect(ray);
+        //intersections.insert(intersections.end(), objIntersections.begin(), objIntersections.end());
+    }
+
+    //std::sort(intersections.begin(), intersections.end(), IntersectionLess{});
+
+    return intersections;
 }
 
 } // namespace zrt

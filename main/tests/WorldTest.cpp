@@ -51,4 +51,16 @@ TEST(WorldTest, DefaultWorld)
     auto w = DefaultWorld();
 }
 
+TEST(WorldTest, IntersectWorldRay)
+{
+    auto w = DefaultWorld();
+    auto r = Ray{Point(0, 0, -5), Vector(0, 0, 1)};
+    auto xs = w.Intersect(r);
+    ASSERT_EQ(xs.size(), 4);
+    EXPECT_EQ(xs[0].T(), 4);
+    EXPECT_EQ(xs[1].T(), 4.5f);
+    EXPECT_EQ(xs[2].T(), 5.5f);
+    EXPECT_EQ(xs[3].T(), 6);
+}
+
 } // namespace zrt

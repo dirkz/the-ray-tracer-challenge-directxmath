@@ -12,8 +12,15 @@ struct Intersection
     Intersection(const Intersectable &intersectable, float t);
     Intersection(const Intersection &other) = default;
 
-    const Intersectable &Object() const;
-    float T() const;
+    inline const Intersectable &Object() const
+    {
+        return m_intersectable;
+    }
+
+    inline float T() const
+    {
+        return m_t;
+    }
 
   private:
     const Intersectable &m_intersectable;

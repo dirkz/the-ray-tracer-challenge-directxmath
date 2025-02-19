@@ -20,7 +20,7 @@ struct Intersectable
     // Can't copy
     void operator=(const Intersectable &other) = delete;
 
-    virtual std::vector<Intersection> Intersect(const Ray &ray) = 0;
+    virtual std::vector<Intersection> Intersect(const Ray &ray) const = 0;
 
     /// <summary>
     /// The normal vector at the given point, assumed to be part of the object's surface.
@@ -31,7 +31,7 @@ struct Intersectable
 
     void XM_CALLCONV Transform(CXMMATRIX transform);
 
-    inline XMMATRIX XM_CALLCONV Transform()
+    inline XMMATRIX XM_CALLCONV Transform() const
     {
         return XMLoadFloat4x4(&m_transform);
     }
