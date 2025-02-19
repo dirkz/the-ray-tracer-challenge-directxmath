@@ -26,6 +26,11 @@ struct Material
         return m_ambient;
     }
 
+    inline void Ambient(float f)
+    {
+        m_ambient = f;
+    }
+
     inline float Diffuse() const
     {
         return m_diffuse;

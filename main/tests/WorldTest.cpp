@@ -104,7 +104,6 @@ TEST(WorldTest, ColorWhenRayHits)
 TEST(WorldTest, ColorWithIntersectionBehindRay)
 {
     auto w = DefaultWorld();
-    auto outer = w.Objects()[0];
 }
 
 } // namespace zrt
