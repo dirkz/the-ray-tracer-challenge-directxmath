@@ -93,6 +93,11 @@ inline XMVECTOR XM_CALLCONV Reflect(FXMVECTOR v, FXMVECTOR n)
     return XMVector4Reflect(v, n);
 }
 
+inline XMVECTOR XM_CALLCONV Color(float r, float g, float b)
+{
+    return Tuple(r, g, b, 1);
+}
+
 } // namespace zrt
 
 namespace DirectX
