@@ -44,15 +44,13 @@ struct IntersectionLess
     bool operator()(const Intersection &s1, const Intersection &s2) const;
 };
 
-using IntersectionList = std::multiset<Intersection, IntersectionLess>;
-
-IntersectionList intersections(std::initializer_list<Intersection> intersections);
+std::vector<Intersection> Intersections(std::initializer_list<Intersection> intersections);
 
 /// <summary>
 /// The first intersection with a distance > 0 from an order list of intersections.
 /// </summary>
 /// <param name="list"></param>
 /// <returns></returns>
-const Intersection *hit(const IntersectionList &list);
+const Intersection *Hit(const std::vector<Intersection> &list);
 
 } // namespace zrt

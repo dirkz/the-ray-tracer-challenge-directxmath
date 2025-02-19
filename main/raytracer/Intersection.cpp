@@ -26,12 +26,14 @@ bool IntersectionLess::operator()(const Intersection &s1, const Intersection &s2
     return s1.T() < s2.T();
 }
 
-IntersectionList intersections(std::initializer_list<Intersection> intersections)
+std::vector<Intersection> Intersections(std::initializer_list<Intersection> intersections)
 {
-    return std::multiset<Intersection, IntersectionLess>{intersections};
+    std::vector<Intersection> xs{intersections};
+    std::sort(xs.begin(), xs.end(), IntersectionLess{});
+    return xs;
 }
 
-const Intersection *hit(const IntersectionList &list)
+const Intersection *Hit(const std::vector<Intersection> &list)
 {
     auto iterator =
         std::find_if(list.begin(), list.end(), [](const Intersection &i) { return i.T() > 0; });
