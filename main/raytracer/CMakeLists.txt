@@ -16,7 +16,9 @@ add_library(raytracer OBJECT
 	Material.h
 	Material.cpp
 	World.h
-	World.cpp)
+	World.cpp
+	Computations.h
+	Computations.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
