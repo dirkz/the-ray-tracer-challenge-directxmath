@@ -40,7 +40,10 @@ XMVECTOR XM_CALLCONV Material::Lighting(const PointLight &light, FXMVECTOR posit
         }
     }
 
-    return XMVectorAdd(XMVectorAdd(ambient, diffuse), specular);
+    XMVECTOR sumv = XMVectorAdd(XMVectorAdd(ambient, diffuse), specular);
+    sumv = XMVectorSetW(sumv, 1);
+
+    return sumv;
 }
 
 } // namespace zrt
