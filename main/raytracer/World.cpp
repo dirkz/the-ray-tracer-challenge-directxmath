@@ -52,4 +52,9 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
     return color;
 }
 
+XMVECTOR World::ColorAt(const Ray &ray)
+{
+    return XMVectorZero();
+}
+
 } // namespace zrt

@@ -54,7 +54,7 @@ TEST(WorldTest, DefaultWorld)
 TEST(WorldTest, IntersectWorldRay)
 {
     auto w = DefaultWorld();
-    auto r = Ray{Point(0, 0, -5), Vector(0, 0, 1)};
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
     auto xs = w.Intersect(r);
     ASSERT_EQ(xs.size(), 4);
     EXPECT_EQ(xs[0].T(), 4);
@@ -66,7 +66,7 @@ TEST(WorldTest, IntersectWorldRay)
 TEST(WorldTest, ShadingIntersection)
 {
     auto w = DefaultWorld();
-    auto r = Ray{Point(0, 0, -5), Vector(0, 0, 1)};
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
     auto shape = w.Objects()[0];
     Intersection i{shape, 4};
     Computations comps{i, r};
@@ -77,12 +77,34 @@ TEST(WorldTest, ShadingIntersection)
 TEST(WorldTest, ShadingIntersectionFromOutside)
 {
     auto w = DefaultWorld(PointLight{Point(0, 0.25f, 0), Color(1, 1, 1)});
-    auto r = Ray{Point(0, 0, 0), Vector(0, 0, 1)};
+    Ray r{Point(0, 0, 0), Vector(0, 0, 1)};
     auto shape = w.Objects()[1];
     Intersection i{shape, 0.5};
     Computations comps{i, r};
     auto c = w.ShadeHit(comps);
     EXPECT_EQ(Floats(c), Floats(Color(0.90498f, 0.90498f, 0.90498f)));
+}
+
+TEST(WorldTest, ColorWhenRayMisses)
+{
+    auto w = DefaultWorld();
+    Ray r{Point(0, 0, -5), Vector(0, 1, 0)};
+    auto c = w.ColorAt(r);
+    EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
+}
+
+TEST(WorldTest, ColorWhenRayHits)
+{
+    auto w = DefaultWorld();
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    auto c = w.ColorAt(r);
+    EXPECT_EQ(Floats(c), Floats(Color(0.38066f, 0.47583f, 0.2855f)));
+}
+
+TEST(WorldTest, ColorWithIntersectionBehindRay)
+{
+    auto w = DefaultWorld();
+    auto outer = w.Objects()[0];
 }
 
 } // namespace zrt
