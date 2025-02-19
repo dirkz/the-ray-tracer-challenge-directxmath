@@ -15,7 +15,7 @@ struct World
     World(const PointLight *light, std::initializer_list<Intersectable *> objects);
     World(World &&world) noexcept;
 
-    std::vector<Intersection> Intersect(const Ray &ray);
+    std::vector<Intersection> Intersect(const Ray &ray) const;
 
     inline const PointLight *Light() const
     {

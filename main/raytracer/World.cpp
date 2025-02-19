@@ -24,7 +24,7 @@ World::World(World &&world) noexcept : m_light{world.m_light.release()}
     m_ownedIntersectables.swap(world.m_ownedIntersectables);
 }
 
-std::vector<Intersection> World::Intersect(const Ray &ray)
+std::vector<Intersection> World::Intersect(const Ray &ray) const
 {
     std::vector<Intersection> intersections{};
 
@@ -34,7 +34,7 @@ std::vector<Intersection> World::Intersect(const Ray &ray)
         intersections.insert(intersections.end(), objIntersections.begin(), objIntersections.end());
     }
 
-    //std::sort(intersections.begin(), intersections.end(), IntersectionLess{});
+    std::sort(intersections.begin(), intersections.end(), IntersectionLess{});
 
     return intersections;
 }
