@@ -1,12 +1,14 @@
-add_executable(
-  raytracer_tests
+add_executable(raytracer_tests
   TestConstants.h
+  TestUtil.h
   RayTest.cpp
   SphereTest.cpp
   IntersectionTest.cpp
   TransformationTest.cpp
   VectorTest.cpp
-  LightTest.cpp "MaterialTest.cpp" "TestUtil.h")
+  LightTest.cpp
+  MaterialTest.cpp
+  WorldTest.cpp)
 
 target_link_libraries(
   raytracer_tests

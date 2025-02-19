@@ -3,4 +3,8 @@
 namespace zrt
 {
 
+World::World()
+{
 }
+
+} // namespace zrt
