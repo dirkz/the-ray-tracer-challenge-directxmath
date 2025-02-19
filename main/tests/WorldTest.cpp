@@ -12,9 +12,9 @@
 namespace zrt
 {
 
-static void DefaultWorld()
+static World DefaultWorld()
 {
-    auto light = new PointLight{Point(-10, 10, -10), Color(1, 1, 1)};
+    const PointLight *light = new PointLight{Point(-10, 10, -10), Color(1, 1, 1)};
 
     constexpr float ambient = 0.1f;
     constexpr float diffuse = 0.7f;
@@ -24,10 +24,19 @@ static void DefaultWorld()
     EXPECT_FLOAT_EQ(m.Diffuse(), diffuse);
     EXPECT_FLOAT_EQ(m.Specular(), specular);
 
-    auto s1 = new Sphere{XMMatrixIdentity(), m};
-    auto s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f)};
+    Intersectable *s1 = new Sphere{XMMatrixIdentity(), m};
+    Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f)};
 
     World w{light, {s1, s2}};
+
+    EXPECT_EQ(w.Light(), light);
+
+    auto itS1 = std::find(w.Objects().begin(), w.Objects().end(), s1);
+    auto itS2 = std::find(w.Objects().begin(), w.Objects().end(), s2);
+
+    EXPECT_TRUE(itS1 != w.Objects().end());
+
+    return w;
 }
 
 TEST(WorldTest, CreatingWorld)
@@ -35,6 +44,11 @@ TEST(WorldTest, CreatingWorld)
     World w{};
     EXPECT_EQ(w.Light(), nullptr);
     EXPECT_TRUE(w.Objects().empty());
+}
+
+TEST(WorldTest, DefaultWorld)
+{
+    auto w = DefaultWorld();
 }
 
 } // namespace zrt
