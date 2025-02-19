@@ -10,9 +10,23 @@ Computations::Computations(const Intersection &i, const Ray &r)
     XMStoreFloat4(&m_point, point);
 
     XMVECTOR direction = r.Direction();
-    XMStoreFloat4(&m_eyev, XMVectorScale(direction, -1));
+    XMVECTOR eyev = XMVectorScale(direction, -1);
+    XMStoreFloat4(&m_eyev, eyev);
 
-    XMStoreFloat4(&m_normal, m_pIntersectable->Normal(point));
+    XMVECTOR normal = m_pIntersectable->Normal(point);
+
+    float dotNormalEye = XMVectorGetX(XMVector4Dot(normal, eyev));
+    if (dotNormalEye < 0)
+    {
+        m_inside = true;
+        normal = XMVectorScale(normal, -1);
+    }
+    else
+    {
+        m_inside = false;
+    }
+
+    XMStoreFloat4(&m_normal, normal);
 }
 
 } // namespace zrt

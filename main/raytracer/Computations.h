@@ -33,9 +33,15 @@ struct Computations
         return XMLoadFloat4(&m_normal);
     }
 
+    inline bool IsInside() const
+    {
+        return m_inside;
+    }
+
   private:
     float m_t;
     const Intersectable *m_pIntersectable;
+    bool m_inside;
 
     XMFLOAT4 m_point;
     XMFLOAT4 m_eyev;
