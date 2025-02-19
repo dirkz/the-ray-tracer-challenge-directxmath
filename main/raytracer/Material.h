@@ -14,7 +14,7 @@ struct Material
              float specular = 0.9, float shininess = 200);
 
     XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
-                                  FXMVECTOR normal);
+                                  FXMVECTOR normal) const;
 
     inline XMVECTOR XM_CALLCONV Color() const
     {
