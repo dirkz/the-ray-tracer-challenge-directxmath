@@ -18,6 +18,7 @@ XMMATRIX XM_CALLCONV ViewTransform(FXMVECTOR from, FXMVECTOR to, FXMVECTOR up)
     XMStoreFloat4(&fromF, XMVectorScale(from, -1));
     XMMATRIX translation = Translation(fromF.x, fromF.y, fromF.z);
 
+    // Note the reversed order.
     XMMATRIX transform = XMMatrixMultiply(translation, orientation);
 
     return transform;
