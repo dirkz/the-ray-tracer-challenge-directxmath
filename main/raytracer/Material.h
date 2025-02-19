@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 
+#include "PointLight.h"
 #include "Vector.h"
 
 namespace zrt
@@ -11,6 +12,9 @@ struct Material
 {
     Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1, float diffuse = 0.9,
              float specular = 0.9, float shininess = 200);
+
+    XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
+                                  FXMVECTOR normal);
 
     inline XMVECTOR XM_CALLCONV Color() const
     {

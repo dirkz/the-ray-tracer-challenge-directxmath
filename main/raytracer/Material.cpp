@@ -9,4 +9,10 @@ Material::Material(FXMVECTOR color, float ambient, float diffuse, float specular
     XMStoreFloat4(&m_color, color);
 }
 
+XMVECTOR XM_CALLCONV Material::Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
+                                        FXMVECTOR normal)
+{
+    return Vector(0, 0, 0);
+}
+
 } // namespace zrt
