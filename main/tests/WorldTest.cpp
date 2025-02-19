@@ -12,18 +12,17 @@
 namespace zrt
 {
 
-static World DefaultWorld(const PointLight &light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)})
-{
-    constexpr float ambient = 0.1f;
-    constexpr float diffuse = 0.7f;
-    constexpr float specular = 0.2f;
-    Material m{Color(0.8f, 1, 0.6f), ambient, diffuse, specular};
-    EXPECT_FLOAT_EQ(m.Ambient(), ambient);
-    EXPECT_FLOAT_EQ(m.Diffuse(), diffuse);
-    EXPECT_FLOAT_EQ(m.Specular(), specular);
+constexpr float Ambient = 0.1f;
+constexpr float Diffuse = 0.7f;
+constexpr float Specular = 0.2f;
 
-    Intersectable *s1 = new Sphere{XMMatrixIdentity(), m};
-    Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f)};
+static World DefaultWorld(const PointLight &light = PointLight{Point(-10, 10, -10), Color(1, 1, 1)},
+                          const Material &m1 = Material{Color(0.8f, 1, 0.6f), Ambient, Diffuse,
+                                                        Specular},
+                          const Material &m2 = Material{})
+{
+    Intersectable *s1 = new Sphere{XMMatrixIdentity(), m1};
+    Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
 
     World w{light, {s1, s2}};
 
@@ -49,6 +48,10 @@ TEST(WorldTest, CreatingWorld)
 TEST(WorldTest, DefaultWorld)
 {
     auto w = DefaultWorld();
+
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Ambient(), Ambient);
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Diffuse(), Diffuse);
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Specular(), Specular);
 }
 
 TEST(WorldTest, IntersectWorldRay)
