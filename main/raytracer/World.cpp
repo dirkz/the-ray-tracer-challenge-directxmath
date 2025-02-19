@@ -31,7 +31,7 @@ std::vector<Intersection> World::Intersect(const Ray &ray)
     for (const Intersectable *pIntersectable : Objects())
     {
         std::vector<Intersection> objIntersections = pIntersectable->Intersect(ray);
-        //intersections.insert(intersections.end(), objIntersections.begin(), objIntersections.end());
+        intersections.insert(intersections.end(), objIntersections.begin(), objIntersections.end());
     }
 
     //std::sort(intersections.begin(), intersections.end(), IntersectionLess{});

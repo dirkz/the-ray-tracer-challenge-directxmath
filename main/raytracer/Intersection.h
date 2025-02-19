@@ -26,6 +26,8 @@ struct Intersection
     {
         m_pIntersectable = other.m_pIntersectable;
         m_t = other.m_t;
+
+        return *this;
     }
 
   private:
