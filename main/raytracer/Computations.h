@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-
 #include "Intersectable.h"
 #include "Intersection.h"
 #include "Ray.h"

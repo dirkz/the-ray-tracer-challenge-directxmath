@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-
 #include "Computations.h"
 #include "Intersectable.h"
 #include "PointLight.h"

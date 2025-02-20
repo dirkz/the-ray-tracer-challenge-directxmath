@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-
 #include "PointLight.h"
 #include "Vector.h"
 
