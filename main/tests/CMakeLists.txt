@@ -8,7 +8,8 @@ add_executable(raytracer_tests
   VectorTest.cpp
   LightTest.cpp
   MaterialTest.cpp
-  WorldTest.cpp)
+  WorldTest.cpp
+  CameraTest.cpp)
 
 target_link_libraries(
   raytracer_tests
