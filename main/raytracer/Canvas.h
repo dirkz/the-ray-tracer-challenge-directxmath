@@ -12,6 +12,16 @@ struct Canvas
     void XM_CALLCONV SetPixel(unsigned x, unsigned y, FXMVECTOR color);
     XMVECTOR XM_CALLCONV GetPixel(unsigned x, unsigned y);
 
+    inline unsigned Width() const
+    {
+        return m_width;
+    }
+
+    inline unsigned Height() const
+    {
+        return m_height;
+    }
+
   private:
     unsigned m_width;
     unsigned m_height;
