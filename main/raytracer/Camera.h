@@ -5,9 +5,15 @@
 namespace zrt
 {
 
+/// <summary>
+/// Camera that (without transform) sits at the origin,
+/// looking along negative z, positive y as up-vector.
+/// The projection pane is 1 unit away from the camera/eye,
+/// that is, at z = -1.
+/// </summary>
 struct Camera
 {
-    Camera(unsigned hsize, unsigned vsize, float fov);
+    Camera(unsigned hsize, unsigned vsize, float fov, CXMMATRIX transform = XMMatrixIdentity());
 
     Ray RayForPixel(unsigned px, unsigned py);
 
@@ -41,6 +47,7 @@ struct Camera
     unsigned m_vsize;
     float m_fov;
     XMFLOAT4X4 m_transform;
+    XMFLOAT4X4 m_inverseTransform;
     float m_halfWidth;
     float m_halfHeight;
     float m_pixelSize;

@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "Camera.h"
+#include "Matrix.h"
 #include "TestConstants.h"
 #include "TestUtil.h"
 #include "Vector.h"
@@ -52,7 +53,8 @@ TEST(CameraTest, ConstructingRayThroughCornerOfCanvas)
 
 TEST(CameraTest, ConstructingRayWhenCameraIsTransformed)
 {
-    Camera c{201, 101, HalfPI};
+    auto transform = XMMatrixMultiply(Translation(0, -2, 5), RotationY(QuarterPI));
+    Camera c{201, 101, HalfPI, transform};
     Ray r = c.RayForPixel(100, 50);
     EXPECT_EQ(Floats(r.Origin()), Floats(Point(0, 2, -5)));
     EXPECT_EQ(Floats(r.Direction()), Floats(Vector(HalfSqrt, 0, -HalfSqrt)));
