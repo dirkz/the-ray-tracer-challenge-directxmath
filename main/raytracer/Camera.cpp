@@ -37,7 +37,7 @@ Ray Camera::RayForPixel(unsigned px, unsigned py) const
     XMVECTOR pointOnCanvas = Point(worldX, worldY, -1);
 
     XMVECTOR pixel = XMVector4Transform(pointOnCanvas, XMLoadFloat4x4(&m_inverseTransform));
-    XMVECTOR origin = XMVector4Transform(Vector(0, 0, 0), XMLoadFloat4x4(&m_inverseTransform));
+    XMVECTOR origin = XMVector4Transform(Point(0, 0, 0), XMLoadFloat4x4(&m_inverseTransform));
     origin = XMVectorSetW(origin, 1);
 
     XMVECTOR direction = XMVectorSubtract(pixel, origin);
