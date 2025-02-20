@@ -20,7 +20,9 @@ add_library(raytracer OBJECT
 	Computations.h
 	Computations.cpp
 	Camera.h
-	Camera.cpp)
+	Camera.cpp
+	Canvas.h
+	Canvas.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
