@@ -139,7 +139,7 @@ TEST(SphereTest, ComputingNormalOnTransformedSphere)
     // Note the order here: Rotate, Scale, Translate.
     // If not DirectXMath, this would likely have to be reversed,
     // as in the book.
-    auto transform = XMMatrixMultiply(RotationZ(PIFifth), Scaling(1, 0.5f, 1));
+    auto transform = XMMatrixMultiply(RotationZ(FifthPI), Scaling(1, 0.5f, 1));
 
     Sphere s{transform};
     auto n = s.Normal(p);
