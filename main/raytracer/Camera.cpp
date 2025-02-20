@@ -23,4 +23,9 @@ Camera::Camera(unsigned hsize, unsigned vsize, float fov)
     m_pixelSize = m_halfWidth * 2.f / static_cast<float>(hsize);
 }
 
+Ray Camera::RayForPixel(unsigned px, unsigned py)
+{
+    return Ray{XMVectorZero(), XMVectorZero()};
+}
+
 } // namespace zrt

@@ -1,11 +1,15 @@
 #pragma once
 
+#include "Ray.h"
+
 namespace zrt
 {
 
 struct Camera
 {
     Camera(unsigned hsize, unsigned vsize, float fov);
+
+    Ray RayForPixel(unsigned px, unsigned py);
 
     inline unsigned HSize() const
     {
