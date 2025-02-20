@@ -38,11 +38,12 @@ Ray Camera::RayForPixel(unsigned px, unsigned py) const
 
     XMVECTOR pixel = XMVector4Transform(pointOnCanvas, XMLoadFloat4x4(&m_inverseTransform));
     XMVECTOR origin = XMVector4Transform(Vector(0, 0, 0), XMLoadFloat4x4(&m_inverseTransform));
-
     origin = XMVectorSetW(origin, 1);
-    pixel = XMVectorSetW(pixel, 0);
 
-    return Ray{origin, pixel};
+    XMVECTOR direction = XMVectorSubtract(pixel, origin);
+    direction = XMVector3Normalize(direction);
+
+    return Ray{origin, direction};
 }
 
 } // namespace zrt

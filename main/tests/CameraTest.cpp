@@ -48,7 +48,7 @@ TEST(CameraTest, ConstructingRayThroughCornerOfCanvas)
     Camera c{201, 101, HalfPI};
     Ray r = c.RayForPixel(0, 0);
     EXPECT_EQ(Floats(r.Origin()), Floats(Point(0, 0, 0)));
-    EXPECT_EQ(Floats(r.Direction()), Floats(Vector(0.66519f, 0.33259f, 0.66851f)));
+    EXPECT_EQ(Floats(r.Direction()), Floats(Vector(0.66519f, 0.33259f, -0.66851f)));
 }
 
 TEST(CameraTest, ConstructingRayWhenCameraIsTransformed)
