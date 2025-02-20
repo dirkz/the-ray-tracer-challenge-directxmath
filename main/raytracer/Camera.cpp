@@ -28,8 +28,8 @@ Camera::Camera(unsigned hsize, unsigned vsize, float fov, CXMMATRIX transform)
 
 Ray Camera::RayForPixel(unsigned px, unsigned py)
 {
-    float offsetX = static_cast<float>(px) + 0.5f * m_pixelSize;
-    float offsetY = static_cast<float>(py) + 0.5f * m_pixelSize;
+    float offsetX = (static_cast<float>(px) + 0.5f) * m_pixelSize;
+    float offsetY = (static_cast<float>(py) + 0.5f) * m_pixelSize;
 
     float worldY = m_halfHeight - offsetY;
     float worldX = m_halfWidth - offsetX;
