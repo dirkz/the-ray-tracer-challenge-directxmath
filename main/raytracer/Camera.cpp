@@ -26,7 +26,7 @@ Camera::Camera(unsigned hsize, unsigned vsize, float fov, CXMMATRIX transform)
     m_pixelSize = m_halfWidth * 2.f / static_cast<float>(hsize);
 }
 
-Ray Camera::RayForPixel(unsigned px, unsigned py)
+Ray Camera::RayForPixel(unsigned px, unsigned py) const
 {
     float offsetX = (static_cast<float>(px) + 0.5f) * m_pixelSize;
     float offsetY = (static_cast<float>(py) + 0.5f) * m_pixelSize;

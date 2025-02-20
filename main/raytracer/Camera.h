@@ -15,7 +15,7 @@ struct Camera
 {
     Camera(unsigned hsize, unsigned vsize, float fov, CXMMATRIX transform = XMMatrixIdentity());
 
-    Ray RayForPixel(unsigned px, unsigned py);
+    Ray RayForPixel(unsigned px, unsigned py) const;
 
     inline unsigned HSize() const
     {
