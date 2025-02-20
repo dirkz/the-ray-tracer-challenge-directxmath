@@ -21,4 +21,16 @@ TEST(CameraTest, ConstructingCamera)
     EXPECT_EQ(Floats(c.Transform()), Floats(XMMatrixIdentity()));
 }
 
+TEST(CameraTest, PixelSizeForHorizontalCanvas)
+{
+    Camera c{200, 125, HalfPI};
+    EXPECT_FLOAT_EQ(c.PixelSize(), 0.01f);
+}
+
+TEST(CameraTest, PixelSizeForVerticalCanvas)
+{
+    Camera c{125, 200, HalfPI};
+    EXPECT_FLOAT_EQ(c.PixelSize(), 0.01f);
+}
+
 } // namespace zrt

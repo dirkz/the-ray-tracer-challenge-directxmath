@@ -27,11 +27,19 @@ struct Camera
         return XMLoadFloat4x4(&m_transform);
     }
 
+    inline float PixelSize() const
+    {
+        return m_pixelSize;
+    }
+
   private:
     unsigned m_hsize;
     unsigned m_vsize;
     float m_fov;
     XMFLOAT4X4 m_transform;
+    float m_halfWidth;
+    float m_halfHeight;
+    float m_pixelSize;
 };
 
 } // namespace zrt
