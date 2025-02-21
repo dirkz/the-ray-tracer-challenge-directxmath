@@ -113,4 +113,12 @@ void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const 
     }
 }
 
+void ParallelRenderer::Join()
+{
+    for (std::thread &t : m_threads)
+    {
+        t.join();
+    }
+}
+
 } // namespace zrt

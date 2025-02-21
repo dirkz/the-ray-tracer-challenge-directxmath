@@ -24,7 +24,9 @@ add_library(raytracer OBJECT
 	Canvas.h
 	Canvas.cpp
 	ParallelRenderer.h
-	ParallelRenderer.cpp)
+	ParallelRenderer.cpp
+	Render.h
+	Render.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
