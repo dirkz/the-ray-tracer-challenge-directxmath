@@ -16,6 +16,7 @@
 #include <fstream>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <numbers>
 #include <set>
 #include <span>
