@@ -62,7 +62,12 @@ TEST(CameraTest, ConstructingRayWhenCameraIsTransformed)
 
 TEST(CameraTest, RenderingWorld)
 {
-
+    auto w = DefaultWorld();
+    auto from = Point(0, 0, -5);
+    auto to = Point(0, 0, 0);
+    auto up = Vector(0, 1, 0);
+    auto transform = ViewTransform(from, to, up);
+    Camera c{11, 11, HalfPI, transform};
 }
 
 } // namespace zrt
