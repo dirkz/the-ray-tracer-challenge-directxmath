@@ -45,20 +45,35 @@ struct CoordinateProvider
     unsigned m_currentY;
 };
 
-void Render(Canvas &canvas, const World &world, const Camera &camera)
+static void Render(Canvas &canvas, const World &world, const Camera &camera,
+                   CoordinateProvider *pCoordinateProvider)
 {
+    while (true)
+    {
+        Coordinate coordinate = pCoordinateProvider->Next();
+        if (!coordinate.has_value())
+        {
+            return;
+        }
+    }
 }
 
 void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera,
                                       unsigned numThreads)
 {
+    m_threads.clear();
+
     if (numThreads == 0)
     {
         numThreads = 2;
     }
 
-    for (auto i = 0; i < numThreads; ++i)
+    m_coordinateProvider.reset(new CoordinateProvider{canvas.Height() - 1, canvas.Width() - 1});
+
+    for (unsigned i = 0; i < numThreads; ++i)
     {
+        std::thread thread{Render, canvas, world, camera, m_coordinateProvider.get()};
+        m_threads.push_back(thread);
     }
 }
 

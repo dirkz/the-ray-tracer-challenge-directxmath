@@ -9,6 +9,8 @@
 namespace zrt
 {
 
+struct CoordinateProvider;
+
 struct ParallelRenderer
 {
     void StartRendering(Canvas &canvas, const World &world, const Camera &camera,
@@ -16,6 +18,7 @@ struct ParallelRenderer
 
   private:
     std::vector<std::thread> m_threads;
+    std::unique_ptr<CoordinateProvider> m_coordinateProvider;
 };
 
 } // namespace zrt
