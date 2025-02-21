@@ -48,12 +48,26 @@ struct CoordinateProvider
 static void Render(Canvas &canvas, const World &world, const Camera &camera,
                    CoordinateProvider *pCoordinateProvider)
 {
+    std::stringstream ss;
+    ss << "*** thread " << std::this_thread::get_id() << "\n";
+    auto s = ss.str();
+    std::wstring msg(s.begin(), s.end());
+    OutputDebugString(msg.c_str());
+
     while (true)
     {
         Coordinate coordinate = pCoordinateProvider->Next();
         if (!coordinate.has_value())
         {
             return;
+        }
+        else
+        {
+            std::stringstream ss;
+            ss << "*** processing " << coordinate.value().first << "," << coordinate.value().second
+               << "\n";
+            std::wstring msg(s.begin(), s.end());
+            OutputDebugString(msg.c_str());
         }
     }
 }
