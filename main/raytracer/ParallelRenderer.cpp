@@ -3,6 +3,8 @@
 namespace zrt
 {
 
+using Coordinate = std::optional<std::pair<unsigned, unsigned>>;
+
 struct CoordinateProvider
 {
     CoordinateProvider(unsigned maxX, unsigned maxY)
@@ -10,7 +12,7 @@ struct CoordinateProvider
     {
     }
 
-    std::optional<std::pair<unsigned, unsigned>> Next()
+    Coordinate Next()
     {
         std::lock_guard lock{m_mutex};
 
@@ -31,7 +33,7 @@ struct CoordinateProvider
         }
         else
         {
-            return std::optional<std::pair<unsigned, unsigned>>{};
+            return Coordinate{};
         }
     }
 
