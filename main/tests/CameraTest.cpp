@@ -60,4 +60,9 @@ TEST(CameraTest, ConstructingRayWhenCameraIsTransformed)
     EXPECT_EQ(Floats(r.Direction()), Floats(Vector(HalfSqrt, 0, -HalfSqrt)));
 }
 
+TEST(CameraTest, RenderingWorld)
+{
+
+}
+
 } // namespace zrt
