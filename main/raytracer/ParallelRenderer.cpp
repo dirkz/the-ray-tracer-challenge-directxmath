@@ -45,12 +45,20 @@ struct CoordinateProvider
     unsigned m_currentY;
 };
 
+void Render(Canvas &canvas, const World &world, const Camera &camera)
+{
+}
+
 void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera,
-                                      unsigned numThreads = std::thread::hardware_concurrency())
+                                      unsigned numThreads)
 {
     if (numThreads == 0)
     {
         numThreads = 2;
+    }
+
+    for (auto i = 0; i < numThreads; ++i)
+    {
     }
 }
 
