@@ -95,7 +95,7 @@ void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const 
     {
         RenderFunctor f{canvas, world, camera, m_coordinateProvider.get()};
         std::thread thread{f};
-        //m_threads.push_back(thread);
+        m_threads.push_back(std::move(thread));
     }
 }
 
