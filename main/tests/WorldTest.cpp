@@ -14,11 +14,12 @@
 namespace zrt
 {
 
-constexpr float Ambient = 0.1f;
-constexpr float Diffuse = 0.7f;
-constexpr float Specular = 0.2f;
+constexpr float WorldMaterial1DefaultAmbient = 0.1f;
+constexpr float WorldMaterial1DefaultDiffuse = 0.7f;
+constexpr float WorldMaterial1DefaultSpecular = 0.2f;
 
-static const Material M1 = Material{Color(0.8f, 1, 0.6f), Ambient, Diffuse, Specular};
+static const Material M1 = Material{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
+                                    WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
 static const PointLight PL{Point(-10, 10, -10), Color(1, 1, 1)};
 
 static World DefaultWorld(const PointLight &light = PL, const Material &m1 = M1,
@@ -52,9 +53,9 @@ TEST(WorldTest, DefaultWorld)
 {
     auto w = DefaultWorld();
 
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Ambient(), Ambient);
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Diffuse(), Diffuse);
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Specular(), Specular);
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Ambient(), WorldMaterial1DefaultAmbient);
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Diffuse(), WorldMaterial1DefaultDiffuse);
+    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Specular(), WorldMaterial1DefaultSpecular);
 }
 
 TEST(WorldTest, IntersectWorldRay)
