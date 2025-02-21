@@ -4,6 +4,7 @@
 
 #include "Camera.h"
 #include "Matrix.h"
+#include "Render.h"
 #include "TestConstants.h"
 #include "TestUtil.h"
 #include "Vector.h"
@@ -68,6 +69,7 @@ TEST(CameraTest, RenderingWorld)
     auto up = Vector(0, 1, 0);
     auto transform = ViewTransform(from, to, up);
     Camera c{11, 11, HalfPI, transform};
+    Canvas canvas = RenderParallel(c, w);
 }
 
 } // namespace zrt
