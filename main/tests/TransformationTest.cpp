@@ -79,8 +79,8 @@ TEST(TransformationTest, TransformationMatrixArbitrary)
     auto up = Vector(1, 1, 0);
     auto t = ViewTransform(from, to, up);
     auto m =
-        XMMATRIX{-0.50709f, 0.50709f, 0.67612f,  -2.36643, 0.76772f, 0.60609f, 0.12122f, -2.82843f,
-                 -0.35857f, 0.59761f, -0.71714f, 0.f,      0.f,      0.f,      0.f,      1.f};
+        XMMATRIX{-0.50709f, 0.50709f, 0.67612f,  -2.36643f, 0.76772f, 0.60609f, 0.12122f, -2.82843f,
+                 -0.35857f, 0.59761f, -0.71714f, 0.f,       0.f,      0.f,      0.f,      1.f};
     EXPECT_EQ(Floats(t), Floats(m));
 }
 
