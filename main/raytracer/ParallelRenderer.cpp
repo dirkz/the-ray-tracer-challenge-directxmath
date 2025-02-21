@@ -45,8 +45,13 @@ struct CoordinateProvider
     unsigned m_currentY;
 };
 
-void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera)
+void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera,
+                                      unsigned numThreads = std::thread::hardware_concurrency())
 {
+    if (numThreads == 0)
+    {
+        numThreads = 2;
+    }
 }
 
 } // namespace zrt

@@ -11,7 +11,8 @@ namespace zrt
 
 struct ParallelRenderer
 {
-    void StartRendering(Canvas &canvas, const World &world, const Camera &camera);
+    void StartRendering(Canvas &canvas, const World &world, const Camera &camera,
+                        unsigned numThreads = std::thread::hardware_concurrency());
 };
 
 } // namespace zrt
