@@ -58,6 +58,27 @@ static void Render(Canvas &canvas, const World &world, const Camera &camera,
     }
 }
 
+struct RenderFunctor
+{
+    RenderFunctor(Canvas &canvas, const World &world, const Camera &camera,
+                  CoordinateProvider *pCoordinateProvider)
+        : m_canvas{canvas}, m_world{world}, m_camera{camera},
+          m_coordinateProvider{pCoordinateProvider}
+    {
+    }
+
+    void operator()()
+    {
+        Render(m_canvas, m_world, m_camera, m_coordinateProvider);
+    }
+
+  private:
+    Canvas &m_canvas;
+    const World &m_world;
+    const Camera &m_camera;
+    CoordinateProvider *m_coordinateProvider;
+};
+
 void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera,
                                       unsigned numThreads)
 {
@@ -72,8 +93,9 @@ void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const 
 
     for (unsigned i = 0; i < numThreads; ++i)
     {
-        std::thread thread{Render, canvas, world, camera, m_coordinateProvider.get()};
-        m_threads.push_back(thread);
+        RenderFunctor f{canvas, world, camera, m_coordinateProvider.get()};
+        std::thread thread{f};
+        //m_threads.push_back(thread);
     }
 }
 
