@@ -12,6 +12,8 @@ struct CoordinateProvider
     {
     }
 
+    ~CoordinateProvider() = default;
+
     Coordinate Next()
     {
         std::lock_guard lock{m_mutex};
@@ -92,6 +94,12 @@ struct RenderFunctor
     const Camera &m_camera;
     CoordinateProvider *m_coordinateProvider;
 };
+
+ParallelRenderer::ParallelRenderer()
+{
+}
+
+ParallelRenderer::~ParallelRenderer() = default;
 
 void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const Camera &camera,
                                       unsigned numThreads)
