@@ -9,7 +9,12 @@
 namespace zrt
 {
 
+namespace parallel
+{
+
 struct CoordinateProvider;
+
+}
 
 struct ParallelRenderer
 {
@@ -22,7 +27,7 @@ struct ParallelRenderer
 
   private:
     std::vector<std::thread> m_threads;
-    std::unique_ptr<CoordinateProvider> m_coordinateProvider;
+    std::unique_ptr<parallel::CoordinateProvider> m_coordinateProvider;
 };
 
 } // namespace zrt

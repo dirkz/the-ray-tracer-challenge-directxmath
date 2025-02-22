@@ -3,6 +3,9 @@
 namespace zrt
 {
 
+namespace parallel
+{
+
 using Coordinate = std::optional<std::pair<unsigned, unsigned>>;
 
 struct CoordinateProvider
@@ -89,6 +92,8 @@ struct RenderFunctor
     CoordinateProvider *m_coordinateProvider;
 };
 
+} // namespace parallel
+
 ParallelRenderer::ParallelRenderer()
 {
 }
@@ -105,11 +110,11 @@ void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const 
         numThreads = 2;
     }
 
-    m_coordinateProvider.reset(new CoordinateProvider{canvas.Height(), canvas.Width()});
+    m_coordinateProvider.reset(new parallel::CoordinateProvider{canvas.Height(), canvas.Width()});
 
     for (unsigned i = 0; i < numThreads; ++i)
     {
-        RenderFunctor f{canvas, world, camera, m_coordinateProvider.get()};
+        parallel::RenderFunctor f{canvas, world, camera, m_coordinateProvider.get()};
         std::thread thread{f};
         m_threads.push_back(std::move(thread));
     }
