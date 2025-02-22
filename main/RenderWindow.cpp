@@ -10,11 +10,16 @@ constexpr POINT MinimumWindowsDimensions{300, 300};
 
 RenderWindow::RenderWindow()
 {
-    m_thread = std::thread{[this]() {
-        RECT rect = DesiredRect();
-        unsigned width = rect.right - rect.left;
-        unsigned height = rect.bottom - rect.top;
+    RECT rect = DesiredRect();
+    unsigned width = rect.right - rect.left;
+    unsigned height = rect.bottom - rect.top;
 
+    m_hdc = CreateCompatibleDC(nullptr);
+    assert(m_hdc != nullptr);
+    m_bitmap = CreateCompatibleBitmap(m_hdc, width, height);
+    assert(m_bitmap != nullptr);
+
+    m_thread = std::thread{[this, width, height]() {
         auto from = Point(0, 0, -5);
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
@@ -25,6 +30,12 @@ RenderWindow::RenderWindow()
 
         Render(camera, world, *this);
     }};
+}
+
+RenderWindow::~RenderWindow()
+{
+    DeleteObject(m_bitmap);
+    DeleteDC(m_hdc);
 }
 
 RECT RenderWindow::DesiredRect()
@@ -66,7 +77,6 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
-    OutputDebugString(L"SetPixel()\n");
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

@@ -10,6 +10,7 @@ namespace zrt
 struct RenderWindow
 {
     RenderWindow();
+    ~RenderWindow();
 
     RECT DesiredRect();
 
@@ -24,6 +25,8 @@ struct RenderWindow
     int Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd);
 
   private:
+    HDC m_hdc;
+    HBITMAP m_bitmap;
     std::thread m_thread;
 };
 
