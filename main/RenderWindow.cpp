@@ -71,12 +71,18 @@ void RenderWindow::OnResize(unsigned width, unsigned height)
 
 void RenderWindow::OnRender()
 {
+    if (m_hwnd == nullptr)
+    {
+        return;
+    }
+
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
     BOOL b = BitBlt(hdc, 0, 0, m_windowWidth, m_windowHeight, m_hdc, 0, 0, SRCCOPY);
     if (!b)
     {
+        DWORD error = GetLastError();
         OutputDebugString(L"BitBlt failed\n");
     }
 
