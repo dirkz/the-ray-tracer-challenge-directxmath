@@ -53,18 +53,11 @@ struct CanvasWriter
 
     void XM_CALLCONV operator()(unsigned x, unsigned y, FXMVECTOR color)
     {
-        m_coordinatesWritten.push_back(std::make_pair(x, y));
         m_canvas.SetPixel(x, y, color);
-    }
-
-    inline std::vector<std::pair<unsigned, unsigned>> &CoordinatesWritten()
-    {
-        return m_coordinatesWritten;
     }
 
   private:
     Canvas &m_canvas;
-    std::vector<std::pair<unsigned, unsigned>> m_coordinatesWritten;
 };
 
 TEST(RenderTest, RenderSequential)
@@ -105,11 +98,6 @@ TEST(RenderTest, RenderThreaded)
 
     auto color = canvas.GetPixel(5, 5);
     EXPECT_EQ(Floats(Color(0.38066f, 0.47583f, 0.2855f)), Floats(color));
-
-    for (auto& pair : writer.CoordinatesWritten())
-    {
-        std::cerr << "coordinate " << pair.first << "," << pair.second << "\n";
-    }
 }
 
 } // namespace zrt

@@ -35,16 +35,19 @@ template <class T> void Render(const Camera &camera, const World &world, T &setP
         CoordinateProvider provider{camera.HSize(), camera.VSize()};
 
         auto renderFn = [&provider, &camera, &world, &setPixelFn]() {
-            auto optCoords = provider.Next();
-            if (!optCoords.has_value())
+            while (true)
             {
-                return;
+                auto optCoords = provider.Next();
+                if (!optCoords.has_value())
+                {
+                    return;
+                }
+                unsigned x = optCoords.value().X();
+                unsigned y = optCoords.value().Y();
+                Ray ray = camera.RayForPixel(x, y);
+                auto color = world.ColorAt(ray);
+                setPixelFn(x, y, color);
             }
-            unsigned x = optCoords.value().X();
-            unsigned y = optCoords.value().Y();
-            Ray ray = camera.RayForPixel(x, y);
-            auto color = world.ColorAt(ray);
-            setPixelFn(x, y, color);
         };
 
         std::vector<std::thread> threads(numThreads);
