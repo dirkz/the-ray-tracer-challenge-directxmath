@@ -61,17 +61,4 @@ TEST(CameraTest, ConstructingRayWhenCameraIsTransformed)
     EXPECT_EQ(Floats(r.Direction()), Floats(Vector(HalfSqrt, 0, -HalfSqrt)));
 }
 
-TEST(CameraTest, RenderingWorld)
-{
-    auto w = DefaultWorld();
-    auto from = Point(0, 0, -5);
-    auto to = Point(0, 0, 0);
-    auto up = Vector(0, 1, 0);
-    auto transform = ViewTransform(from, to, up);
-    Camera c{11, 11, HalfPI, transform};
-    Canvas canvas = RenderParallel(c, w);
-    auto color = canvas.GetPixel(5, 5);
-    EXPECT_EQ(Floats(Color(0.38066f, 0.47583f, 0.2855f)), Floats(color));
-}
-
 } // namespace zrt

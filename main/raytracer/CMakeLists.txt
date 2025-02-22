@@ -23,10 +23,7 @@ add_library(raytracer OBJECT
 	Camera.cpp
 	Canvas.h
 	Canvas.cpp
-	ParallelRenderer.h
-	ParallelRenderer.cpp
 	Render.h
-	Render.cpp
 	CoordinateProvider.h
 	CoordinateProvider.cpp)
 

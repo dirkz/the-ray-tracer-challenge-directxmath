@@ -9,6 +9,9 @@ struct Canvas
 {
     Canvas(unsigned width, unsigned height);
 
+    Canvas(const Canvas &) = delete;
+    Canvas &operator=(const Canvas &) = delete;
+
     void XM_CALLCONV SetPixel(unsigned x, unsigned y, FXMVECTOR color);
     XMVECTOR XM_CALLCONV GetPixel(unsigned x, unsigned y);
 

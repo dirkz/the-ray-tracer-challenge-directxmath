@@ -10,8 +10,6 @@
 namespace zrt
 {
 
-Canvas RenderParallel(const Camera &camera, const World &world);
-
 template <class T> void RenderSequentially(const Camera &camera, const World &world, T &f)
 {
     for (unsigned y = 0; y < camera.VSize(); ++y)
