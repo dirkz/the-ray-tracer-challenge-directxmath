@@ -8,16 +8,7 @@ namespace zrt
 constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
-RenderWindow::PixelSetter::PixelSetter(RenderWindow &window) : m_window{window}
-{
-}
-
-void XM_CALLCONV RenderWindow::PixelSetter::operator()(unsigned x, unsigned y, FXMVECTOR color)
-{
-    m_window.SetPixel(x, y, color);
-}
-
-RenderWindow::RenderWindow() : m_pixelSetter{}
+RenderWindow::RenderWindow()
 {
     m_thread = std::thread{[this]() {
         RECT rect = DesiredRect();
@@ -31,6 +22,8 @@ RenderWindow::RenderWindow() : m_pixelSetter{}
         Camera camera{width, height, Fov, transform};
 
         World world{};
+
+        Render(camera, world, *this);
     }};
 }
 
@@ -69,6 +62,11 @@ void RenderWindow::OnRender()
 void RenderWindow::OnDestroy()
 {
     m_thread.join();
+}
+
+void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
+{
+    OutputDebugString(L"SetPixel()\n");
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -161,10 +159,6 @@ int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
     }
 
     return static_cast<char>(msg.wParam);
-}
-
-void XM_CALLCONV RenderWindow::SetPixel(unsigned x, unsigned y, FXMVECTOR color)
-{
 }
 
 } // namespace zrt
