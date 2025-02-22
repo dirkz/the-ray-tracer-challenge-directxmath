@@ -13,6 +13,14 @@ struct CoordinateProvider
 {
     struct Coordinate
     {
+        struct Less
+        {
+            bool operator()(const Coordinate &c1, const Coordinate &c2) const
+            {
+                return c1.X() < c2.X() && c1.Y() < c2.Y();
+            };
+        };
+
         Coordinate(unsigned x, unsigned y) : m_x{x}, m_y{y} {};
 
         inline unsigned X() const

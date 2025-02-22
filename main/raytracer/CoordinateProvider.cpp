@@ -19,12 +19,12 @@ std::optional<CoordinateProvider::Coordinate> CoordinateProvider::Next()
     {
         if (haveStillX)
         {
-            m_currentX++;
+            ++m_currentX;
             return Coordinate{m_currentX, m_currentY};
         }
         if (haveStillY)
         {
-            m_currentY++;
+            ++m_currentY;
             m_currentX = 0;
             return Coordinate{m_currentX, m_currentY};
         }
