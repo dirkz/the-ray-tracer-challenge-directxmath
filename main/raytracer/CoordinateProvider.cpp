@@ -17,26 +17,22 @@ std::optional<CoordinateProvider::Coordinate> CoordinateProvider::Next()
         return std::optional<Coordinate>{};
     }
 
-    bool haveStillY = m_currentY < m_maxY;
-    bool haveStillX = m_currentX < m_maxX;
-
-    if (haveStillX || haveStillY)
+    if (m_currentX < m_maxX)
     {
-        if (haveStillX)
-        {
-            Coordinate coord = Coordinate{m_currentX, m_currentY};
-            ++m_currentX;
-            return coord;
-        }
-        if (haveStillY)
-        {
-            m_currentX = 0;
-            Coordinate coord = Coordinate{m_currentX, m_currentY};
-            ++m_currentY;
-            return coord;
-        }
+        Coordinate coord = Coordinate{m_currentX, m_currentY};
+        ++m_currentX;
+        return coord;
     }
 
+    if (m_currentY < m_maxY)
+    {
+        m_currentX = 0;
+        Coordinate coord = Coordinate{m_currentX, m_currentY};
+        ++m_currentY;
+        return coord;
+    }
+
+    assert(false);
     return std::optional<Coordinate>{};
 }
 
