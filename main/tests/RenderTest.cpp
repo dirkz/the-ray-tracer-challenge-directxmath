@@ -93,3 +93,5 @@ TEST(RenderTest, RenderThreaded)
         Render(camera, world, writer);
     });
 }
+
+} // namespace zrt
