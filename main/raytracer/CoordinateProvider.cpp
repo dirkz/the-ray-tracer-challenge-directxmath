@@ -12,26 +12,30 @@ std::optional<CoordinateProvider::Coordinate> CoordinateProvider::Next()
 {
     std::lock_guard l{m_mutex};
 
-    bool haveStillY = m_currentY < m_maxY - 1;
-    bool haveStillX = m_currentX < m_maxX - 1;
+    if (m_currentX == m_maxX - 1 && m_currentY == m_maxY - 1)
+    {
+        return std::optional<Coordinate>{};
+    }
+
+    bool haveStillY = m_currentY < m_maxY;
+    bool haveStillX = m_currentX < m_maxX;
 
     if (haveStillX || haveStillY)
     {
         if (haveStillX)
         {
+            Coordinate coord = Coordinate{m_currentX, m_currentY};
             ++m_currentX;
-            return Coordinate{m_currentX, m_currentY};
+            return coord;
         }
         if (haveStillY)
         {
-            ++m_currentY;
             m_currentX = 0;
-            return Coordinate{m_currentX, m_currentY};
+            Coordinate coord = Coordinate{m_currentX, m_currentY};
+            ++m_currentY;
+            return coord;
         }
     }
-
-    assert(m_currentX == m_maxX - 1);
-    assert(m_currentY == m_maxY - 1);
 
     return std::optional<Coordinate>{};
 }

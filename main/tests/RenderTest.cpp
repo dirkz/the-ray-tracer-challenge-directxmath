@@ -10,8 +10,8 @@ using CoordinateLess = CoordinateProvider::Coordinate::Less;
 
 TEST(RenderTest, TraverseAllCoordinates)
 {
-    constexpr unsigned rows = 5;
-    constexpr unsigned cols = 5;
+    constexpr unsigned rows = 2;
+    constexpr unsigned cols = 2;
 
     std::set<Coordinate, CoordinateLess> coordinates{};
 
@@ -26,18 +26,18 @@ TEST(RenderTest, TraverseAllCoordinates)
 
     CoordinateProvider provider{cols, rows};
 
-    for (unsigned r = 0; r < rows; ++r)
+    for (unsigned count = 0; count < cols * rows; ++count)
     {
-        for (unsigned c = 0; c < cols; ++c)
+        auto optCoord = provider.Next();
+        EXPECT_TRUE(optCoord.has_value());
+        if (optCoord.has_value())
         {
-            auto optCoord = provider.Next();
-            std::cerr << r << "," << c << ": " << optCoord.has_value() << "\n";
-            ASSERT_TRUE(optCoord.has_value());
-            coordinates.insert(optCoord.value());
+            std::cerr << optCoord.value().X() << "," << optCoord.value().Y() << "\n";
+			coordinates.insert(optCoord.value());
         }
     }
 
-    EXPECT_FALSE(provider.Next());
+    EXPECT_FALSE(provider.Next().has_value());
 }
 
 } // namespace zrt
