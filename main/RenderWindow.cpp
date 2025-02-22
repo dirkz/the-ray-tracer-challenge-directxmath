@@ -1,13 +1,31 @@
 #include "RenderWindow.h"
 
+#include "Vector.h"
+#include "Camera.h"
+#include "Matrix.h"
+#include "World.h"
+
 namespace zrt
 {
 
+constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
 RenderWindow::RenderWindow()
 {
-    m_thread = std::thread{[]() {}};
+    m_thread = std::thread{[this]() {
+        RECT rect = DesiredRect();
+        unsigned width = rect.right - rect.left;
+        unsigned height = rect.bottom - rect.top;
+
+        auto from = Point(0, 0, -5);
+        auto to = Point(0, 0, 0);
+        auto up = Vector(0, 1, 0);
+        auto transform = ViewTransform(from, to, up);
+        Camera camera{width, height, Fov, transform};
+
+        World world{};
+    }};
 }
 
 RECT RenderWindow::DesiredRect()
@@ -44,6 +62,7 @@ void RenderWindow::OnRender()
 
 void RenderWindow::OnDestroy()
 {
+    m_thread.join();
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
