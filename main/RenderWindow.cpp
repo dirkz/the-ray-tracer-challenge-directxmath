@@ -6,6 +6,8 @@ namespace zrt
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
 RenderWindow::RenderWindow()
+    : m_rect{DesiredRect()}, m_canvas{static_cast<unsigned>(m_rect.right - m_rect.left),
+                                      static_cast<unsigned>(m_rect.bottom - m_rect.top)}
 {
 }
 

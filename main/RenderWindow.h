@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 
+#include "Canvas.h"
+
 namespace zrt
 {
 
@@ -18,6 +20,10 @@ struct RenderWindow
     void OnDestroy();
 
     int Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd);
+
+  private:
+    RECT m_rect;
+    Canvas m_canvas;
 };
 
 } // namespace zrt
