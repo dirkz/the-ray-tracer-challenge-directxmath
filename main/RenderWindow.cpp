@@ -90,7 +90,15 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
-    SetPixel(m_hdc, x, y, 0);
+    XMFLOAT4 floats;
+    XMStoreFloat4(&floats, color);
+
+    BYTE r = static_cast<BYTE>(floats.x * 255.f);
+    BYTE g = static_cast<BYTE>(floats.y * 255.f);
+    BYTE b = static_cast<BYTE>(floats.z * 255.f);
+
+    SetPixel(m_hdc, x, y, RGB(r, g, b));
+
     if (m_hwnd != nullptr)
     {
         BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
