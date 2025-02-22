@@ -9,6 +9,7 @@ struct RenderWindow
 {
     RenderWindow();
 
+    RECT DesiredRect();
     void OnInit(HWND hwnd, unsigned width, unsigned height);
     void OnActivate(bool isBeingActivated);
     void OnResize(unsigned width, unsigned height);

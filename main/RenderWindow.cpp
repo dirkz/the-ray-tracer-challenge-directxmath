@@ -9,6 +9,22 @@ RenderWindow::RenderWindow()
 {
 }
 
+RECT RenderWindow::DesiredRect()
+{
+    int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
+
+    int screenWidthQuarter = screenWidth / 4;
+    int screenHeightHalve = screenHeight / 2;
+
+    int left = screenWidthQuarter;
+    int right = 3 * screenWidthQuarter;
+    int top = 0;
+    int height = screenHeightHalve;
+
+    return RECT{left, top, right, height};
+}
+
 void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 {
 }
@@ -84,17 +100,7 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-    int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
-    int screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
-
-    int screenWidthQuarter = screenWidth / 4;
-    int screenHeightHalve = screenHeight / 2;
-
-    int left = screenWidthQuarter;
-    int right = 3 * screenWidthQuarter;
-    int top = 0;
-    int width = right - left;
-    int height = screenHeightHalve;
+    RECT rect = DesiredRect();
 
     const wchar_t CLASS_NAME[] = L"TRTCDXMATH";
 
@@ -105,9 +111,12 @@ int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
 
     RegisterClass(&wc);
 
+    int width = rect.right - rect.left;
+    int height = rect.bottom - rect.top;
+
     HWND hwnd = CreateWindowEx(0, CLASS_NAME, L"The Ray Tracer Challenge (DirectXMath)",
-                               WS_OVERLAPPEDWINDOW, left, top, width, height, nullptr, nullptr,
-                               hInstance, this);
+                               WS_OVERLAPPEDWINDOW, rect.left, rect.top, width, height, nullptr,
+                               nullptr, hInstance, this);
 
     if (hwnd == NULL)
     {
