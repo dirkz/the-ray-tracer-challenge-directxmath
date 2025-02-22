@@ -1,5 +1,7 @@
 add_executable(${CMAKE_PROJECT_NAME} WIN32
-	main.cpp)
+	main.cpp
+	RenderWindow.h
+	RenderWindow.cpp)
 
 add_subdirectory(common)
 add_subdirectory(raytracer)
