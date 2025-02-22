@@ -70,6 +70,7 @@ TEST(CameraTest, RenderingWorld)
     auto transform = ViewTransform(from, to, up);
     Camera c{11, 11, HalfPI, transform};
     Canvas canvas = RenderParallel(c, w);
+    FAIL();
 }
 
 } // namespace zrt
