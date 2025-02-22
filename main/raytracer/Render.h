@@ -14,19 +14,14 @@ Canvas RenderParallel(const Camera &camera, const World &world);
 
 template <class T> void RenderSequentially(const Camera &camera, const World &world, T &f)
 {
-    CoordinateProvider provider{camera.HSize(), camera.VSize()};
-    while (true)
+    for (unsigned y = 0; y < camera.VSize(); ++y)
     {
-        auto optCoords = provider.Next();
-        if (!optCoords.has_value())
+        for (unsigned x = 0; x < camera.HSize(); ++x)
         {
-            break;
+            Ray ray = camera.RayForPixel(x, y);
+            auto color = world.ColorAt(ray);
+            f(x, y, color);
         }
-        unsigned x = optCoords.value().X();
-        unsigned y = optCoords.value().Y();
-        Ray ray = camera.RayForPixel(x, y);
-        auto color = world.ColorAt(ray);
-        f(x, y, color);
     }
 }
 
@@ -61,7 +56,7 @@ template <class T> void Render(const Camera &camera, const World &world, T &setP
             threads[i] = std::move(thread);
         }
 
-        for (std::thread& thread : threads)
+        for (std::thread &thread : threads)
         {
             thread.join();
         }
