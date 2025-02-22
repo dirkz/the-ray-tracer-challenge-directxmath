@@ -59,8 +59,6 @@ static void Render(Canvas &canvas, const World &world, const Camera &camera,
         }
         else
         {
-            std::cout << "*** thread " << std::this_thread::get_id() << " processing "
-                      << coordinate.value().first << "," << coordinate.value().second << "\n";
         }
     }
 }
