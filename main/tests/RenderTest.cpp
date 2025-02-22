@@ -60,7 +60,7 @@ struct CanvasWriter
     Canvas &m_canvas;
 };
 
-TEST(RenderTest, RenderSequential)
+template <class T> void ExecuteRenderTest(const T &fn)
 {
     constexpr unsigned rows = 11;
     constexpr unsigned cols = 11;
@@ -74,30 +74,22 @@ TEST(RenderTest, RenderSequential)
     auto transform = ViewTransform(from, to, up);
     Camera camera{11, 11, HalfPI, transform};
 
-    RenderSequentially(camera, world, writer);
+    fn(camera, world, writer);
 
     auto color = canvas.GetPixel(5, 5);
     EXPECT_EQ(Floats(Color(0.38066f, 0.47583f, 0.2855f)), Floats(color));
+}
+
+TEST(RenderTest, RenderSequential)
+{
+    ExecuteRenderTest([](const Camera &camera, const World &world, CanvasWriter &writer) {
+        RenderSequentially(camera, world, writer);
+    });
 }
 
 TEST(RenderTest, RenderThreaded)
 {
-    constexpr unsigned rows = 11;
-    constexpr unsigned cols = 11;
-    Canvas canvas{cols, rows};
-    CanvasWriter writer{canvas};
-
-    auto world = DefaultWorld();
-    auto from = Point(0, 0, -5);
-    auto to = Point(0, 0, 0);
-    auto up = Vector(0, 1, 0);
-    auto transform = ViewTransform(from, to, up);
-    Camera camera{11, 11, HalfPI, transform};
-
-    Render(camera, world, writer);
-
-    auto color = canvas.GetPixel(5, 5);
-    EXPECT_EQ(Floats(Color(0.38066f, 0.47583f, 0.2855f)), Floats(color));
+    ExecuteRenderTest([](const Camera &camera, const World &world, CanvasWriter &writer) {
+        Render(camera, world, writer);
+    });
 }
-
-} // namespace zrt
