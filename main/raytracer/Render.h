@@ -27,12 +27,21 @@ template <class T> void RenderSequentially(const Camera &camera, const World &wo
 template <class T> void Render(const Camera &camera, const World &world, T &setPixelFn)
 {
     unsigned numThreads = std::thread::hardware_concurrency();
-    if (numThreads == 0)
+    if (numThreads == 0 || numThreads == 1)
     {
         RenderSequentially(camera, world, setPixelFn);
     }
     else
     {
+        if (numThreads > 4)
+        {
+            numThreads -= 2;
+        }
+        else if (numThreads > 1)
+        {
+            numThreads--;
+        }
+
         CoordinateProvider provider{camera.HSize(), camera.VSize()};
 
         auto renderFn = [&provider, &camera, &world, &setPixelFn]() {
