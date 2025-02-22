@@ -59,6 +59,11 @@ static void Render(Canvas &canvas, const World &world, const Camera &camera,
         }
         else
         {
+            unsigned x = coordinate.value().first;
+            unsigned y = coordinate.value().second;
+            Ray ray = camera.RayForPixel(x, y);
+            auto color = world.ColorAt(ray);
+            canvas.SetPixel(x, y, color);
         }
     }
 }
