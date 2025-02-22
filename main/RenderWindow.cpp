@@ -84,7 +84,6 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
 int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-
     int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
     int screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
