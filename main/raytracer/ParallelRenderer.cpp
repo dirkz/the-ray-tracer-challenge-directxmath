@@ -102,7 +102,7 @@ void ParallelRenderer::StartRendering(Canvas &canvas, const World &world, const 
         numThreads = 2;
     }
 
-    m_coordinateProvider.reset(new CoordinateProvider{canvas.Height() - 1, canvas.Width() - 1});
+    m_coordinateProvider.reset(new CoordinateProvider{canvas.Height(), canvas.Width()});
 
     for (unsigned i = 0; i < numThreads; ++i)
     {
