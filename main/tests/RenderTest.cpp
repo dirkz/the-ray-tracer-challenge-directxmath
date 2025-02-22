@@ -47,6 +47,9 @@ TEST(RenderTest, TraverseAllCoordinates)
 struct CanvasWriter
 {
     CanvasWriter(Canvas &canvas) : m_canvas{canvas} {};
+    CanvasWriter(const CanvasWriter &) = delete;
+
+    CanvasWriter &operator=(const CanvasWriter &) = delete;
 
     void XM_CALLCONV operator()(unsigned x, unsigned y, FXMVECTOR color)
     {
