@@ -9,6 +9,16 @@ namespace zrt
 
 struct RenderWindow
 {
+    struct PixelSetter
+    {
+        PixelSetter(RenderWindow &window);
+
+        void XM_CALLCONV operator()(unsigned x, unsigned y, FXMVECTOR color);
+
+      private:
+        RenderWindow &m_window;
+    };
+
     RenderWindow();
 
     RECT DesiredRect();
@@ -22,6 +32,9 @@ struct RenderWindow
     int Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd);
 
   private:
+    void XM_CALLCONV SetPixel(unsigned x, unsigned y, FXMVECTOR color);
+
+    PixelSetter m_pixelSetter;
     std::thread m_thread;
 };
 

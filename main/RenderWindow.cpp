@@ -8,7 +8,16 @@ namespace zrt
 constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
-RenderWindow::RenderWindow()
+RenderWindow::PixelSetter::PixelSetter(RenderWindow &window) : m_window{window}
+{
+}
+
+void XM_CALLCONV RenderWindow::PixelSetter::operator()(unsigned x, unsigned y, FXMVECTOR color)
+{
+    m_window.SetPixel(x, y, color);
+}
+
+RenderWindow::RenderWindow() : m_pixelSetter{}
 {
     m_thread = std::thread{[this]() {
         RECT rect = DesiredRect();
@@ -152,6 +161,10 @@ int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
     }
 
     return static_cast<char>(msg.wParam);
+}
+
+void XM_CALLCONV RenderWindow::SetPixel(unsigned x, unsigned y, FXMVECTOR color)
+{
 }
 
 } // namespace zrt
