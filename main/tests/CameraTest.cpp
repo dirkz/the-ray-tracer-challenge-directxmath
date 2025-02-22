@@ -70,6 +70,8 @@ TEST(CameraTest, RenderingWorld)
     auto transform = ViewTransform(from, to, up);
     Camera c{11, 11, HalfPI, transform};
     Canvas canvas = RenderParallel(c, w);
+    auto color = canvas.GetPixel(5, 5);
+    EXPECT_EQ(Floats(Color(0.38066f, 0.47583f, 0.2855f)), Floats(color));
 }
 
 } // namespace zrt
