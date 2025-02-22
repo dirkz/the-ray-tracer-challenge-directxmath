@@ -56,6 +56,7 @@ RECT RenderWindow::DesiredRect()
 
 void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 {
+    m_hwnd = hwnd;
 }
 
 void RenderWindow::OnActivate(bool isBeingActivated)
@@ -64,10 +65,22 @@ void RenderWindow::OnActivate(bool isBeingActivated)
 
 void RenderWindow::OnResize(unsigned width, unsigned height)
 {
+    m_windowWidth = width;
+    m_windowHeight = height;
 }
 
 void RenderWindow::OnRender()
 {
+    PAINTSTRUCT ps;
+    HDC hdc = BeginPaint(m_hwnd, &ps);
+
+    BOOL b = BitBlt(hdc, 0, 0, m_windowWidth, m_windowHeight, m_hdc, 0, 0, SRCCOPY);
+    if (!b)
+    {
+        OutputDebugString(L"BitBlt failed\n");
+    }
+
+    EndPaint(m_hwnd, &ps);
 }
 
 void RenderWindow::OnDestroy()
@@ -77,6 +90,16 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
+    SetPixel(m_hdc, x, y, 0);
+    if (m_hwnd != nullptr)
+    {
+        BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
+        if (!b)
+        {
+            OutputDebugString(L"InvalidateRect failed\n");
+			PostMessage(m_hwnd, WM_PAINT, 0, 0);
+        }
+    }
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

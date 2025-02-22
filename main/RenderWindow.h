@@ -28,6 +28,9 @@ struct RenderWindow
     HDC m_hdc;
     HBITMAP m_bitmap;
     std::thread m_thread;
+    HWND m_hwnd;
+    unsigned m_windowWidth;
+    unsigned m_windowHeight;
 };
 
 } // namespace zrt
