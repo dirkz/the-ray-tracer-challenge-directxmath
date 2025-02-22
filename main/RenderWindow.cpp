@@ -1,9 +1,6 @@
 #include "RenderWindow.h"
 
-#include "Vector.h"
-#include "Camera.h"
-#include "Matrix.h"
-#include "World.h"
+#include "Render.h"
 
 namespace zrt
 {

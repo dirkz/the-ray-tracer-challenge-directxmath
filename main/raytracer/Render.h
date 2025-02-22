@@ -6,6 +6,7 @@
 #include "Canvas.h"
 #include "CoordinateProvider.h"
 #include "World.h"
+#include "Matrix.h"
 
 namespace zrt
 {
