@@ -36,7 +36,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Fov = std::numbers::pi_v<float> / 2;
 
         auto t1 = Scaling(100, 100, 100);
-        Sphere s1{t1};
+        auto m1 = Material{Colors::Aquamarine, 0.5f};
+        Sphere s1{t1, m1};
 
         PointLight l{Point(-50, 0, -50), Color(1, 1, 1)};
 
