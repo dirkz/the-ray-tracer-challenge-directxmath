@@ -39,7 +39,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto m1 = Material{Colors::Aquamarine, 0.5f};
         Sphere s1{t1, m1};
 
-        PointLight l{Point(-50, 0, -50), Color(1, 1, 1)};
+        PointLight l{Point(-50, 0, -50), Color(1, 0.5f, 0.5f)};
 
         auto from = Point(0, 0, -300);
         auto to = Point(0, 0, 0);
