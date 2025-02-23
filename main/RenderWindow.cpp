@@ -7,6 +7,13 @@ namespace zrt
 
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
+constexpr unsigned CanvasWidth = 450;
+constexpr unsigned CanvasHeight = 300;
+
+RenderWindow::RenderWindow() : m_canvas{CanvasWidth, CanvasHeight}
+{
+}
+
 RECT RenderWindow::DesiredRect()
 {
     int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
@@ -27,11 +34,6 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 {
     m_hwnd = hwnd;
 
-    m_colorsWidth = width;
-    m_colorsHeight = height;
-
-    m_colors.resize(width * height);
-
     m_thread = std::thread{[this, width, height]() {
         constexpr float Fov = std::numbers::pi_v<float> / 2;
 
@@ -47,7 +49,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto mat3 = Material{Colors::YellowGreen, 0.9f, 0.9f, 0.1f, 0.1f};
         Sphere s3{t3, mat3};
 
-        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.1), Translation(0, 0, 100));
+        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.1f), Translation(0, 0, 100));
         auto mat4 = Material{Colors::BlanchedAlmond, 0.9f, 0.9f, 0.1f, 0.1f};
         Sphere s4{t4, mat4};
 
@@ -63,7 +65,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
         auto cameraTransform = ViewTransform(from, to, up);
-        Camera camera{width, height, Fov, cameraTransform};
+        Camera camera{CanvasWidth, CanvasHeight, Fov, cameraTransform};
 
         Render(camera, world, *this);
     }};
@@ -90,9 +92,9 @@ void RenderWindow::OnRender()
     RECT rect = ps.rcPaint;
 
     LONG colorsLeft = 0;
-    LONG colorsRight = static_cast<LONG>(m_colorsWidth);
+    LONG colorsRight = static_cast<LONG>(CanvasWidth);
     LONG colorsTop = 0;
-    LONG colorsBottom = static_cast<LONG>(m_colorsHeight);
+    LONG colorsBottom = static_cast<LONG>(CanvasHeight);
 
     rect.left = std::clamp(rect.left, colorsLeft, colorsRight);
     rect.right = std::clamp(rect.right, colorsLeft, colorsRight);
@@ -103,11 +105,14 @@ void RenderWindow::OnRender()
     {
         for (LONG x = rect.left; x < rect.right; ++x)
         {
-            XMFLOAT4 *color = &m_colors[y * m_colorsWidth + x];
+            XMVECTOR colorv = m_canvas.GetPixel(x, y);
 
-            BYTE r = static_cast<BYTE>(std::round(color->x * 255.f));
-            BYTE g = static_cast<BYTE>(std::round(color->y * 255.f));
-            BYTE b = static_cast<BYTE>(std::round(color->z * 255.f));
+            XMFLOAT4 color;
+            XMStoreFloat4(&color, colorv);
+
+            BYTE r = static_cast<BYTE>(std::round(color.x * 255.f));
+            BYTE g = static_cast<BYTE>(std::round(color.y * 255.f));
+            BYTE b = static_cast<BYTE>(std::round(color.z * 255.f));
 
             COLORREF cr = RGB(r, g, b);
             SetPixel(hdc, x, y, cr);
@@ -125,9 +130,7 @@ void RenderWindow::OnDestroy()
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
     XMVECTOR clampedColor = XMVectorClamp(color, XMVectorZero(), XMVectorSplatOne());
-
-    XMFLOAT4 *floats = &m_colors[y * m_colorsWidth + x];
-    XMStoreFloat4(floats, clampedColor);
+    m_canvas.SetPixel(x, y, clampedColor);
 
     LONG left = static_cast<LONG>(x);
     LONG top = static_cast<LONG>(y);

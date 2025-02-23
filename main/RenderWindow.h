@@ -9,6 +9,8 @@ namespace zrt
 
 struct RenderWindow
 {
+    RenderWindow();
+
     RECT DesiredRect();
 
     void OnInit(HWND hwnd, unsigned width, unsigned height);
@@ -24,9 +26,7 @@ struct RenderWindow
   private:
     std::thread m_thread;
     HWND m_hwnd;
-    std::vector<XMFLOAT4> m_colors;
-    unsigned m_colorsWidth;
-    unsigned m_colorsHeight;
+    Canvas m_canvas;
 };
 
 } // namespace zrt
