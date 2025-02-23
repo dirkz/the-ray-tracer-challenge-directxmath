@@ -35,19 +35,35 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
     m_thread = std::thread{[this, width, height]() {
         constexpr float Fov = std::numbers::pi_v<float> / 2;
 
-        auto t1 = Scaling(100, 100, 100);
-        auto m1 = Material{Colors::Aquamarine, 0.5f};
-        Sphere s1{t1, m1};
+        auto t1 = XMMatrixMultiply(Scaling(100, 100, 100), Translation(120, 0, 0));
+        auto mat1 = Material{Colors::Aquamarine, 0.9f};
+        Sphere s1{t1, mat1};
 
-        PointLight l{Point(-500, 0, -500), Color(1, 0.5f, 0.5f)};
+        auto t2 = XMMatrixMultiply(Scaling(50, 50, 50), Translation(-50, 0, 0));
+        auto mat2 = Material{Colors::IndianRed, 0.9f};
+        Sphere s2{t2, mat2};
+
+        auto t3 = XMMatrixMultiply(Scaling(0.1f, 1000, 1000), Translation(210, 0, 0));
+        auto mat3 = Material{Colors::YellowGreen, 0.9f, 0.9f, 0.1f, 0.1f};
+        Sphere s3{t3, mat3};
+
+        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.1), Translation(0, 0, 100));
+        auto mat4 = Material{Colors::BlanchedAlmond, 0.9f, 0.9f, 0.1f, 0.1f};
+        Sphere s4{t4, mat4};
+
+        auto t5 = XMMatrixMultiply(Scaling(10000, 10000, 10000), Translation(0, -10110, 0));
+        auto mat5 = Material{Colors::SandyBrown, 0.9f, 0.9f, 0.1f, 0.1f};
+        Sphere floor{t5, mat5};
+
+        PointLight l{Point(-500, 0, -500), Color(1.0f, 1.0f, 1.0f)};
+
+        World world{l, {&s1, &s2, &s3, &s4, &floor}};
 
         auto from = Point(0, 0, -300);
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
         auto cameraTransform = ViewTransform(from, to, up);
         Camera camera{width, height, Fov, cameraTransform};
-
-        World world{l, {&s1}};
 
         Render(camera, world, *this);
     }};
