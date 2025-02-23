@@ -8,6 +8,7 @@
 #include "World.h"
 #include "Matrix.h"
 #include "Sphere.h"
+#include "Plane.h"
 #include "PointLight.h"
 #include "Vector.h"
 

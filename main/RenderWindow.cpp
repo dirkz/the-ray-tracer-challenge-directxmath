@@ -37,7 +37,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
     m_thread = std::thread{[this, width, height]() {
         constexpr float Fov = std::numbers::pi_v<float> / 2;
-        
+
         constexpr float Ambient = 0.5f;
         constexpr float Diffuse = 0.7f;
         constexpr float Specular = 0.9f;
@@ -48,12 +48,17 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-10, 0, 0));
-        auto mat2 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
+        auto mat2 = Material{Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
+
+        auto transformPlane1 =
+            XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 2.f), Translation(20, 0, 0));
+        auto materialPlane1 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
+        Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-50, 0, 0), Color(1.0f, 1.0f, 1.0f)};
 
-        World world{l, {&s1, &s2}};
+        World world{l, {&s1, &s2, &p1}};
 
         auto from = Point(0, 0, -25);
         auto to = Point(0, 0, 0);
