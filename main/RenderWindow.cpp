@@ -45,21 +45,9 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto mat2 = Material{Colors::IndianRed, 0.9f};
         Sphere s2{t2, mat2};
 
-        auto t3 = XMMatrixMultiply(Scaling(0.1f, 1000, 1000), Translation(210, 0, 0));
-        auto mat3 = Material{Colors::YellowGreen, 0.9f, 0.9f, 0.1f, 0.1f};
-        Sphere s3{t3, mat3};
-
-        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.5f), Translation(0, 0, 100));
-        auto mat4 = Material{Colors::BlanchedAlmond, 0.9f, 0.9f, 0.1f, 0.1f};
-        Sphere s4{t4, mat4};
-
-        auto t5 = XMMatrixMultiply(Scaling(10000, 10000, 10000), Translation(0, -10110, 0));
-        auto mat5 = Material{Colors::SandyBrown, 0.9f, 0.9f, 0.1f, 0.1f};
-        Sphere floor{t5, mat5};
-
         PointLight l{Point(-500, 0, -500), Color(1.0f, 1.0f, 1.0f)};
 
-        World world{l, {&s1, &s2, &s3, &s4, &floor}};
+        World world{l, {&s1, &s2}};
 
         auto from = Point(0, 0, -300);
         auto to = Point(0, 0, 0);
