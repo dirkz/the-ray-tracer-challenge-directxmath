@@ -42,11 +42,14 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 {
     XMVECTOR color = XMVectorZero();
 
+    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.001f);
+    XMVECTOR overPoint = XMVectorAdd(comps.Point(), overNormal);
+
     for (const PointLight &light : Lights())
     {
         XMVECTOR lightPosition = light.Position();
-        XMVECTOR pointToLightV = XMVectorSubtract(lightPosition, comps.Point());
-        Ray lightRay = Ray{comps.Point(), XMVector4Normalize(pointToLightV)};
+        XMVECTOR pointToLightV = XMVectorSubtract(lightPosition, overPoint);
+        Ray lightRay = Ray{overPoint, XMVector4Normalize(pointToLightV)};
         auto intersections = Intersect(lightRay);
         const Intersection *pNearestIntersection = Hit(intersections);
         bool isInLight = true;
