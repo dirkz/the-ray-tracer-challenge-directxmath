@@ -70,18 +70,27 @@ void RenderWindow::OnRender()
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
-    for (unsigned y = 0; y < m_colorsHeight; ++y)
+    RECT updateRect;
+    BOOL updated = GetUpdateRect(m_hwnd, &updateRect, FALSE);
+
+    if (updated)
     {
-        for (unsigned x = 0; x < m_colorsWidth; ++x)
+        updateRect.right = std::min(static_cast<LONG>(m_colorsWidth), updateRect.right);
+        updateRect.bottom = std::min(static_cast<LONG>(m_colorsHeight), updateRect.bottom);
+
+        for (LONG y = updateRect.top; y < updateRect.bottom; ++y)
         {
-            XMFLOAT4 *color = &m_colors[y * m_colorsWidth + x];
+            for (LONG x = updateRect.left; x < updateRect.right; ++x)
+            {
+                XMFLOAT4 *color = &m_colors[y * m_colorsWidth + x];
 
-            BYTE r = static_cast<BYTE>(std::round(color->x * 255.f));
-            BYTE g = static_cast<BYTE>(std::round(color->y * 255.f));
-            BYTE b = static_cast<BYTE>(std::round(color->z * 255.f));
+                BYTE r = static_cast<BYTE>(std::round(color->x * 255.f));
+                BYTE g = static_cast<BYTE>(std::round(color->y * 255.f));
+                BYTE b = static_cast<BYTE>(std::round(color->z * 255.f));
 
-            COLORREF cr = RGB(r, g, b);
-            SetPixel(hdc, x, y, cr);
+                COLORREF cr = RGB(r, g, b);
+                SetPixel(hdc, x, y, cr);
+            }
         }
     }
 
@@ -97,7 +106,14 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
 {
     XMFLOAT4 *floats = &m_colors[y * m_windowWidth + x];
     XMStoreFloat4(floats, color);
-    BOOL success = InvalidateRect(m_hwnd, nullptr, FALSE);
+
+    LONG left = static_cast<LONG>(x);
+    LONG top = static_cast<LONG>(y);
+    LONG right = left + 1;
+    LONG bottom = top + 1;
+
+    RECT r{left, top, right, bottom};
+    BOOL success = InvalidateRect(m_hwnd, &r, FALSE);
     if (!success)
     {
         CheckLastError();
