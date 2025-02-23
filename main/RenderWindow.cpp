@@ -94,10 +94,6 @@ void RenderWindow::OnRender()
     LONG colorsTop = 0;
     LONG colorsBottom = static_cast<LONG>(m_colorsHeight);
 
-    std::string msg =
-        std::format("*** render x:{}-{}, y:{}-{}\n", rect.left, rect.right, rect.top, rect.bottom);
-    OutputDebugStringA(msg.c_str());
-
     rect.left = std::clamp(rect.left, colorsLeft, colorsRight);
     rect.right = std::clamp(rect.right, colorsLeft, colorsRight);
     rect.top = std::clamp(rect.top, colorsTop, colorsBottom);
