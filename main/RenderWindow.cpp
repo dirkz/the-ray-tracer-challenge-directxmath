@@ -15,9 +15,16 @@ RenderWindow::RenderWindow()
     unsigned height = rect.bottom - rect.top;
 
     m_hdc = CreateCompatibleDC(nullptr);
+    if (m_hdc == nullptr)
+    {
+        CheckLastError();
+    }
     assert(m_hdc != nullptr);
     m_bitmap = CreateCompatibleBitmap(m_hdc, width, height);
-    assert(m_bitmap != nullptr);
+    if (m_bitmap == nullptr)
+    {
+        CheckLastError();
+    }
 
     m_thread = std::thread{[this, width, height]() {
         auto t1 = Scaling(100, 100, 100);
