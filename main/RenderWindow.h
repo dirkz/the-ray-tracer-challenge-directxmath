@@ -19,6 +19,7 @@ struct RenderWindow
     void OnResize(unsigned width, unsigned height);
     void OnRender();
     void OnDestroy();
+    void SetPixel(unsigned x, unsigned y, COLORREF color);
 
 	void XM_CALLCONV operator()(unsigned x, unsigned y, FXMVECTOR color);
 

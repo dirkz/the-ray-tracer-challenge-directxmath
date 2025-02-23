@@ -5,6 +5,8 @@
 namespace zrt
 {
 
+constexpr UINT WM_SET_PIXEL = WM_USER + 5;
+
 constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
@@ -105,6 +107,26 @@ void RenderWindow::OnDestroy()
     m_thread.join();
 }
 
+void RenderWindow::SetPixel(unsigned x, unsigned y, COLORREF color)
+{
+    HBITMAP oldBitmap = static_cast<HBITMAP>(SelectObject(m_hdc, m_bitmap));
+
+    COLORREF result = ::SetPixel(m_hdc, x, y, color);
+
+    if (result == -1)
+    {
+        OutputDebugString(L"no SetPixel()\n");
+    }
+
+    SelectObject(m_hdc, oldBitmap);
+
+    BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
+    if (!b)
+    {
+        OutputDebugString(L"InvalidateRect failed\n");
+    }
+}
+
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
     XMFLOAT4 floats;
@@ -114,25 +136,13 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
     BYTE g = static_cast<BYTE>(floats.y * 255.f);
     BYTE b = static_cast<BYTE>(floats.z * 255.f);
 
-    HBITMAP oldBitmap = static_cast<HBITMAP>(SelectObject(m_hdc, m_bitmap));
+    WPARAM wParam = MAKEWPARAM(x, y);
+    LPARAM lParam = RGB(r, g, b);
 
-    COLORREF result = SetPixel(m_hdc, x, y, RGB(r, g, b));
-
-    if (result == -1)
+    BOOL success = PostMessage(m_hwnd, WM_SET_PIXEL, wParam, lParam);
+    if (!success)
     {
-        OutputDebugString(L"no SetPixel()\n");
-    }
-
-    SelectObject(m_hdc, oldBitmap);
-
-    if (m_hwnd != nullptr)
-    {
-        BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
-        if (!b)
-        {
-            OutputDebugString(L"InvalidateRect failed\n");
-            PostMessage(m_hwnd, WM_PAINT, 0, 0);
-        }
+        CheckLastError();
     }
 }
 
@@ -160,6 +170,14 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
         case WM_PAINT:
             pCallback->OnRender();
+            return 0;
+
+        case WM_SET_PIXEL: {
+            WORD x = LOWORD(wParam);
+            WORD y = HIWORD(wParam);
+            COLORREF color = static_cast<COLORREF>(lParam);
+            pCallback->SetPixel(x, y, color);
+        }
             return 0;
 
         case WM_SIZE: {
