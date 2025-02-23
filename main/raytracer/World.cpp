@@ -49,20 +49,11 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
         Ray lightRay = Ray{comps.Point(), XMVector4Normalize(pointToLightV)};
         auto intersections = Intersect(lightRay);
         bool isInLight = true;
-        if (intersections.empty())
-        {
-            isInLight = true;
-        }
-        else
+        if (!intersections.empty())
         {
             float lightDistance = XMVectorGetX(XMVector4Length(pointToLightV));
             float nearestT = intersections[0].T();
-            float diff = nearestT - lightDistance;
-            if (std::abs(diff) < 0.01f)
-            {
-                isInLight = true;
-            }
-            else
+            if (nearestT < lightDistance)
             {
                 isInLight = false;
             }
