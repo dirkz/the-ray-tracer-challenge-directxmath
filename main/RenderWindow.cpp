@@ -30,6 +30,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
     m_colorsWidth = width;
     m_colorsHeight = height;
+
     m_colors.resize(width * height);
 
     m_thread = std::thread{[this, width, height]() {
@@ -56,8 +57,6 @@ void RenderWindow::OnActivate(bool isBeingActivated)
 
 void RenderWindow::OnResize(unsigned width, unsigned height)
 {
-    m_windowWidth = width;
-    m_windowHeight = height;
 }
 
 void RenderWindow::OnRender()
@@ -100,7 +99,7 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
-    XMFLOAT4 *floats = &m_colors[y * m_windowWidth + x];
+    XMFLOAT4 *floats = &m_colors[y * m_colorsWidth + x];
     XMStoreFloat4(floats, color);
 
     LONG left = static_cast<LONG>(x);

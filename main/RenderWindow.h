@@ -24,8 +24,6 @@ struct RenderWindow
   private:
     std::thread m_thread;
     HWND m_hwnd;
-    unsigned m_windowWidth;
-    unsigned m_windowHeight;
     std::vector<XMFLOAT4> m_colors;
     unsigned m_colorsWidth;
     unsigned m_colorsHeight;
