@@ -5,7 +5,6 @@
 namespace zrt
 {
 
-constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
 RECT RenderWindow::DesiredRect()
@@ -34,6 +33,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
     m_colors.resize(width * height);
 
     m_thread = std::thread{[this, width, height]() {
+        constexpr float Fov = std::numbers::pi_v<float> / 2;
+
         auto t1 = Scaling(100, 100, 100);
         Sphere s1{t1};
 
