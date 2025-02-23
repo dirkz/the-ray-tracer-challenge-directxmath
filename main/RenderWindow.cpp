@@ -114,6 +114,8 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
     BYTE g = static_cast<BYTE>(floats.y * 255.f);
     BYTE b = static_cast<BYTE>(floats.z * 255.f);
 
+    HBITMAP oldBitmap = static_cast<HBITMAP>(SelectObject(m_hdc, m_bitmap));
+
     COLORREF result = SetPixel(m_hdc, x, y, RGB(r, g, b));
 
     if (result == -1)
@@ -121,13 +123,15 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
         OutputDebugString(L"no SetPixel()\n");
     }
 
+    SelectObject(m_hdc, oldBitmap);
+
     if (m_hwnd != nullptr)
     {
         BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
         if (!b)
         {
             OutputDebugString(L"InvalidateRect failed\n");
-			PostMessage(m_hwnd, WM_PAINT, 0, 0);
+            PostMessage(m_hwnd, WM_PAINT, 0, 0);
         }
     }
 }
