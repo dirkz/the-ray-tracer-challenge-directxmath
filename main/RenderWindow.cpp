@@ -37,13 +37,18 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
     m_thread = std::thread{[this, width, height]() {
         constexpr float Fov = std::numbers::pi_v<float> / 2;
+        
+        constexpr float Ambient = 0.5f;
+        constexpr float Diffuse = 0.3f;
+        constexpr float Specular = 0.9f;
+        constexpr float Shininess = 50.f;
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
-        auto mat1 = Material{Colors::Aquamarine, 0.9f, 0.9f, 200.f};
+        auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-10, 0, 0));
-        auto mat2 = Material{Colors::IndianRed, 0.9f, 0.9f, 200.f};
+        auto mat2 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
 
         PointLight l{Point(-50, 0, 0), Color(1.0f, 1.0f, 1.0f)};
