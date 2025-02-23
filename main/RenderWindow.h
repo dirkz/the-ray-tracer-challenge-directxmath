@@ -9,8 +9,6 @@ namespace zrt
 
 struct RenderWindow
 {
-    ~RenderWindow();
-
     RECT DesiredRect();
 
     void OnInit(HWND hwnd, unsigned width, unsigned height);
@@ -18,19 +16,17 @@ struct RenderWindow
     void OnResize(unsigned width, unsigned height);
     void OnRender();
     void OnDestroy();
-    void SetPixel(unsigned x, unsigned y, COLORREF color);
 
 	void XM_CALLCONV operator()(unsigned x, unsigned y, FXMVECTOR color);
 
     int Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd);
 
   private:
-    HDC m_hdc;
-    HBITMAP m_bitmap;
     std::thread m_thread;
     HWND m_hwnd;
     unsigned m_windowWidth;
     unsigned m_windowHeight;
+    std::vector<XMFLOAT4> m_colors;
 };
 
 } // namespace zrt

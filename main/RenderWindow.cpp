@@ -5,16 +5,8 @@
 namespace zrt
 {
 
-constexpr UINT WM_SET_PIXEL = WM_USER + 5;
-
 constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
-
-RenderWindow::~RenderWindow()
-{
-    DeleteObject(m_bitmap);
-    DeleteDC(m_hdc);
-}
 
 RECT RenderWindow::DesiredRect()
 {
@@ -36,17 +28,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 {
     m_hwnd = hwnd;
 
-    m_hdc = CreateCompatibleDC(nullptr);
-    if (m_hdc == nullptr)
-    {
-        CheckLastError();
-    }
-    assert(m_hdc != nullptr);
-    m_bitmap = CreateCompatibleBitmap(m_hdc, width, height);
-    if (m_bitmap == nullptr)
-    {
-        CheckLastError();
-    }
+    m_colors.resize(width * height);
 
     m_thread = std::thread{[this, width, height]() {
         auto t1 = Scaling(100, 100, 100);
@@ -86,12 +68,6 @@ void RenderWindow::OnRender()
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
-    BOOL b = BitBlt(hdc, 0, 0, m_windowWidth, m_windowHeight, m_hdc, 0, 0, SRCCOPY);
-    if (!b)
-    {
-        CheckLastError();
-    }
-
     EndPaint(m_hwnd, &ps);
 }
 
@@ -100,43 +76,10 @@ void RenderWindow::OnDestroy()
     m_thread.join();
 }
 
-void RenderWindow::SetPixel(unsigned x, unsigned y, COLORREF color)
-{
-    HBITMAP oldBitmap = static_cast<HBITMAP>(SelectObject(m_hdc, m_bitmap));
-
-    COLORREF result = ::SetPixel(m_hdc, x, y, color);
-
-    if (result == -1)
-    {
-        OutputDebugString(L"no SetPixel()\n");
-    }
-
-    SelectObject(m_hdc, oldBitmap);
-
-    BOOL b = InvalidateRect(m_hwnd, nullptr, TRUE);
-    if (!b)
-    {
-        OutputDebugString(L"InvalidateRect failed\n");
-    }
-}
-
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
     XMFLOAT4 floats;
     XMStoreFloat4(&floats, color);
-
-    BYTE r = static_cast<BYTE>(floats.x * 255.f);
-    BYTE g = static_cast<BYTE>(floats.y * 255.f);
-    BYTE b = static_cast<BYTE>(floats.z * 255.f);
-
-    WPARAM wParam = MAKEWPARAM(x, y);
-    LPARAM lParam = RGB(r, g, b);
-
-    BOOL success = PostMessage(m_hwnd, WM_SET_PIXEL, wParam, lParam);
-    if (!success)
-    {
-        CheckLastError();
-    }
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -163,14 +106,6 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 
         case WM_PAINT:
             pCallback->OnRender();
-            return 0;
-
-        case WM_SET_PIXEL: {
-            WORD x = LOWORD(wParam);
-            WORD y = HIWORD(wParam);
-            COLORREF color = static_cast<COLORREF>(lParam);
-            pCallback->SetPixel(x, y, color);
-        }
             return 0;
 
         case WM_SIZE: {
