@@ -76,6 +76,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         Camera camera{CanvasWidth, CanvasHeight, Fov, cameraTransform};
 
         Render(camera, world, *this);
+
+        OutputDebugString(L"*** rendering finished\n");
     }};
 }
 
