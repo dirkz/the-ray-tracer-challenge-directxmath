@@ -40,7 +40,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
         PointLight l{Point(-50, 0, -50), Color(1, 1, 1)};
 
-        auto from = Point(0, 0, -200);
+        auto from = Point(0, 0, -300);
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
         auto cameraTransform = ViewTransform(from, to, up);
