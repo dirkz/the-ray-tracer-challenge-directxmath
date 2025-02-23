@@ -55,14 +55,6 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
         bool isInLight = true;
         if (pNearestIntersection)
         {
-            if (pNearestIntersection->Object() == comps.Object())
-            {
-                OutputDebugString(L"hit myself\n");
-            }
-            else
-            {
-                OutputDebugString(L"hit something else indeed\n");
-            }
             float lightDistance = XMVectorGetX(XMVector4Length(pointToLightVector));
             float nearestT = pNearestIntersection->T();
             if (nearestT < lightDistance)
@@ -70,10 +62,8 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
                 isInLight = false;
             }
         }
-        else
-        {
-            OutputDebugString(L"no intersection\n");
-        }
+
+        isInLight = true;
 
         XMVECTOR c = comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(),
                                                          comps.Normal(), isInLight);
