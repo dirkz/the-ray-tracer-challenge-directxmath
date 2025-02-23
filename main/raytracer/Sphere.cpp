@@ -7,7 +7,7 @@ namespace zrt
 
 std::vector<Intersection> Sphere::Intersect(const Ray &ray) const
 {
-    Ray ray2 = ray.Transform(XMMatrixInverse(nullptr, Transform()));
+    Ray ray2 = ray.Transform(InverseTransform());
 
     // The sphere is at the origin, so the vector to the ray is simply
     // the ray's origin. But we have to set w = 0, hence the subtraction
