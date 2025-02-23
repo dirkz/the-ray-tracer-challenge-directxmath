@@ -10,6 +10,7 @@ namespace zrt
 struct RenderWindow
 {
     RenderWindow();
+    ~RenderWindow();
 
     RECT DesiredRect();
 
@@ -29,6 +30,10 @@ struct RenderWindow
     Canvas m_canvas;
     unsigned m_windowsWidth;
     unsigned m_windowsHeight;
+
+    HDC m_hdcDesktop;
+    HDC m_hdcMemory;
+    HBITMAP m_hbitmap;
 };
 
 } // namespace zrt

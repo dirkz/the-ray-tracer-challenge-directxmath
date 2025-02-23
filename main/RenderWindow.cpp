@@ -11,8 +11,17 @@ constexpr unsigned CanvasWidth = 450;
 constexpr unsigned CanvasHeight = 300;
 
 RenderWindow::RenderWindow()
-    : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0}
+    : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0},
+      m_hdcDesktop{GetDC(nullptr)}, m_hdcMemory{CreateCompatibleDC(m_hdcDesktop)},
+      m_hbitmap{CreateCompatibleBitmap(m_hdcMemory, CanvasWidth, CanvasHeight)}
 {
+    SelectObject(m_hdcMemory, m_hbitmap);
+}
+
+RenderWindow::~RenderWindow()
+{
+    DeleteDC(m_hdcMemory);
+    DeleteObject(m_hbitmap);
 }
 
 RECT RenderWindow::DesiredRect()
@@ -87,24 +96,26 @@ void RenderWindow::OnRender()
         return;
     }
 
-    unsigned offsetX = (m_windowsWidth - CanvasWidth) / 2;
-    unsigned offsetY = (m_windowsHeight - CanvasHeight) / 2;
-
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
     RECT rect = ps.rcPaint;
 
-    for (LONG y = rect.top; y < rect.bottom; ++y)
-    {
-        for (LONG x = rect.left; x < rect.right; ++x)
-        {
-            unsigned canvasX = x - offsetX;
-            unsigned canvasY = y - offsetY;
+    unsigned offsetX = (m_windowsWidth - CanvasWidth) / 2;
+    unsigned offsetY = (m_windowsHeight - CanvasHeight) / 2;
 
-            if (canvasX < m_canvas.Width() && canvasY < m_canvas.Height())
+    unsigned canvasLeft = rect.left - offsetX;
+    unsigned canvasRight = rect.right - offsetX;
+    unsigned canvasTop = rect.top - offsetY;
+    unsigned canvasBottom = rect.bottom - offsetY;
+
+    for (unsigned y = canvasTop; y < canvasBottom; ++y)
+    {
+        for (unsigned x = canvasLeft; x < canvasRight; ++x)
+        {
+            if (x < m_canvas.Width() && y < m_canvas.Height())
             {
-                XMVECTOR colorv = m_canvas.GetPixel(canvasX, canvasY);
+                XMVECTOR colorv = m_canvas.GetPixel(x, y);
 
                 XMFLOAT4 color;
                 XMStoreFloat4(&color, colorv);
@@ -114,14 +125,17 @@ void RenderWindow::OnRender()
                 BYTE b = static_cast<BYTE>(std::round(color.z * 255.f));
 
                 COLORREF cr = RGB(r, g, b);
-                SetPixel(hdc, x, y, cr);
-            }
-            else
-            {
-                COLORREF cr = RGB(0, 0, 0);
-                SetPixel(hdc, x, y, cr);
+                SetPixel(m_hdcMemory, x, y, cr);
             }
         }
+    }
+
+    BOOL success =
+        BitBlt(hdc, offsetX, offsetY, CanvasWidth, CanvasHeight, m_hdcMemory, 0, 0, SRCCOPY);
+
+    if (!success)
+    {
+        CheckLastError();
     }
 
     EndPaint(m_hwnd, &ps);
