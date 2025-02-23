@@ -101,8 +101,10 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
+    XMVECTOR clampedColor = XMVectorClamp(color, XMVectorZero(), XMVectorSplatOne());
+
     XMFLOAT4 *floats = &m_colors[y * m_colorsWidth + x];
-    XMStoreFloat4(floats, color);
+    XMStoreFloat4(floats, clampedColor);
 
     LONG left = static_cast<LONG>(x);
     LONG top = static_cast<LONG>(y);
