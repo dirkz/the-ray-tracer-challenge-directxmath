@@ -1,5 +1,6 @@
 #include "World.h"
 
+#include "Constants.h"
 #include "Intersection.h"
 
 namespace zrt
@@ -42,7 +43,7 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 {
     XMVECTOR color = XMVectorZero();
 
-    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.0001f);
+    XMVECTOR overNormal = XMVectorScale(comps.Normal(), Epsilon);
     XMVECTOR overPoint = XMVectorAdd(comps.Point(), overNormal);
 
     for (const PointLight &light : Lights())

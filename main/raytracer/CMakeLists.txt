@@ -1,4 +1,5 @@
 add_library(raytracer OBJECT
+	Constants.h
 	Ray.h
 	Ray.cpp
 	Vector.h
