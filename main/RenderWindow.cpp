@@ -39,14 +39,14 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Fov = std::numbers::pi_v<float> / 2;
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
-        auto mat1 = Material{Colors::Aquamarine, 0.9f};
+        auto mat1 = Material{Colors::Aquamarine, 0.9f, 0.9f, 200.f};
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-10, 0, 0));
-        auto mat2 = Material{Colors::IndianRed, 0.9f};
+        auto mat2 = Material{Colors::IndianRed, 0.9f, 0.9f, 200.f};
         Sphere s2{t2, mat2};
 
-        PointLight l{Point(-5, 0, 0), Color(1.0f, 1.0f, 1.0f)};
+        PointLight l{Point(-50, 0, 0), Color(1.0f, 1.0f, 1.0f)};
 
         World world{l, {&s1, &s2}};
 
