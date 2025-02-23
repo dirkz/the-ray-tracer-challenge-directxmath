@@ -10,7 +10,7 @@ constexpr POINT MinimumWindowsDimensions{300, 300};
 constexpr unsigned CanvasWidth = 450;
 constexpr unsigned CanvasHeight = 300;
 
-RenderWindow::RenderWindow() : m_canvas{CanvasWidth, CanvasHeight}
+RenderWindow::RenderWindow() : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}
 {
 }
 
