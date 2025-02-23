@@ -11,8 +11,6 @@
 
 #include <comdef.h>
 
-#include "Error.h"
-
 #endif
 
 #include <array>
@@ -35,5 +33,11 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+#ifdef _WIN32
+
+#include "Error.h"
+
+#endif
 
 using namespace DirectX; // for XMFLOAT3 etc.
