@@ -20,13 +20,18 @@ RenderWindow::RenderWindow()
     assert(m_bitmap != nullptr);
 
     m_thread = std::thread{[this, width, height]() {
-        auto from = Point(0, 0, -5);
+        auto t1 = Scaling(100, 100, 100);
+        Sphere s1{t1};
+
+        PointLight l{Point(-50, 0, -50), Color(1, 1, 1)};
+
+        auto from = Point(0, 0, -200);
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
-        auto transform = ViewTransform(from, to, up);
-        Camera camera{width, height, Fov, transform};
+        auto cameraTransform = ViewTransform(from, to, up);
+        Camera camera{width, height, Fov, cameraTransform};
 
-        World world{};
+        World world{l, {&s1}};
 
         Render(camera, world, *this);
     }};
@@ -82,8 +87,7 @@ void RenderWindow::OnRender()
     BOOL b = BitBlt(hdc, 0, 0, m_windowWidth, m_windowHeight, m_hdc, 0, 0, SRCCOPY);
     if (!b)
     {
-        DWORD error = GetLastError();
-        OutputDebugString(L"BitBlt failed\n");
+        CheckLastError();
     }
 
     EndPaint(m_hwnd, &ps);

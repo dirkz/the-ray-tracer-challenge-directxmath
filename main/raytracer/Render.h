@@ -7,6 +7,9 @@
 #include "CoordinateProvider.h"
 #include "World.h"
 #include "Matrix.h"
+#include "Sphere.h"
+#include "PointLight.h"
+#include "Vector.h"
 
 namespace zrt
 {
