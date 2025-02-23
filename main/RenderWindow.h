@@ -9,7 +9,6 @@ namespace zrt
 
 struct RenderWindow
 {
-    RenderWindow();
     ~RenderWindow();
 
     RECT DesiredRect();

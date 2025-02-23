@@ -10,11 +10,31 @@ constexpr UINT WM_SET_PIXEL = WM_USER + 5;
 constexpr float Fov = std::numbers::pi_v<float>;
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
-RenderWindow::RenderWindow()
+RenderWindow::~RenderWindow()
 {
-    RECT rect = DesiredRect();
-    unsigned width = rect.right - rect.left;
-    unsigned height = rect.bottom - rect.top;
+    DeleteObject(m_bitmap);
+    DeleteDC(m_hdc);
+}
+
+RECT RenderWindow::DesiredRect()
+{
+    int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
+
+    int screenWidthQuarter = screenWidth / 4;
+    int screenHeightHalve = screenHeight / 2;
+
+    int left = screenWidthQuarter;
+    int right = 3 * screenWidthQuarter;
+    int top = 0;
+    int height = screenHeightHalve;
+
+    return RECT{left, top, right, height};
+}
+
+void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
+{
+    m_hwnd = hwnd;
 
     m_hdc = CreateCompatibleDC(nullptr);
     if (m_hdc == nullptr)
@@ -44,33 +64,6 @@ RenderWindow::RenderWindow()
 
         Render(camera, world, *this);
     }};
-}
-
-RenderWindow::~RenderWindow()
-{
-    DeleteObject(m_bitmap);
-    DeleteDC(m_hdc);
-}
-
-RECT RenderWindow::DesiredRect()
-{
-    int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
-    int screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
-
-    int screenWidthQuarter = screenWidth / 4;
-    int screenHeightHalve = screenHeight / 2;
-
-    int left = screenWidthQuarter;
-    int right = 3 * screenWidthQuarter;
-    int top = 0;
-    int height = screenHeightHalve;
-
-    return RECT{left, top, right, height};
-}
-
-void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
-{
-    m_hwnd = hwnd;
 }
 
 void RenderWindow::OnActivate(bool isBeingActivated)
