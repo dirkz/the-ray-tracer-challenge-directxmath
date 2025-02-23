@@ -25,7 +25,9 @@ add_library(raytracer OBJECT
 	Canvas.cpp
 	Render.h
 	CoordinateProvider.h
-	CoordinateProvider.cpp)
+	CoordinateProvider.cpp
+	Plane.h
+	Plane.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
