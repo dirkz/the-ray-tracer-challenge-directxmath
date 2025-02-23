@@ -49,7 +49,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto mat3 = Material{Colors::YellowGreen, 0.9f, 0.9f, 0.1f, 0.1f};
         Sphere s3{t3, mat3};
 
-        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.1f), Translation(0, 0, 100));
+        auto t4 = XMMatrixMultiply(Scaling(1000, 1000, 0.5f), Translation(0, 0, 100));
         auto mat4 = Material{Colors::BlanchedAlmond, 0.9f, 0.9f, 0.1f, 0.1f};
         Sphere s4{t4, mat4};
 
