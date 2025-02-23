@@ -114,7 +114,12 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
     BYTE g = static_cast<BYTE>(floats.y * 255.f);
     BYTE b = static_cast<BYTE>(floats.z * 255.f);
 
-    SetPixel(m_hdc, x, y, RGB(r, g, b));
+    COLORREF result = SetPixel(m_hdc, x, y, RGB(r, g, b));
+
+    if (result == -1)
+    {
+        OutputDebugString(L"no SetPixel()\n");
+    }
 
     if (m_hwnd != nullptr)
     {
