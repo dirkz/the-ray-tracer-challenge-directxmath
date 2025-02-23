@@ -63,8 +63,6 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
             }
         }
 
-        isInLight = true;
-
         XMVECTOR c = comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(),
                                                          comps.Normal(), isInLight);
         color = XMVectorAdd(color, c);
