@@ -10,7 +10,7 @@ Material::Material(FXMVECTOR color, float ambient, float diffuse, float specular
 }
 
 XMVECTOR XM_CALLCONV Material::Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
-                                        FXMVECTOR normal) const
+                                        FXMVECTOR normal, bool isInLight) const
 {
     XMVECTOR diffuse = XMVectorZero();
     XMVECTOR specular = XMVectorZero();
@@ -40,7 +40,14 @@ XMVECTOR XM_CALLCONV Material::Lighting(const PointLight &light, FXMVECTOR posit
         }
     }
 
-    XMVECTOR sumv = XMVectorAdd(XMVectorAdd(ambient, diffuse), specular);
+    XMVECTOR sumv = ambient;
+
+    if (isInLight)
+    {
+        sumv = XMVectorAdd(sumv, diffuse);
+        sumv = XMVectorAdd(sumv, specular);
+    }
+
     sumv = XMVectorSetW(sumv, 1);
 
     return sumv;

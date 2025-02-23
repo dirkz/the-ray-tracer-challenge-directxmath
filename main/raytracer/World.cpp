@@ -44,8 +44,15 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 
     for (const PointLight &light : Lights())
     {
-        XMVECTOR c =
-            comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(), comps.Normal());
+        XMVECTOR lp = light.Position();
+        XMVECTOR pointToLight = XMVectorSubtract(lp, comps.Point());
+        float lightDistance = XMVectorGetX(XMVector4Length(pointToLight));
+        Ray lightRay = Ray{comps.Point(), XMVectorScale(pointToLight, lightDistance)};
+        auto intersections = Intersect(lightRay);
+        bool isInLight = std::abs(intersections[0].T() - lightDistance) > 0.001f;
+
+        XMVECTOR c = comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(),
+                                                         comps.Normal(), isInLight);
         color = XMVectorAdd(color, c);
     }
 
