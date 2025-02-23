@@ -71,14 +71,18 @@ void RenderWindow::OnRender()
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
-    RECT updateRect = ps.rcPaint;
+    RECT rect = ps.rcPaint;
 
-    updateRect.right = std::min(static_cast<LONG>(m_colorsWidth), updateRect.right);
-    updateRect.bottom = std::min(static_cast<LONG>(m_colorsHeight), updateRect.bottom);
+    std::string msg =
+        std::format("*** render x:{}-{}, y:{}-{}\n", rect.left, rect.right, rect.top, rect.bottom);
+    OutputDebugStringA(msg.c_str());
 
-    for (LONG y = updateRect.top; y < updateRect.bottom; ++y)
+    rect.right = std::min(static_cast<LONG>(m_colorsWidth), rect.right);
+    rect.bottom = std::min(static_cast<LONG>(m_colorsHeight), rect.bottom);
+
+    for (LONG y = rect.top; y < rect.bottom; ++y)
     {
-        for (LONG x = updateRect.left; x < updateRect.right; ++x)
+        for (LONG x = rect.left; x < rect.right; ++x)
         {
             XMFLOAT4 *color = &m_colors[y * m_colorsWidth + x];
 

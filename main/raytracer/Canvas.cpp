@@ -19,7 +19,8 @@ Canvas::Canvas(unsigned width, unsigned height)
 
 void XM_CALLCONV Canvas::SetPixel(unsigned x, unsigned y, FXMVECTOR color)
 {
-    XMStoreFloat4(&m_pixels[y * m_width + x], color);
+    XMVECTOR clampedColor = XMVectorClamp(color, XMVectorZero(), XMVectorSplatOne());
+    XMStoreFloat4(&m_pixels[y * m_width + x], clampedColor);
 }
 
 XMVECTOR XM_CALLCONV Canvas::GetPixel(unsigned x, unsigned y)
