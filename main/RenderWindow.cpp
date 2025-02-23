@@ -7,8 +7,8 @@ namespace zrt
 
 constexpr POINT MinimumWindowsDimensions{300, 300};
 
-constexpr unsigned CanvasWidth = 450;
-constexpr unsigned CanvasHeight = 300;
+constexpr unsigned CanvasWidth = 600;
+constexpr unsigned CanvasHeight = 400;
 
 RenderWindow::RenderWindow()
     : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0},
