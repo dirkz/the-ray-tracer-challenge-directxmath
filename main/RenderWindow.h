@@ -27,6 +27,8 @@ struct RenderWindow
     std::thread m_thread;
     HWND m_hwnd;
     Canvas m_canvas;
+    unsigned m_windowsWidth;
+    unsigned m_windowsHeight;
 };
 
 } // namespace zrt

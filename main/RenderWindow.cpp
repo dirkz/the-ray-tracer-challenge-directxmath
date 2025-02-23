@@ -77,6 +77,8 @@ void RenderWindow::OnActivate(bool isBeingActivated)
 
 void RenderWindow::OnResize(unsigned width, unsigned height)
 {
+    m_windowsWidth = width;
+    m_windowsHeight = height;
 }
 
 void RenderWindow::OnRender()
@@ -86,36 +88,41 @@ void RenderWindow::OnRender()
         return;
     }
 
+    unsigned offsetX = (m_windowsWidth - CanvasWidth) / 2;
+    unsigned offsetY = (m_windowsHeight - CanvasHeight) / 2;
+
     PAINTSTRUCT ps;
     HDC hdc = BeginPaint(m_hwnd, &ps);
 
     RECT rect = ps.rcPaint;
 
-    LONG colorsLeft = 0;
-    LONG colorsRight = static_cast<LONG>(CanvasWidth);
-    LONG colorsTop = 0;
-    LONG colorsBottom = static_cast<LONG>(CanvasHeight);
-
-    rect.left = std::clamp(rect.left, colorsLeft, colorsRight);
-    rect.right = std::clamp(rect.right, colorsLeft, colorsRight);
-    rect.top = std::clamp(rect.top, colorsTop, colorsBottom);
-    rect.bottom = std::clamp(rect.bottom, colorsTop, colorsBottom);
-
     for (LONG y = rect.top; y < rect.bottom; ++y)
     {
         for (LONG x = rect.left; x < rect.right; ++x)
         {
-            XMVECTOR colorv = m_canvas.GetPixel(x, y);
+            unsigned canvasX = x - offsetX;
+            unsigned canvasY = y - offsetY;
 
-            XMFLOAT4 color;
-            XMStoreFloat4(&color, colorv);
+            if (canvasX > 0 && canvasX < m_canvas.Width() && canvasY > 0 &&
+                canvasY < m_canvas.Height())
+            {
+                XMVECTOR colorv = m_canvas.GetPixel(canvasX, canvasY);
 
-            BYTE r = static_cast<BYTE>(std::round(color.x * 255.f));
-            BYTE g = static_cast<BYTE>(std::round(color.y * 255.f));
-            BYTE b = static_cast<BYTE>(std::round(color.z * 255.f));
+                XMFLOAT4 color;
+                XMStoreFloat4(&color, colorv);
 
-            COLORREF cr = RGB(r, g, b);
-            SetPixel(hdc, x, y, cr);
+                BYTE r = static_cast<BYTE>(std::round(color.x * 255.f));
+                BYTE g = static_cast<BYTE>(std::round(color.y * 255.f));
+                BYTE b = static_cast<BYTE>(std::round(color.z * 255.f));
+
+                COLORREF cr = RGB(r, g, b);
+                SetPixel(hdc, x, y, cr);
+            }
+            else
+            {
+                COLORREF cr = RGB(0, 0, 0);
+                SetPixel(hdc, x, y, cr);
+            }
         }
     }
 
