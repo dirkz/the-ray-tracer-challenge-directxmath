@@ -28,6 +28,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 {
     m_hwnd = hwnd;
 
+    m_colorsWidth = width;
+    m_colorsHeight = height;
     m_colors.resize(width * height);
 
     m_thread = std::thread{[this, width, height]() {
@@ -78,8 +80,13 @@ void RenderWindow::OnDestroy()
 
 void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR color)
 {
-    XMFLOAT4 floats;
-    XMStoreFloat4(&floats, color);
+    XMFLOAT4 *floats = &m_colors[y * m_windowWidth + x];
+    XMStoreFloat4(floats, color);
+    BOOL success = InvalidateRect(m_hwnd, nullptr, FALSE);
+    if (!success)
+    {
+        CheckLastError();
+    }
 }
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
