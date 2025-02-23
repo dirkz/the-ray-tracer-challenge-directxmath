@@ -40,8 +40,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
         constexpr float Ambient = 0.5f;
         constexpr float Diffuse = 0.7f;
-        constexpr float Specular = 0.9f;
-        constexpr float Shininess = 50.f;
+        constexpr float Specular = 0.3f;
+        constexpr float Shininess = 10.f;
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
