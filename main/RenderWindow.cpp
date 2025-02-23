@@ -13,7 +13,7 @@ constexpr unsigned CanvasHeight = 300;
 RenderWindow::RenderWindow()
     : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0},
       m_hdcDesktop{GetDC(nullptr)}, m_hdcMemory{CreateCompatibleDC(m_hdcDesktop)},
-      m_hbitmap{CreateCompatibleBitmap(m_hdcMemory, CanvasWidth, CanvasHeight)}
+      m_hbitmap{CreateCompatibleBitmap(m_hdcDesktop, CanvasWidth, CanvasHeight)}
 {
     SelectObject(m_hdcMemory, m_hbitmap);
 }
