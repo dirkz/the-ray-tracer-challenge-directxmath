@@ -103,8 +103,7 @@ void RenderWindow::OnRender()
             unsigned canvasX = x - offsetX;
             unsigned canvasY = y - offsetY;
 
-            if (canvasX > 0 && canvasX < m_canvas.Width() && canvasY > 0 &&
-                canvasY < m_canvas.Height())
+            if (canvasX < m_canvas.Width() && canvasY < m_canvas.Height())
             {
                 XMVECTOR colorv = m_canvas.GetPixel(canvasX, canvasY);
 
@@ -139,8 +138,11 @@ void XM_CALLCONV RenderWindow::operator()(unsigned x, unsigned y, FXMVECTOR colo
     XMVECTOR clampedColor = XMVectorClamp(color, XMVectorZero(), XMVectorSplatOne());
     m_canvas.SetPixel(x, y, clampedColor);
 
-    LONG left = static_cast<LONG>(x);
-    LONG top = static_cast<LONG>(y);
+    unsigned offsetX = (m_windowsWidth - CanvasWidth) / 2;
+    unsigned offsetY = (m_windowsHeight - CanvasHeight) / 2;
+
+    LONG left = static_cast<LONG>(x + offsetX);
+    LONG top = static_cast<LONG>(y + offsetY);
     LONG right = left + 1;
     LONG bottom = top + 1;
 
