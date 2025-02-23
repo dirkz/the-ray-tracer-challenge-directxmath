@@ -37,11 +37,11 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
     m_thread = std::thread{[this, width, height]() {
         constexpr float Fov = std::numbers::pi_v<float> / 2;
 
-        auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(15, 0, 0));
+        auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, 0.9f};
         Sphere s1{t1, mat1};
 
-        auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-5, 0, 0));
+        auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-10, 0, 0));
         auto mat2 = Material{Colors::IndianRed, 0.9f};
         Sphere s2{t2, mat2};
 
@@ -49,7 +49,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
         World world{l, {&s1, &s2}};
 
-        auto from = Point(0, 0, -30);
+        auto from = Point(0, 0, -25);
         auto to = Point(0, 0, 0);
         auto up = Vector(0, 1, 0);
         auto cameraTransform = ViewTransform(from, to, up);

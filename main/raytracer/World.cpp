@@ -42,25 +42,37 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 {
     XMVECTOR color = XMVectorZero();
 
-    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.001f);
+    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.01f);
     XMVECTOR overPoint = XMVectorAdd(comps.Point(), overNormal);
 
     for (const PointLight &light : Lights())
     {
         XMVECTOR lightPosition = light.Position();
-        XMVECTOR pointToLightV = XMVectorSubtract(lightPosition, overPoint);
-        Ray lightRay = Ray{overPoint, XMVector4Normalize(pointToLightV)};
+        XMVECTOR pointToLightVector = XMVectorSubtract(lightPosition, overPoint);
+        Ray lightRay = Ray{overPoint, XMVector4Normalize(pointToLightVector)};
         auto intersections = Intersect(lightRay);
         const Intersection *pNearestIntersection = Hit(intersections);
         bool isInLight = true;
         if (pNearestIntersection)
         {
-            float lightDistance = XMVectorGetX(XMVector4Length(pointToLightV));
+            if (pNearestIntersection->Object() == comps.Object())
+            {
+                OutputDebugString(L"hit myself\n");
+            }
+            else
+            {
+                OutputDebugString(L"hit something else indeed\n");
+            }
+            float lightDistance = XMVectorGetX(XMVector4Length(pointToLightVector));
             float nearestT = pNearestIntersection->T();
             if (nearestT < lightDistance)
             {
                 isInLight = false;
             }
+        }
+        else
+        {
+            OutputDebugString(L"no intersection\n");
         }
 
         XMVECTOR c = comps.Object()->Material().Lighting(light, comps.Point(), comps.EyeV(),
