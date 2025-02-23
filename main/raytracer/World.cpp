@@ -42,7 +42,7 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 {
     XMVECTOR color = XMVectorZero();
 
-    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.01f);
+    XMVECTOR overNormal = XMVectorScale(comps.Normal(), 0.0001f);
     XMVECTOR overPoint = XMVectorAdd(comps.Point(), overNormal);
 
     for (const PointLight &light : Lights())
