@@ -89,12 +89,19 @@ void RenderWindow::OnRender()
 
     RECT rect = ps.rcPaint;
 
+    LONG colorsLeft = 0;
+    LONG colorsRight = static_cast<LONG>(m_colorsWidth);
+    LONG colorsTop = 0;
+    LONG colorsBottom = static_cast<LONG>(m_colorsHeight);
+
     std::string msg =
         std::format("*** render x:{}-{}, y:{}-{}\n", rect.left, rect.right, rect.top, rect.bottom);
     OutputDebugStringA(msg.c_str());
 
-    rect.right = std::min(static_cast<LONG>(m_colorsWidth), rect.right);
-    rect.bottom = std::min(static_cast<LONG>(m_colorsHeight), rect.bottom);
+    rect.left = std::clamp(rect.left, colorsLeft, colorsRight);
+    rect.right = std::clamp(rect.right, colorsLeft, colorsRight);
+    rect.top = std::clamp(rect.top, colorsTop, colorsBottom);
+    rect.bottom = std::clamp(rect.bottom, colorsTop, colorsBottom);
 
     for (LONG y = rect.top; y < rect.bottom; ++y)
     {
