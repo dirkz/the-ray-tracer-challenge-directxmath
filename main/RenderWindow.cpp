@@ -56,7 +56,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto materialPlane1 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
-        PointLight l{Point(-50, 0, 0), Color(1.0f, 1.0f, 1.0f)};
+        PointLight l{Point(-500, 0, 0), Color(1.0f, 1.0f, 1.0f)};
 
         World world{l, {&s1, &s2, &p1}};
 
