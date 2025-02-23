@@ -43,6 +43,8 @@ XMVECTOR XM_CALLCONV Material::Lighting(const PointLight &light, FXMVECTOR posit
     XMVECTOR sumv = XMVectorAdd(XMVectorAdd(ambient, diffuse), specular);
     sumv = XMVectorSetW(sumv, 1);
 
+    sumv = XMVectorClamp(sumv, XMVectorZero(), XMVectorSplatOne());
+
     return sumv;
 }
 
