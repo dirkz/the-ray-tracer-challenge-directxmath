@@ -6,10 +6,13 @@ namespace zrt
 {
 
 constexpr int NumGradients = 256;
+constexpr int BitMask = NumGradients - 1;
 
 struct PerlinNoise
 {
     PerlinNoise();
+
+    float Noise(float x, float y, float z);
 
   private:
     inline int Hash(int x, int y, int z);
