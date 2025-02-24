@@ -111,7 +111,7 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light,
 
 struct StripePattern
 {
-    StripePattern(XMVECTOR color)
+    StripePattern(FXMVECTOR color)
     {
         XMStoreFloat4(&m_color, color);
     }
