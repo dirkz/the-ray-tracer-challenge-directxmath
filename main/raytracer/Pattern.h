@@ -140,4 +140,25 @@ struct NoisePattern : public Pattern
     PerlinNoise m_noise;
 };
 
+template <class A, class B> struct AddPattern
+{
+    AddPattern(A &pattern1, B &pattern2) : m_pattern1{pattern1}, m_pattern2{pattern2}
+    {
+    }
+
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
+    {
+        XMVECTOR c1 = m_pattern1(object, position, color);
+        XMVECTOR c2 = m_pattern2(object, position, color);
+        XMVECTOR sum = XMVectorAdd(c1, c2);
+        XMVECTOR clamped = XMVectorClamp(sum, XMVectorZero(), XMVectorSplatOne());
+        return clamped;
+    }
+
+  private:
+    A &m_pattern1;
+    B &m_pattern2;
+};
+
 } // namespace zrt
