@@ -60,18 +60,17 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         ModulatedPattern modulated{pattern, noise};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
-        auto mat1 =
-            PatternedMaterial{noise, Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
+        auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-12, 0, 0));
-        auto mat2 = PatternedMaterial{noise, Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
+        auto mat2 = Material{Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
 
         auto transformPlane1 =
             XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 10.f), Translation(0, -15, 0));
         auto materialPlane1 =
-            PatternedMaterial{modulated, Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
+            PatternedMaterial{added, Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-100, 0, 0), Color(1.0f, 1.0f, 1.0f)};
