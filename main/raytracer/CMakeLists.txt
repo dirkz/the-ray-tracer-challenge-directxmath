@@ -15,6 +15,7 @@ add_library(raytracer OBJECT
 	PointLight.h
 	PointLight.cpp
 	Material.h
+	Material.cpp
 	World.h
 	World.cpp
 	Computations.h
