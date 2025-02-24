@@ -57,7 +57,8 @@ struct Material
 
 struct NoPattern
 {
-    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
     {
         return color;
     }
@@ -71,7 +72,7 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const Intersectable *obj
     XMVECTOR diffuse = XMVectorZero();
     XMVECTOR specular = XMVectorZero();
 
-    XMVECTOR color = pattern(position, material.Color());
+    XMVECTOR color = pattern(object, position, material.Color());
 
     XMVECTOR effectiveColor = XMColorModulate(color, light.Intensity());
     XMVECTOR lightv = XMVector4Normalize(XMVectorSubtract(light.Position(), position));
@@ -141,7 +142,8 @@ struct StripePattern : public Pattern
         XMStoreFloat4(&m_color, color);
     }
 
-    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
     {
         float x = XMVectorGetX(position);
         float m = std::fmod(std::abs(x), 2.f);
@@ -169,7 +171,8 @@ struct TwoStripePattern : Pattern
         XMStoreFloat4(&m_color2, color2);
     }
 
-    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
     {
         float x = XMVectorGetX(position);
         float m = std::fmod(std::abs(x), 2.f);
