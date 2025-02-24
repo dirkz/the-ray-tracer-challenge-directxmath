@@ -34,6 +34,7 @@ struct RenderWindow
     HDC m_hdcDesktop;
     HDC m_hdcMemory;
     HBITMAP m_hbitmap;
+    HGDIOBJ m_hOldBitmap;
 };
 
 } // namespace zrt

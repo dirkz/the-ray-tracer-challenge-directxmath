@@ -11,15 +11,17 @@ constexpr unsigned CanvasWidth = 600;
 constexpr unsigned CanvasHeight = 400;
 
 RenderWindow::RenderWindow()
-    : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0},
-      m_hdcDesktop{GetDC(nullptr)}, m_hdcMemory{CreateCompatibleDC(m_hdcDesktop)},
-      m_hbitmap{CreateCompatibleBitmap(m_hdcDesktop, CanvasWidth, CanvasHeight)}
+    : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0}
 {
-    SelectObject(m_hdcMemory, m_hbitmap);
+    m_hdcDesktop = GetDC(nullptr);
+    m_hdcMemory = CreateCompatibleDC(m_hdcDesktop);
+    m_hbitmap = CreateCompatibleBitmap(m_hdcDesktop, CanvasWidth, CanvasHeight);
+    m_hOldBitmap = SelectObject(m_hdcMemory, m_hbitmap);
 }
 
 RenderWindow::~RenderWindow()
 {
+    SelectObject(m_hdcMemory, m_hOldBitmap);
     DeleteDC(m_hdcMemory);
     DeleteObject(m_hbitmap);
 }
