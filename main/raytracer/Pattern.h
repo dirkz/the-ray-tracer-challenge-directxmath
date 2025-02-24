@@ -127,9 +127,10 @@ struct NoisePattern : public Pattern
         XMFLOAT4 floats;
         XMStoreFloat4(&floats, patternPosition);
 
-        float noiseF = m_noise.Noise(floats.x, floats.y, floats.z);
+        float noise = m_noise.Noise(floats.x, floats.y, floats.z);
+        float scaledNoise = noise / 2.f + 1.f;
 
-        XMVECTOR scaledColor = XMVectorScale(color, noiseF);
+        XMVECTOR scaledColor = XMVectorScale(color, scaledNoise);
         XMVECTOR clampedColor = XMVectorClamp(scaledColor, XMVectorZero(), XMVectorSplatOne());
 
         return clampedColor;

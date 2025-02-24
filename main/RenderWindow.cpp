@@ -63,7 +63,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-12, 0, 0));
-        auto mat2 = Material{Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
+        auto mat2 = PatternedMaterial{noise, Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
 
         auto transformPlane1 =
