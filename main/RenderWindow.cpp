@@ -56,7 +56,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
         CirclePattern pattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
         NoisePattern noise{};
-        AddPattern combined{pattern, noise};
+        AddPattern added{pattern, noise};
+        ModulatedPattern modulated{pattern, noise};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
         auto mat1 =
@@ -70,7 +71,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto transformPlane1 =
             XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 10.f), Translation(0, -15, 0));
         auto materialPlane1 =
-            PatternedMaterial{combined, Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
+            PatternedMaterial{modulated, Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-100, 0, 0), Color(1.0f, 1.0f, 1.0f)};
