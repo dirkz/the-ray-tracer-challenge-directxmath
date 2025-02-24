@@ -77,4 +77,39 @@ struct StripePattern : public Pattern
     XMFLOAT4 m_color;
 };
 
+struct CirclePattern : public Pattern
+{
+    CirclePattern(FXMVECTOR color, FXMMATRIX transform = XMMatrixIdentity()) : Pattern{transform}
+    {
+        XMStoreFloat4(&m_color, color);
+    }
+
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
+    {
+        XMVECTOR patternPosition = PatternPosition(object, position);
+
+        XMFLOAT4 floats;
+        XMStoreFloat4(&floats, patternPosition);
+
+        XMVECTOR v = XMVectorSet(floats.x, 0.f, floats.z, 0.f);
+        XMVECTOR dv = XMVector3Length(v);
+
+        float distance = XMVectorGetX(dv);
+        float m = std::fmod(distance, 2.f);
+        float fm = std::floor(m);
+        if (std::abs(fm) == 1.f)
+        {
+            return XMLoadFloat4(&m_color);
+        }
+        else
+        {
+            return color;
+        }
+    }
+
+  private:
+    XMFLOAT4 m_color;
+};
+
 } // namespace zrt

@@ -54,7 +54,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Specular = 0.3f;
         constexpr float Shininess = 10.f;
 
-        StripePattern stripePattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
+        CirclePattern pattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
@@ -66,8 +66,8 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
 
         auto transformPlane1 =
             XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 10.f), Translation(0, -15, 0));
-        auto materialPlane1 = PatternedMaterial{stripePattern, Colors::IndianRed, Ambient,
-                                                Diffuse,       Specular,          Shininess};
+        auto materialPlane1 =
+            PatternedMaterial{pattern, Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-100, 0, 0), Color(1.0f, 1.0f, 1.0f)};
