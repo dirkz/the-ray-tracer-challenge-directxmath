@@ -29,7 +29,9 @@ add_library(raytracer OBJECT
 	CoordinateProvider.cpp
 	Plane.h
 	Plane.cpp
-	Pattern.h)
+	Pattern.h
+	PerlinNoise.cpp
+	PerlinNoise.h)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
