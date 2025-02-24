@@ -39,8 +39,6 @@ struct Intersectable
         return m_material;
     }
 
-    void Material(const zrt::Material &material);
-
   protected:
     inline XMMATRIX XM_CALLCONV InverseTransform() const
     {
@@ -56,7 +54,7 @@ struct Intersectable
     XMFLOAT4X4 m_transform;
     XMFLOAT4X4 m_inverseTransform;
     XMFLOAT4X4 m_transposedInverseTransform;
-    zrt::Material m_material;
+    const zrt::Material &m_material;
 
     void CreateDerivedTransforms(CXMMATRIX transform);
 };

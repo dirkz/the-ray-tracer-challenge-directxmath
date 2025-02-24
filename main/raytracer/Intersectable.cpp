@@ -20,11 +20,6 @@ void XM_CALLCONV Intersectable::Transform(CXMMATRIX transform)
     CreateDerivedTransforms(transform);
 }
 
-void Intersectable::Material(const zrt::Material &material)
-{
-    m_material = material;
-}
-
 void Intersectable::CreateDerivedTransforms(CXMMATRIX transform)
 {
     XMMATRIX inverse = XMMatrixInverse(nullptr, transform);
