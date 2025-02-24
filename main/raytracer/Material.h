@@ -111,7 +111,7 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light,
 
 struct Pattern
 {
-    Pattern(FXMMATRIX transform)
+    Pattern(CXMMATRIX transform)
     {
         XMStoreFloat4x4(&m_transform, transform);
         XMStoreFloat4x4(&m_inverseTransform, XMMatrixInverse(nullptr, transform));
