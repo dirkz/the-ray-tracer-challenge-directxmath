@@ -54,7 +54,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Specular = 0.3f;
         constexpr float Shininess = 10.f;
 
-        StripePattern stripePattern{Color(0, 0, 0)};
+        TwoStripePattern stripePattern{Color(0, 0, 0), Color(0, 0.7f, 0.7f)};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};

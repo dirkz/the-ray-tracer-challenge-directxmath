@@ -135,6 +135,34 @@ struct StripePattern
     XMFLOAT4 m_color;
 };
 
+struct TwoStripePattern
+{
+    TwoStripePattern(FXMVECTOR color1, FXMVECTOR color2)
+    {
+        XMStoreFloat4(&m_color1, color1);
+        XMStoreFloat4(&m_color2, color2);
+    }
+
+    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
+    {
+        float x = XMVectorGetX(position);
+        float m = std::fmod(std::abs(x), 2.f);
+        float fm = std::floor(m);
+        if (fm == 1.f)
+        {
+            return XMLoadFloat4(&m_color1);
+        }
+        else
+        {
+            return XMLoadFloat4(&m_color2);
+        }
+    }
+
+  private:
+    XMFLOAT4 m_color1;
+    XMFLOAT4 m_color2;
+};
+
 template <class T> struct PatternedMaterial : public Material
 {
     PatternedMaterial(const T &pattern, FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1,
