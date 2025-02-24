@@ -53,4 +53,58 @@ struct Material
     float m_shininess;
 };
 
+struct PatternNone
+{
+    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color)
+    {
+        return color;
+    }
+};
+
+template <class T>
+XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light, FXMVECTOR position,
+                              FXMVECTOR eyev, FXMVECTOR normal, bool isInLight,
+                              const T &pattern = PatternNone)
+{
+    XMVECTOR diffuse = XMVectorZero();
+    XMVECTOR specular = XMVectorZero();
+
+    XMVECTOR effectiveColor = XMColorModulate(material.Color(), light.Intensity());
+    XMVECTOR lightv = XMVector4Normalize(XMVectorSubtract(light.Position(), position));
+    XMVECTOR ambient = XMVectorScale(effectiveColor, material.Ambient());
+
+    float lightDotNormal = XMVectorGetX(XMVector4Dot(lightv, normal));
+    if (lightDotNormal < 0)
+    {
+        diffuse = zrt::Color(0, 0, 0);
+    }
+    else
+    {
+        diffuse = XMVectorScale(XMVectorScale(effectiveColor, material.Diffuse()), lightDotNormal);
+        XMVECTOR reflectv = Reflect(XMVectorScale(lightv, -1), normal);
+        float reflectDotEye = XMVectorGetX(XMVector4Dot(reflectv, eyev));
+        if (reflectDotEye <= 0)
+        {
+            specular = zrt::Color(0, 0, 0);
+        }
+        else
+        {
+            float factor = std::pow(reflectDotEye, material.Shininess());
+            specular = XMVectorScale(XMVectorScale(light.Intensity(), material.Specular()), factor);
+        }
+    }
+
+    XMVECTOR sumv = ambient;
+
+    if (isInLight)
+    {
+        sumv = XMVectorAdd(sumv, diffuse);
+        sumv = XMVectorAdd(sumv, specular);
+    }
+
+    sumv = XMVectorSetW(sumv, 1);
+
+    return sumv;
+}
+
 } // namespace zrt
