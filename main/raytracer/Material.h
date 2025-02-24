@@ -3,6 +3,8 @@
 #include "PointLight.h"
 #include "Vector.h"
 
+struct Intersectable;
+
 namespace zrt
 {
 
@@ -11,8 +13,8 @@ struct Material
     Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1, float diffuse = 0.9,
              float specular = 0.9, float shininess = 200);
 
-    virtual XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position,
-                                          FXMVECTOR eyev, FXMVECTOR normal,
+    virtual XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
+                                          FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
                                           bool isInLight = true) const;
 
     inline XMVECTOR XM_CALLCONV Color() const
@@ -62,9 +64,9 @@ struct NoPattern
 };
 
 template <class T>
-XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light, FXMVECTOR position,
-                              FXMVECTOR eyev, FXMVECTOR normal, bool isInLight,
-                              const T &pattern = NoPattern)
+XMVECTOR XM_CALLCONV Lighting(const Material &material, const Intersectable *object,
+                              const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
+                              FXMVECTOR normal, bool isInLight, const T &pattern = NoPattern)
 {
     XMVECTOR diffuse = XMVectorZero();
     XMVECTOR specular = XMVectorZero();
@@ -195,10 +197,11 @@ template <class T> struct PatternedMaterial : public Material
     {
     }
 
-    XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
-                                  FXMVECTOR normal, bool isInLight = true) const override
+    XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
+                                  FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
+                                  bool isInLight = true) const override
     {
-        return zrt::Lighting(*this, light, position, eyev, normal, isInLight, m_pattern);
+        return zrt::Lighting(*this, object, light, position, eyev, normal, isInLight, m_pattern);
     }
 
   private:
