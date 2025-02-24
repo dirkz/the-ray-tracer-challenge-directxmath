@@ -11,6 +11,7 @@
 #include "Plane.h"
 #include "PointLight.h"
 #include "Vector.h"
+#include "Material.h"
 
 namespace zrt
 {

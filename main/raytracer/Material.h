@@ -53,9 +53,9 @@ struct Material
     float m_shininess;
 };
 
-struct PatternNone
+struct NoPattern
 {
-    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color)
+    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
     {
         return color;
     }
@@ -64,12 +64,14 @@ struct PatternNone
 template <class T>
 XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light, FXMVECTOR position,
                               FXMVECTOR eyev, FXMVECTOR normal, bool isInLight,
-                              const T &pattern = PatternNone)
+                              const T &pattern = NoPattern)
 {
     XMVECTOR diffuse = XMVectorZero();
     XMVECTOR specular = XMVectorZero();
 
-    XMVECTOR effectiveColor = XMColorModulate(material.Color(), light.Intensity());
+    XMVECTOR color = pattern(position, material.Color());
+
+    XMVECTOR effectiveColor = XMColorModulate(color, light.Intensity());
     XMVECTOR lightv = XMVector4Normalize(XMVectorSubtract(light.Position(), position));
     XMVECTOR ambient = XMVectorScale(effectiveColor, material.Ambient());
 
@@ -107,6 +109,32 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light,
     return sumv;
 }
 
+struct StripePattern
+{
+    StripePattern(XMVECTOR color)
+    {
+        XMStoreFloat4(&m_color, color);
+    }
+
+    XMVECTOR XM_CALLCONV operator()(FXMVECTOR position, FXMVECTOR color) const
+    {
+        float x = XMVectorGetX(position);
+        float m = std::fmod(std::abs(x), 2.f);
+        float fm = std::floor(m);
+        if (fm == 1.f)
+        {
+            return XMLoadFloat4(&m_color);
+        }
+        else
+        {
+            return color;
+        }
+    }
+
+  private:
+    XMFLOAT4 m_color;
+};
+
 template <class T> struct PatternedMaterial : public Material
 {
     PatternedMaterial(const T &pattern, FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1,
@@ -118,7 +146,7 @@ template <class T> struct PatternedMaterial : public Material
     XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
                                   FXMVECTOR normal, bool isInLight = true) const override
     {
-        return zrt::Lighting(light, position, eyev, normal, isInLight, m_pattern);
+        return zrt::Lighting(*this, light, position, eyev, normal, isInLight, m_pattern);
     }
 
   private:
