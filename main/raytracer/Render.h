@@ -12,6 +12,7 @@
 #include "PointLight.h"
 #include "Vector.h"
 #include "Material.h"
+#include "Pattern.h"
 
 namespace zrt
 {
