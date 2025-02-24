@@ -22,6 +22,17 @@ struct Pattern
         return XMVector4Transform(position, m);
     }
 
+    XMVECTOR ObjectToPatternPosition(FXMVECTOR objectPosition) const
+    {
+        return XMVector4Transform(objectPosition, InverseTransform());
+    }
+
+    XMVECTOR PatternPosition(const Intersectable *object, FXMVECTOR position) const
+    {
+        XMVECTOR objectPosition = WorldToObjectPosition(object, position);
+        return ObjectToPatternPosition(objectPosition);
+    }
+
     XMMATRIX Transform() const
     {
         return XMLoadFloat4x4(&m_transform);
@@ -47,9 +58,9 @@ struct StripePattern : public Pattern
     XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
                                     FXMVECTOR color) const
     {
-        XMVECTOR objectPosition = WorldToObjectPosition(object, position);
+        XMVECTOR patternPosition = PatternPosition(object, position);
 
-        float x = XMVectorGetX(objectPosition);
+        float x = XMVectorGetX(patternPosition);
         float m = std::fmod(std::abs(x), 2.f);
         float fm = std::floor(m);
         if (fm == 1.f)
@@ -78,9 +89,9 @@ struct TwoStripePattern : Pattern
     XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
                                     FXMVECTOR color) const
     {
-        XMVECTOR objectPosition = WorldToObjectPosition(object, position);
+        XMVECTOR patternPosition = PatternPosition(object, position);
 
-        float x = XMVectorGetX(objectPosition);
+        float x = XMVectorGetX(patternPosition);
         float m = std::fmod(std::abs(x), 2.f);
         float fm = std::floor(m);
         if (fm == 1.f)
