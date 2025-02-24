@@ -107,4 +107,22 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light,
     return sumv;
 }
 
+template <class T> struct PatternedMaterial : public Material
+{
+    PatternedMaterial(const T &pattern, FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1,
+                      float diffuse = 0.9, float specular = 0.9, float shininess = 200)
+        : Material{color, ambient, diffuse, specular, shininess}, m_pattern{pattern}
+    {
+    }
+
+    XMVECTOR XM_CALLCONV Lighting(const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
+                                  FXMVECTOR normal, bool isInLight = true) const override
+    {
+        return zrt::Lighting(light, position, eyev, normal, isInLight, m_pattern);
+    }
+
+  private:
+    const T &m_pattern;
+};
+
 } // namespace zrt
