@@ -3,12 +3,12 @@
 namespace zrt
 {
 
-inline float Fade(float t)
+static inline float Fade(float t)
 {
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
-inline float Lerp(float t, float a, float b)
+static inline float Lerp(float t, float a, float b)
 {
     return a + t * (b - a);
 }
@@ -37,12 +37,27 @@ float PerlinNoise::Noise(float x, float y, float z)
     y -= fy;
     z -= fz;
 
-    return 0.0f;
-}
+    // Fade curves.
+    float u = Fade(x);
+    float v = Fade(y);
+    float w = Fade(z);
 
-inline int PerlinNoise::Hash(int x, int y, int z)
-{
-    return m_permutations[m_permutations[m_permutations[x] + y]];
+    // Hash coordinates of the 8 cube corners.
+    int A = m_permutations[X] + Y, AA = m_permutations[A] + Z, AB = m_permutations[A + 1] + Z,
+        B = m_permutations[X + 1] + Y, BA = m_permutations[B] + Z, BB = m_permutations[B + 1] + Z;
+
+    float result = Lerp(
+        w,
+        Lerp(v, Lerp(u, Grad(m_permutations[AA], x, y, z), Grad(m_permutations[BA], x - 1, y, z)),
+             Lerp(u, Grad(m_permutations[AB], x, y - 1, z),
+                  Grad(m_permutations[BB], x - 1, y - 1, z))),
+        Lerp(v,
+             Lerp(u, Grad(m_permutations[AA + 1], x, y, z - 1),
+                  Grad(m_permutations[BA + 1], x - 1, y, z - 1)),
+             Lerp(u, Grad(m_permutations[AB + 1], x, y - 1, z - 1),
+                  Grad(m_permutations[BB + 1], x - 1, y - 1, z - 1))));
+
+    return result;
 }
 
 inline float PerlinNoise::Grad(int hash, float x, float y, float z)

@@ -15,7 +15,6 @@ struct PerlinNoise
     float Noise(float x, float y, float z);
 
   private:
-    inline int Hash(int x, int y, int z);
     inline float Grad(int hash, float x, float y, float z);
 
     std::array<XMFLOAT4, 16> m_gradients = {
