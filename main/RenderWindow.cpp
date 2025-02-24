@@ -54,23 +54,23 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Specular = 0.3f;
         constexpr float Shininess = 10.f;
 
-        TwoStripePattern stripePattern{Color(0, 0, 0), Color(0, 0.7f, 0.7f), Scaling(10, 10, 10)};
+        StripePattern stripePattern{Color(0, 0, 0), Scaling(50, 50, 50)};
 
-        auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(10, 0, 0));
+        auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
         Sphere s1{t1, mat1};
 
-        auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-10, 0, 0));
+        auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-12, 0, 0));
         auto mat2 = Material{Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
 
         auto transformPlane1 =
-            XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 2.f), Translation(40, 0, 0));
+            XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 10.f), Translation(0, -15, 0));
         auto materialPlane1 = PatternedMaterial{stripePattern, Colors::IndianRed, Ambient,
                                                 Diffuse,       Specular,          Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
-        PointLight l{Point(-500, 0, 0), Color(1.0f, 1.0f, 1.0f)};
+        PointLight l{Point(-100, 0, 0), Color(1.0f, 1.0f, 1.0f)};
 
         World world{l, {&s1, &s2, &p1}};
 
