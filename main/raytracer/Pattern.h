@@ -4,6 +4,7 @@
 
 #include "Intersectable.h"
 #include "Material.h"
+#include "PerlinNoise.h"
 
 namespace zrt
 {
@@ -110,6 +111,32 @@ struct CirclePattern : public Pattern
 
   private:
     XMFLOAT4 m_color;
+};
+
+struct NoisePattern : public Pattern
+{
+    NoisePattern(FXMMATRIX transform = XMMatrixIdentity()) : Pattern{transform}
+    {
+    }
+
+    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
+                                    FXMVECTOR color) const
+    {
+        XMVECTOR patternPosition = PatternPosition(object, position);
+
+        XMFLOAT4 floats;
+        XMStoreFloat4(&floats, patternPosition);
+
+        float noiseF = m_noise.Noise(floats.x, floats.y, floats.z);
+
+        XMVECTOR scaledColor = XMVectorScale(color, noiseF);
+        XMVECTOR clampedColor = XMVectorClamp(scaledColor, XMVectorZero(), XMVectorSplatOne());
+
+        return clampedColor;
+    }
+
+  private:
+    PerlinNoise m_noise;
 };
 
 } // namespace zrt

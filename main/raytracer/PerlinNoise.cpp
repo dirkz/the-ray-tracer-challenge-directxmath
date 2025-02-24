@@ -21,7 +21,7 @@ PerlinNoise::PerlinNoise()
     }
 }
 
-float PerlinNoise::Noise(float x, float y, float z)
+float PerlinNoise::Noise(float x, float y, float z) const
 {
     float fx = std::floor(x);
     float fy = std::floor(y);
@@ -60,7 +60,7 @@ float PerlinNoise::Noise(float x, float y, float z)
     return result;
 }
 
-inline float PerlinNoise::Grad(int hash, float x, float y, float z)
+inline float PerlinNoise::Grad(int hash, float x, float y, float z) const
 {
     int h = hash & m_gradients.size() - 1;
 

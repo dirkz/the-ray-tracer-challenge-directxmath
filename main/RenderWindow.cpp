@@ -55,9 +55,11 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Shininess = 10.f;
 
         CirclePattern pattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
+        NoisePattern noise{};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
-        auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
+        auto mat1 =
+            PatternedMaterial{noise, Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-12, 0, 0));

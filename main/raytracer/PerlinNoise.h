@@ -12,10 +12,10 @@ struct PerlinNoise
 {
     PerlinNoise();
 
-    float Noise(float x, float y, float z);
+    float Noise(float x, float y, float z) const;
 
   private:
-    inline float Grad(int hash, float x, float y, float z);
+    inline float Grad(int hash, float x, float y, float z) const;
 
     std::array<XMFLOAT4, 16> m_gradients = {
         XMFLOAT4{1, 1, 0, 0},  XMFLOAT4{-1, 1, 0, 0}, XMFLOAT4{-1, 1, 0, 0},  XMFLOAT4{1, 0, 1, 0},
