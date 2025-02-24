@@ -237,6 +237,7 @@ int RenderWindow::Run(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
+    wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
 
     RegisterClass(&wc);
 
