@@ -8,7 +8,7 @@ namespace zrt
 
 struct ConstPattern
 {
-    inline XMVECTOR XM_CALLCONV operator()(FXMVECTOR c)
+    inline XMVECTOR XM_CALLCONV operator()(FXMVECTOR p, FXMVECTOR c) const
     {
         return c;
     }
@@ -32,7 +32,7 @@ template <class T> struct MaterialWithPattern
         XMVECTOR diffuse = XMVectorZero();
         XMVECTOR specular = XMVectorZero();
 
-        XMVECTOR effectiveColor = XMColorModulate(Color(), light.Intensity());
+        XMVECTOR effectiveColor = XMColorModulate(m_pattern(position, Color()), light.Intensity());
         XMVECTOR lightv = XMVector4Normalize(XMVectorSubtract(light.Position(), position));
         XMVECTOR ambient = XMVectorScale(effectiveColor, Ambient());
 

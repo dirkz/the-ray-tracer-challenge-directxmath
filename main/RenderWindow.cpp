@@ -62,9 +62,24 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto mat2 = Material{Colors::Wheat, Ambient, Diffuse, Specular, Shininess};
         Sphere s2{t2, mat2};
 
+        struct StripePattern
+        {
+            XMVECTOR XM_CALLCONV operator()(FXMVECTOR point, FXMVECTOR color)
+            {
+                if (std::fmod(XMVectorGetX(point), 2.f) == 0.f)
+                {
+                    return Color(0, 0, 0);
+                }
+                else
+                {
+                    return Color(1, 1, 1);
+                }
+            }
+        };
         auto transformPlane1 =
             XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 2.f), Translation(40, 0, 0));
-        auto materialPlane1 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
+        auto materialPlane1 = MaterialWithPattern{Colors::IndianRed, Ambient,   Diffuse,
+                                                  Specular,          Shininess, StripePattern{}};
         Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-500, 0, 0), Color(1.0f, 1.0f, 1.0f)};
