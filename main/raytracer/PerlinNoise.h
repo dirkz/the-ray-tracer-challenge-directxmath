@@ -5,8 +5,8 @@
 namespace zrt
 {
 
-constexpr int NumGradients = 256;
-constexpr int BitMask = NumGradients - 1;
+constexpr int GridSize = 256;
+constexpr int BitMask = GridSize - 1;
 
 struct PerlinNoise
 {
@@ -16,6 +16,7 @@ struct PerlinNoise
 
   private:
     inline int Hash(int x, int y, int z);
+    inline float Grad(int hash, float x, float y, float z);
 
     std::array<XMFLOAT4, 16> m_gradients = {
         XMFLOAT4{1, 1, 0, 0},  XMFLOAT4{-1, 1, 0, 0}, XMFLOAT4{-1, 1, 0, 0},  XMFLOAT4{1, 0, 1, 0},
@@ -23,7 +24,7 @@ struct PerlinNoise
         XMFLOAT4{0, -1, 1, 0}, XMFLOAT4{0, 1, -1, 0}, XMFLOAT4{0, -1, -1, 0}, XMFLOAT4{1, 1, 0, 0},
         XMFLOAT4{-1, 1, 0, 0}, XMFLOAT4{0, -1, 1, 0}, XMFLOAT4{0, -1, -1, 0}};
 
-    std::array<int, NumGradients * 2> m_permutations = {
+    std::array<int, GridSize * 2> m_permutations = {
         151, 160, 137, 91,  90,  15,  131, 13,  201, 95,  96,  53,  194, 233, 7,   225, 140, 36,
         103, 30,  69,  142, 8,   99,  37,  240, 21,  10,  23,  190, 6,   148, 247, 120, 234, 75,
         0,   26,  197, 62,  94,  252, 219, 203, 117, 35,  11,  32,  57,  177, 33,  88,  237, 149,
