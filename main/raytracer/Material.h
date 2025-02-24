@@ -109,9 +109,32 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const PointLight &light,
     return sumv;
 }
 
-struct StripePattern
+struct Pattern
 {
-    StripePattern(FXMVECTOR color)
+    Pattern(FXMMATRIX transform)
+    {
+        XMStoreFloat4x4(&m_transform, transform);
+        XMStoreFloat4x4(&m_inverseTransform, XMMatrixInverse(nullptr, transform));
+    };
+
+    XMMATRIX Transform() const
+    {
+        return XMLoadFloat4x4(&m_transform);
+    }
+
+    XMMATRIX InverseTransform() const
+    {
+        return XMLoadFloat4x4(&m_inverseTransform);
+    }
+
+  private:
+    XMFLOAT4X4 m_transform;
+    XMFLOAT4X4 m_inverseTransform;
+};
+
+struct StripePattern : public Pattern
+{
+    StripePattern(FXMVECTOR color, FXMMATRIX transform = XMMatrixIdentity()) : Pattern{transform}
     {
         XMStoreFloat4(&m_color, color);
     }
@@ -135,9 +158,10 @@ struct StripePattern
     XMFLOAT4 m_color;
 };
 
-struct TwoStripePattern
+struct TwoStripePattern : Pattern
 {
-    TwoStripePattern(FXMVECTOR color1, FXMVECTOR color2)
+    TwoStripePattern(FXMVECTOR color1, FXMVECTOR color2, FXMMATRIX transform = XMMatrixIdentity())
+        : Pattern{transform}
     {
         XMStoreFloat4(&m_color1, color1);
         XMStoreFloat4(&m_color2, color2);
