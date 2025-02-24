@@ -78,8 +78,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         };
         auto transformPlane1 =
             XMMatrixMultiply(RotationZ(std::numbers::phi_v<float> / 2.f), Translation(40, 0, 0));
-        auto materialPlane1 = MaterialWithPattern{Colors::IndianRed, Ambient,   Diffuse,
-                                                  Specular,          Shininess, StripePattern{}};
+        auto materialPlane1 = Material{Colors::IndianRed, Ambient, Diffuse, Specular, Shininess};
         Plane p1{transformPlane1, materialPlane1};
 
         PointLight l{Point(-500, 0, 0), Color(1.0f, 1.0f, 1.0f)};
