@@ -28,7 +28,9 @@ std::vector<Intersection> Plane::Intersect(const Ray &ray) const
 XMVECTOR XM_CALLCONV Plane::Normal(FXMVECTOR p) const
 {
     XMVECTOR normal = Vector(0, 1, 0);
-    return XMVector4Transform(normal, InverseTransform());
+    XMVECTOR transposed = XMVector4Transform(normal, TransposedInverseTransform());
+    transposed = XMVectorSetW(transposed, 0.f);
+    return transposed;
 }
 
 } // namespace zrt
