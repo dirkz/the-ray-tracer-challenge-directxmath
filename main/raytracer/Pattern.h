@@ -63,7 +63,7 @@ struct StripePattern : public Pattern
         float x = XMVectorGetX(patternPosition);
         float m = std::fmod(x, 2.f);
         float fm = std::floor(m);
-        if (fm == 1.f || fm == -1.f)
+        if (std::abs(fm) == 1.f)
         {
             return XMLoadFloat4(&m_color);
         }
