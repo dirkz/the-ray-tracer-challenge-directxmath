@@ -10,8 +10,8 @@ namespace zrt
 
 struct Material
 {
-    Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1, float diffuse = 0.9,
-             float specular = 0.9, float shininess = 200);
+    Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1f, float diffuse = 0.9f,
+             float specular = 0.9f, float shininess = 200.f, float reflective = 0.f);
 
     virtual XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
                                           FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
@@ -47,12 +47,18 @@ struct Material
         return m_shininess;
     }
 
+    inline float Reflective() const
+    {
+        return m_reflective;
+    }
+
   private:
     XMFLOAT4 m_color;
     float m_ambient;
     float m_diffuse;
     float m_specular;
     float m_shininess;
+    float m_reflective;
 };
 
 struct NoPattern
