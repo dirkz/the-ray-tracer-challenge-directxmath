@@ -16,6 +16,16 @@ project ("raytracer-dxmath" CXX)
 
 add_compile_definitions(_UNICODE UNICODE)
 
+#
+# Needs the following cache variables/user presets overrides:
+# Boost_USE_STATIC_LIBS: OFF
+# BOOST_ROOT": c:\local\boost
+#
+find_package(Boost
+	REQUIRED
+	COMPONENTS unit_test_framework
+)
+
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
