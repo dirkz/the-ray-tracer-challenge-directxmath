@@ -3,10 +3,10 @@
 #include "PointLight.h"
 #include "Vector.h"
 
-struct Intersectable;
-
 namespace zrt
 {
+
+struct Intersectable;
 
 struct Material
 {
