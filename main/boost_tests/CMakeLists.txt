@@ -7,3 +7,5 @@ target_link_libraries(
   raytracer
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
+enable_testing()
+add_test(NAME boost_tests COMMAND rt_boost_tests)
