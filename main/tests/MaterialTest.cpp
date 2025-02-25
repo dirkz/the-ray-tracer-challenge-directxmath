@@ -27,7 +27,8 @@ TEST(MaterialTest, LightingWithEyeBetweenLightAndSurface)
     auto eyev = Vector(0, 0, -1);
     auto normalv = Vector(0, 0, -1);
     auto light = PointLight{Point(0, 0, -10), Color(1, 1, 1)};
-    auto result = m.Lighting(light, position, eyev, normalv);
+    Sphere sphere{};
+    auto result = m.Lighting(&sphere, light, position, eyev, normalv);
     EXPECT_EQ(Floats(result), Floats(Color(1.9f, 1.9f, 1.9f)));
 }
 
@@ -38,7 +39,8 @@ TEST(MaterialTest, LightingWithEyeBetweenLightAndSurfaceEyeOffset45)
     auto eyev = Vector(0, HalfSqrt, -HalfSqrt);
     auto normalv = Vector(0, 0, -1);
     auto light = PointLight{Point(0, 0, -10), Color(1, 1, 1)};
-    auto result = m.Lighting(light, position, eyev, normalv);
+    Sphere sphere{};
+    auto result = m.Lighting(&sphere, light, position, eyev, normalv);
     EXPECT_EQ(Floats(result), Floats(Color(1.0f, 1.0f, 1.0f)));
 }
 
@@ -49,7 +51,8 @@ TEST(MaterialTest, LightingWithEyeOppositeSurfaceEyeOffset45)
     auto eyev = Vector(0, 0, -1);
     auto normalv = Vector(0, 0, -1);
     auto light = PointLight{Point(0, 10, -10), Color(1, 1, 1)};
-    auto result = m.Lighting(light, position, eyev, normalv);
+    Sphere sphere{};
+    auto result = m.Lighting(&sphere, light, position, eyev, normalv);
     EXPECT_EQ(Floats(result), Floats(Color(0.7364f, 0.7364f, 0.7364f)));
 }
 
@@ -60,7 +63,8 @@ TEST(MaterialTest, LightingWithEyeInPathOfReflectionVector)
     auto eyev = Vector(0, -HalfSqrt, -HalfSqrt);
     auto normalv = Vector(0, 0, -1);
     auto light = PointLight{Point(0, 10, -10), Color(1, 1, 1)};
-    auto result = m.Lighting(light, position, eyev, normalv);
+    Sphere sphere{};
+    auto result = m.Lighting(&sphere, light, position, eyev, normalv);
     EXPECT_EQ(Floats(result), Floats(Color(1.6364f, 1.6364f, 1.6364f)));
 }
 
@@ -71,7 +75,8 @@ TEST(MaterialTest, LightingWithLightBehindSurface)
     auto eyev = Vector(0, 0, -1);
     auto normalv = Vector(0, 0, -1);
     auto light = PointLight{Point(0, 0, 10), Color(1, 1, 1)};
-    auto result = m.Lighting(light, position, eyev, normalv);
+    Sphere sphere{};
+    auto result = m.Lighting(&sphere, light, position, eyev, normalv);
     EXPECT_EQ(Floats(result), Floats(Color(0.1f, 0.1f, 0.1f)));
 }
 
