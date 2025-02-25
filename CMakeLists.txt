@@ -19,6 +19,8 @@ add_compile_definitions(_UNICODE UNICODE)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
+enable_testing()
+
 add_subdirectory(googletest)
 
 add_subdirectory(main)
