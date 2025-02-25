@@ -12,7 +12,7 @@ endif()
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED True)
 
-project ("raytracer_dxmath" CXX)
+project (raytracer_dxmath CXX)
 
 add_compile_definitions(_UNICODE UNICODE)
 
