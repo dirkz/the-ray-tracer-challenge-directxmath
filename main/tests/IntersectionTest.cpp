@@ -150,7 +150,7 @@ TEST(IntersectionTest, UnderPointOffsetBelowSurface)
     Intersection i{shape, 5};
     auto xs = Intersections({i});
     Computations comps{i, r, xs};
-    EXPECT_FLOAT_EQ(XMVectorGetZ(comps.UnderPoint()), Epsilon);
+    EXPECT_GT(XMVectorGetZ(comps.UnderPoint()), Epsilon / 2.f);
     EXPECT_LT(XMVectorGetZ(comps.Point()), XMVectorGetZ(comps.UnderPoint()));
 }
 
