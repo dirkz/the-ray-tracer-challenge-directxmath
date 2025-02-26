@@ -50,14 +50,9 @@ const Material GlassMaterial{MaterialDefaultColor,
                              1.f,
                              1.5f};
 
-inline Sphere *GlassSphereP()
+inline std::unique_ptr<Sphere> GlassSphere()
 {
-    return new Sphere{XMMatrixIdentity(), GlassMaterial};
-}
-
-inline Sphere GlassSphere()
-{
-    return Sphere{XMMatrixIdentity(), GlassMaterial};
+    return std::make_unique<Sphere>(XMMatrixIdentity(), GlassMaterial);
 }
 
 /// <summary>

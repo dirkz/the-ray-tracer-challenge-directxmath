@@ -148,18 +148,11 @@ TEST(SphereTest, ComputingNormalOnTransformedSphere)
 
 TEST(SphereTest, HelperForProducingGlassSphere)
 {
-    Sphere s = GlassSphere();
-    EXPECT_EQ(Floats(s.Transform()), Floats(XMMatrixIdentity()));
-    EXPECT_FLOAT_EQ(s.Material().Transparency(), 1.f);
-    EXPECT_FLOAT_EQ(s.Material().RefractiveIndex(), 1.5f);
-}
-
-TEST(SphereTest, HelperForProducingGlassSpherePointer)
-{
-    std::unique_ptr<Sphere> s{GlassSphereP()};
-    EXPECT_EQ(Floats(s.get()->Transform()), Floats(XMMatrixIdentity()));
-    EXPECT_FLOAT_EQ(s.get()->Material().Transparency(), 1.f);
-    EXPECT_FLOAT_EQ(s.get()->Material().RefractiveIndex(), 1.5f);
+    std::unique_ptr<Sphere> s{GlassSphere()};
+    Sphere *p = s.get();
+    EXPECT_EQ(Floats(p->Transform()), Floats(XMMatrixIdentity()));
+    EXPECT_FLOAT_EQ(p->Material().Transparency(), 1.f);
+    EXPECT_FLOAT_EQ(p->Material().RefractiveIndex(), 1.5f);
 }
 
 } // namespace zrt
