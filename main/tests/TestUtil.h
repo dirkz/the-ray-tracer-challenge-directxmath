@@ -15,14 +15,14 @@ constexpr float WorldMaterial1DefaultAmbient = 0.1f;
 constexpr float WorldMaterial1DefaultDiffuse = 0.7f;
 constexpr float WorldMaterial1DefaultSpecular = 0.2f;
 
-const Material DefaultWorldMaterial1 =
-    Material{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient, WorldMaterial1DefaultDiffuse,
-             WorldMaterial1DefaultSpecular};
+const Material DefaultWorldMaterial1{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
+                                     WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
+const Material DefaultWorldMaterial2{};
 const PointLight DefaultWorldLight{Point(-10, 10, -10), Color(1, 1, 1)};
 
 inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
                           const Material &m1 = DefaultWorldMaterial1,
-                          const Material &m2 = Material{})
+                          const Material &m2 = DefaultWorldMaterial2)
 {
     Shape *s1 = new Sphere{XMMatrixIdentity(), m1};
     Shape *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
