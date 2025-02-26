@@ -80,4 +80,10 @@ TEST(MaterialTest, LightingWithLightBehindSurface)
     EXPECT_EQ(Floats(result), Floats(Color(0.1f, 0.1f, 0.1f)));
 }
 
+TEST(MaterialTest, ReflectiveDefaultMaterial)
+{
+    Material m{};
+    EXPECT_EQ(m.Reflective(), 0.f);
+}
+
 } // namespace zrt
