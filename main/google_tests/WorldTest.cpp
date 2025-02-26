@@ -143,4 +143,23 @@ TEST(WorldTest, ShadeHitForReflectiveMaterial)
     EXPECT_EQ(Floats(color), Floats(Color(0.87677f, 0.92436f, 0.82918f)));
 }
 
+TEST(WorldTest, ColorAtWithMutuallyReflectiveSurfaces)
+{
+    PointLight light{Point(), Color(1, 1, 1)};
+
+    Material reflectiveM{MaterialDefaultColor,    MaterialDefaultAmbient,   MaterialDefaultDiffuse,
+                         MaterialDefaultSpecular, MaterialDefaultShininess, 1.f};
+
+    auto t1 = Translation(0, -1, 0);
+    auto t2 = Translation(0, 1, 0);
+
+    Plane *p1 = new Plane{t1, reflectiveM};
+    Plane *p2 = new Plane{t2, reflectiveM};
+
+    World w{light, {p1, p2}};
+
+    Ray r{Point(), Vector(0, 1, 0)};
+    auto c = w.ColorAt(r);
+}
+
 } // namespace zrt
