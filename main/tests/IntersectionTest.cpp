@@ -112,7 +112,29 @@ struct IndexN1N2Test : public testing::TestWithParam<IndexN1N2>
 
 TEST_P(IndexN1N2Test, FindingN1AndN2AtVariousIntersections)
 {
+    Material glass1 = GlassMaterial(1.5f);
+    Material glass2 = GlassMaterial(2.0f);
+    Material glass3 = GlassMaterial(2.5f);
+
+    std::unique_ptr<Sphere> a = GlassSphere(Scaling(2, 2, 2), glass1);
+    Sphere *pa = a.get();
+
+    std::unique_ptr<Sphere> b = GlassSphere(Translation(0, 0, -0.25f), glass2);
+    Sphere *pb = b.get();
+
+    std::unique_ptr<Sphere> c = GlassSphere(Translation(0, 0, 0.25f), glass3);
+    Sphere *pc = c.get();
+
+    Ray r{Point(0, 0, -4), Vector(0, 0, 1)};
+    auto xs =
+        Intersections({{pa, 2}, {pb, 2.75f}, {pc, 3.25f}, {pb, 4.75f}, {pc, 5.25f}, {pa, 6.f}});
+
     IndexN1N2 param = GetParam();
+
+    Computations comps{xs[param.index], r, xs};
+
+    EXPECT_EQ(comps.N1(), param.n1);
+    EXPECT_EQ(comps.N2(), param.n2);
 }
 
 INSTANTIATE_TEST_CASE_P(HardCoded, IndexN1N2Test,
