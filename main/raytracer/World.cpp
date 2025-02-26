@@ -47,7 +47,7 @@ std::vector<Intersection> World::Intersect(const Ray &ray) const
 
 XMVECTOR World::ShadeHit(const Computations &comps) const
 {
-    XMVECTOR color = XMVectorZero();
+    XMVECTOR surfaceColor = XMVectorZero();
 
     for (const PointLight &light : Lights())
     {
@@ -69,10 +69,12 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
 
         XMVECTOR c = comps.Object()->Material().Lighting(comps.Object(), light, comps.Point(),
                                                          comps.EyeV(), comps.Normal(), isInLight);
-        color = XMVectorAdd(color, c);
+        surfaceColor = XMVectorAdd(surfaceColor, c);
     }
 
-    return color;
+    XMVECTOR reflected = ReflectedColor(comps);
+
+    return XMVectorClamp(surfaceColor + reflected, XMVectorZero(), XMVectorSplatOne());
 }
 
 XMVECTOR World::ColorAt(const Ray &ray) const

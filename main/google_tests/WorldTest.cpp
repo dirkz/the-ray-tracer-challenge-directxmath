@@ -124,4 +124,23 @@ TEST(WorldTest, ReflectedColorForReflectiveMaterial)
     EXPECT_EQ(Floats(color), Floats(Color(0.19032f, 0.2379f, 0.14274f)));
 }
 
+TEST(WorldTest, ShadeHitForReflectiveMaterial)
+{
+    auto w = DefaultWorld();
+
+    Material m{MaterialDefaultColor,    MaterialDefaultAmbient,   MaterialDefaultDiffuse,
+               MaterialDefaultSpecular, MaterialDefaultShininess, 0.5f};
+    auto shape = new Plane{Translation(0, -1, 0), m};
+
+    w.Add(shape);
+
+    Ray r{Point(0, 0, -3), Vector(0, -HalfSqrt, HalfSqrt)};
+
+    Intersection i{shape, sqrt(2.f)};
+    Computations comps{i, r};
+    auto color = w.ShadeHit(comps);
+
+    EXPECT_EQ(Floats(color), Floats(Color(0.87677f, 0.92436f, 0.82918f)));
+}
+
 } // namespace zrt
