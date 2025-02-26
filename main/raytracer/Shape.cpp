@@ -7,7 +7,7 @@ Shape::Shape() : Shape(XMMatrixIdentity())
 {
 }
 
-Shape::Shape(CXMMATRIX transform, const zrt::Material &material) : m_material{material}
+Shape::Shape(CXMMATRIX transform, zrt::Material material) : m_material{material}
 {
     XMStoreFloat4x4(&m_transform, transform);
     CreateDerivedTransforms(transform);
