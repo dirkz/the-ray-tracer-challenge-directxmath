@@ -10,7 +10,7 @@ namespace zrt
 struct Shape
 {
     Shape();
-    Shape(CXMMATRIX transform, Material material = zrt::Material{});
+    Shape(CXMMATRIX transform, const Material &material = zrt::Material{});
 
     // Can't copy
     Shape(const Shape &other) = delete;
@@ -54,7 +54,7 @@ struct Shape
     XMFLOAT4X4 m_transform;
     XMFLOAT4X4 m_inverseTransform;
     XMFLOAT4X4 m_transposedInverseTransform;
-    zrt::Material m_material;
+    const zrt::Material &m_material;
 
     void CreateDerivedTransforms(CXMMATRIX transform);
 };
