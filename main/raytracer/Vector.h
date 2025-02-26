@@ -77,4 +77,16 @@ inline XMVECTOR XM_CALLCONV Color(float r = 0.f, float g = 0.f, float b = 0.f)
     return Tuple(r, g, b, 1);
 }
 
+/// <summary>
+/// Scales a given color by the given scalar, leaving the alpha as is.
+/// </summary>
+/// <param name="color"></param>
+/// <param name="scalar"></param>
+/// <returns></returns>
+inline XMVECTOR XM_CALLCONV ScaleColor(FXMVECTOR color, float scalar)
+{
+    XMVECTOR modulator = XMVectorSet(scalar, scalar, scalar, 1.f);
+    return XMColorModulate(color, modulator);
+}
+
 } // namespace zrt

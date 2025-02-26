@@ -99,7 +99,7 @@ XMVECTOR World::ReflectedColor(const Computations &comps) const
     Ray reflectRay{comps.OverPoint(), comps.ReflectV()};
     XMVECTOR color = ColorAt(reflectRay);
 
-    return XMVectorScale(color, comps.Object()->Material().Reflective());
+    return ScaleColor(color, comps.Object()->Material().Reflective());
 }
 
 } // namespace zrt
