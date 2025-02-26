@@ -41,18 +41,31 @@ inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
     return w;
 }
 
-const Material GlassMaterial{MaterialDefaultColor,
-                             MaterialDefaultAmbient,
-                             MaterialDefaultDiffuse,
-                             MaterialDefaultSpecular,
-                             MaterialDefaultShininess,
-                             MaterialDefaultReflective,
-                             1.f,
-                             1.5f};
+const Material GlassMaterialDefault{MaterialDefaultColor,
+                                    MaterialDefaultAmbient,
+                                    MaterialDefaultDiffuse,
+                                    MaterialDefaultSpecular,
+                                    MaterialDefaultShininess,
+                                    MaterialDefaultReflective,
+                                    1.f,
+                                    1.5f};
 
-inline std::unique_ptr<Sphere> GlassSphere(FXMMATRIX transform = XMMatrixIdentity())
+inline Material GlassMaterial(float refractiveIndex = 1.5f)
 {
-    return std::make_unique<Sphere>(transform, GlassMaterial);
+    return Material{MaterialDefaultColor,
+                    MaterialDefaultAmbient,
+                    MaterialDefaultDiffuse,
+                    MaterialDefaultSpecular,
+                    MaterialDefaultShininess,
+                    MaterialDefaultReflective,
+                    1.f,
+                    refractiveIndex};
+}
+
+inline std::unique_ptr<Sphere> GlassSphere(FXMMATRIX transform = XMMatrixIdentity(),
+                                           Material material = GlassMaterial())
+{
+    return std::make_unique<Sphere>(transform, GlassMaterialDefault);
 }
 
 /// <summary>
