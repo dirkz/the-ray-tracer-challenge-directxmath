@@ -21,6 +21,7 @@ struct World
     XMVECTOR ColorAt(const Ray &ray, unsigned remaining = 5) const;
     XMVECTOR ShadeHit(const Computations &comps, unsigned remaining) const;
     XMVECTOR ReflectedColor(const Computations &comps, unsigned remaining) const;
+    XMVECTOR RefractedColor(const Computations &comps, unsigned remaining) const;
 
     inline std::vector<PointLight> Lights() const
     {

@@ -162,4 +162,15 @@ TEST(WorldTest, ColorAtWithMutuallyReflectiveSurfaces)
     auto c = w.ColorAt(r);
 }
 
+TEST(WorldTest, RefractedColorWithOpaqueSurface)
+{
+    World w = DefaultWorld();
+    const Shape *shape = w.Shapes()[0];
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    auto xs = Intersections({{shape, 4}, {shape, 6}});
+    Computations comps{xs[0], r, xs};
+    auto c = w.RefractedColor(comps, 5);
+    EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
+}
+
 } // namespace zrt

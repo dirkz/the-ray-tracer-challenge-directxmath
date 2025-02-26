@@ -104,4 +104,14 @@ XMVECTOR World::ReflectedColor(const Computations &comps, unsigned remaining) co
     return ScaleColor(color, comps.Object()->Material().Reflective());
 }
 
+XMVECTOR World::RefractedColor(const Computations &comps, unsigned remaining) const
+{
+    if (comps.Object()->Material().Transparency() == 0.f)
+    {
+        return Color(0, 0, 0);
+    }
+
+    return XMVECTOR();
+}
+
 } // namespace zrt
