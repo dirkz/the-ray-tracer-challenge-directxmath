@@ -41,30 +41,23 @@ inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
     return w;
 }
 
+const Material GlassMaterial{MaterialDefaultColor,
+                             MaterialDefaultAmbient,
+                             MaterialDefaultDiffuse,
+                             MaterialDefaultSpecular,
+                             MaterialDefaultShininess,
+                             MaterialDefaultReflective,
+                             1.f,
+                             1.5f};
+
 inline Sphere *GlassSphereP()
 {
-    Material m{MaterialDefaultColor,
-               MaterialDefaultAmbient,
-               MaterialDefaultDiffuse,
-               MaterialDefaultSpecular,
-               MaterialDefaultShininess,
-               MaterialDefaultReflective,
-               1.f,
-               1.5f};
-    return new Sphere{XMMatrixIdentity(), m};
+    return new Sphere{XMMatrixIdentity(), GlassMaterial};
 }
 
 inline Sphere GlassSphere()
 {
-    Material m{MaterialDefaultColor,
-               MaterialDefaultAmbient,
-               MaterialDefaultDiffuse,
-               MaterialDefaultSpecular,
-               MaterialDefaultShininess,
-               MaterialDefaultReflective,
-               1.f,
-               1.5f};
-    return Sphere{XMMatrixIdentity(), m};
+    return Sphere{XMMatrixIdentity(), GlassMaterial};
 }
 
 /// <summary>
