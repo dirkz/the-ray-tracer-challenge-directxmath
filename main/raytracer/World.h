@@ -17,6 +17,7 @@ struct World
     void Add(const Shape *shape);
 
     std::vector<Intersection> Intersect(const Ray &ray) const;
+
     XMVECTOR ShadeHit(const Computations &comps) const;
     XMVECTOR ColorAt(const Ray &ray) const;
     XMVECTOR ReflectedColor(const Computations &comps) const;
