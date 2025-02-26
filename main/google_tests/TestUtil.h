@@ -15,11 +15,13 @@ constexpr float WorldMaterial1DefaultAmbient = 0.1f;
 constexpr float WorldMaterial1DefaultDiffuse = 0.7f;
 constexpr float WorldMaterial1DefaultSpecular = 0.2f;
 
-const Material M1 = Material{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
-                             WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
-const PointLight PL{Point(-10, 10, -10), Color(1, 1, 1)};
+const Material DefaultWorldMaterial1 =
+    Material{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient, WorldMaterial1DefaultDiffuse,
+             WorldMaterial1DefaultSpecular};
+const PointLight DefaultWorldLight{Point(-10, 10, -10), Color(1, 1, 1)};
 
-inline World DefaultWorld(const PointLight &light = PL, const Material &m1 = M1,
+inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
+                          const Material &m1 = DefaultWorldMaterial1,
                           const Material &m2 = Material{})
 {
     Intersectable *s1 = new Sphere{XMMatrixIdentity(), m1};

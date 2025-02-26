@@ -82,11 +82,11 @@ TEST(WorldTest, ColorWhenRayHits)
 
 TEST(WorldTest, ColorWithIntersectionBehindRay)
 {
-    Material m1 = M1;
+    Material m1 = DefaultWorldMaterial1;
     m1.Ambient(1);
     Material m2{};
     m2.Ambient(1);
-    auto w = DefaultWorld(PL, m1, m2);
+    auto w = DefaultWorld(DefaultWorldLight, m1, m2);
     Ray r{Point(0, 0, 0.75f), Vector(0, 0, -1)};
     auto c = w.ColorAt(r);
     EXPECT_EQ(Floats(c), Floats(m2.Color()));
@@ -95,7 +95,7 @@ TEST(WorldTest, ColorWithIntersectionBehindRay)
 TEST(WorldTest, ReflectedColorForNonReflectiveMaterial)
 {
     Material m2{Color(1, 1, 1), 1};
-    auto w = DefaultWorld(PL, M1, m2);
+    auto w = DefaultWorld(DefaultWorldLight, DefaultWorldMaterial1, m2);
     Ray r{Point(), Vector(0, 0, 1)};
     auto shape = w.Objects()[1];
     Intersection i{shape, 1};
