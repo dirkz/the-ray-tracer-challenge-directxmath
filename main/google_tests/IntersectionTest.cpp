@@ -4,7 +4,9 @@
 
 #include "Computations.h"
 #include "Intersection.h"
+#include "Plane.h"
 #include "Sphere.h"
+#include "TestConstants.h"
 #include "TestUtil.h"
 
 namespace zrt
@@ -86,6 +88,15 @@ TEST(IntersectionTest, HitWhenIntersectionOccursInside)
     EXPECT_EQ(Floats(comps.Point()), Floats(Point(0, 0, 1)));
     EXPECT_EQ(Floats(comps.EyeV()), Floats(Vector(0, 0, -1)));
     EXPECT_EQ(Floats(comps.Normal()), Floats(Vector(0, 0, -1)));
+}
+
+TEST(IntersectionTest, PrecomputingReflectionVector)
+{
+    Plane shape{};
+    Ray r{Point(0, 1, -1), Vector(0, -HalfSqrt, HalfSqrt)};
+    Intersection i{&shape, HalfSqrt};
+    Computations comps{i, r};
+    EXPECT_EQ(Floats(comps.ReflectV()), Floats(Vector(0, HalfSqrt, HalfSqrt)));
 }
 
 } // namespace zrt

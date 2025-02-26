@@ -27,6 +27,9 @@ Computations::Computations(const Intersection &i, const Ray &r)
     }
 
     XMStoreFloat4(&m_normal, normal);
+
+    XMVECTOR reflectv = Reflect(r.Direction(), normal);
+    XMStoreFloat4(&m_reflectv, reflectv);
 }
 
 } // namespace zrt

@@ -36,6 +36,11 @@ struct Computations
         return m_inside;
     }
 
+    inline XMVECTOR XM_CALLCONV ReflectV() const
+    {
+        return XMLoadFloat4(&m_reflectv);
+    }
+
   private:
     float m_t;
     const Intersectable *m_pIntersectable;
@@ -44,6 +49,7 @@ struct Computations
     XMFLOAT4 m_point;
     XMFLOAT4 m_eyev;
     XMFLOAT4 m_normal;
+    XMFLOAT4 m_reflectv;
 };
 
 } // namespace zrt
