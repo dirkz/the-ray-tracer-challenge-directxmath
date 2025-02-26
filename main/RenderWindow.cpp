@@ -10,6 +10,8 @@ constexpr POINT MinimumWindowsDimensions{300, 300};
 constexpr unsigned CanvasWidth = 600;
 constexpr unsigned CanvasHeight = 400;
 
+constexpr unsigned MaxNumberOfReflections = 5;
+
 RenderWindow::RenderWindow()
     : m_hwnd{nullptr}, m_canvas{CanvasWidth, CanvasHeight}, m_windowsWidth{0}, m_windowsHeight{0}
 {
@@ -83,7 +85,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         auto cameraTransform = ViewTransform(from, to, up);
         Camera camera{CanvasWidth, CanvasHeight, Fov, cameraTransform};
 
-        Render(camera, world, *this);
+        Render(camera, world, MaxNumberOfReflections, *this);
 
         OutputDebugString(L"*** rendering finished\n");
     }};

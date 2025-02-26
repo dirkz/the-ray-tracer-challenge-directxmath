@@ -5,14 +5,14 @@
 #include "Camera.h"
 #include "Canvas.h"
 #include "CoordinateProvider.h"
-#include "World.h"
+#include "Material.h"
 #include "Matrix.h"
-#include "Sphere.h"
+#include "Pattern.h"
 #include "Plane.h"
 #include "PointLight.h"
+#include "Sphere.h"
 #include "Vector.h"
-#include "Material.h"
-#include "Pattern.h"
+#include "World.h"
 
 namespace zrt
 {
@@ -30,7 +30,9 @@ template <class T> void RenderSequentially(const Camera &camera, const World &wo
     }
 }
 
-template <class T> void Render(const Camera &camera, const World &world, T &setPixelFn)
+template <class T>
+void Render(const Camera &camera, const World &world, unsigned maxNumberOfReflections,
+            T &setPixelFn)
 {
     unsigned numThreads = std::thread::hardware_concurrency();
     if (numThreads == 0 || numThreads == 1)
@@ -50,7 +52,7 @@ template <class T> void Render(const Camera &camera, const World &world, T &setP
 
         CoordinateProvider provider{camera.HSize(), camera.VSize()};
 
-        auto renderFn = [&provider, &camera, &world, &setPixelFn]() {
+        auto renderFn = [&provider, &camera, &world, maxNumberOfReflections, &setPixelFn]() {
             while (true)
             {
                 auto optCoords = provider.Next();
@@ -61,7 +63,7 @@ template <class T> void Render(const Camera &camera, const World &world, T &setP
                 unsigned x = optCoords.value().X();
                 unsigned y = optCoords.value().Y();
                 Ray ray = camera.RayForPixel(x, y);
-                auto color = world.ColorAt(ray);
+                auto color = world.ColorAt(ray, maxNumberOfReflections);
                 setPixelFn(x, y, color);
             }
         };

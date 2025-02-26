@@ -90,7 +90,7 @@ TEST(RenderTest, RenderSequential)
 TEST(RenderTest, RenderThreaded)
 {
     ExecuteRenderTest([](const Camera &camera, const World &world, CanvasWriter &writer) {
-        Render(camera, world, writer);
+        Render(camera, world, 1, writer);
     });
 }
 
