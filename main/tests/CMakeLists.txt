@@ -1,4 +1,4 @@
-add_executable(rt_google_tests
+add_executable(rt_tests
   TestConstants.h
   TestUtil.h
   RayTest.cpp
@@ -13,10 +13,10 @@ add_executable(rt_google_tests
   RenderTest.cpp)
 
 target_link_libraries(
-  rt_google_tests
+  rt_tests
   common
   raytracer
   gtest_main)
 
 include(GoogleTest)
-gtest_discover_tests(rt_google_tests)
+gtest_discover_tests(rt_tests)

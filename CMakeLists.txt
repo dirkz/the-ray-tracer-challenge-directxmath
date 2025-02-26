@@ -12,7 +12,7 @@ endif()
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED True)
 
-project (rt_dxmath CXX)
+project (rt CXX)
 
 add_compile_definitions(_UNICODE UNICODE)
 

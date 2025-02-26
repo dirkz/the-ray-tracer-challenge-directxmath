@@ -8,5 +8,5 @@ add_subdirectory(raytracer)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE common raytracer)
 
-add_subdirectory(google_tests)
+add_subdirectory(tests)
 
