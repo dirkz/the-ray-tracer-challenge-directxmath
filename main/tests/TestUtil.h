@@ -14,11 +14,25 @@ namespace zrt
 constexpr float WorldMaterial1DefaultAmbient = 0.1f;
 constexpr float WorldMaterial1DefaultDiffuse = 0.7f;
 constexpr float WorldMaterial1DefaultSpecular = 0.2f;
+constexpr float WorldMaterialDefaultShininess = 200.f;
+constexpr float WorldMaterialDefaultReflective = 0.f;
 
 const Material DefaultWorldMaterial1{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
                                      WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
 const Material DefaultWorldMaterial2{};
 const PointLight DefaultWorldLight{Point(-10, 10, -10), Color(1, 1, 1)};
+
+inline Material DefaultWorldMaterial1WithRefraction(float transparency, float refractiveIndex)
+{
+    return Material{Color(0.8f, 1, 0.6f),
+                    WorldMaterial1DefaultAmbient,
+                    WorldMaterial1DefaultDiffuse,
+                    WorldMaterial1DefaultSpecular,
+                    WorldMaterialDefaultShininess,
+                    WorldMaterialDefaultReflective,
+                    transparency,
+                    refractiveIndex};
+}
 
 inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
                           const Material &m1 = DefaultWorldMaterial1,

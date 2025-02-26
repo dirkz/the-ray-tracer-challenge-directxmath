@@ -173,4 +173,15 @@ TEST(WorldTest, RefractedColorWithOpaqueSurface)
     EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
 }
 
+TEST(WorldTest, RefractedColorAtMaximumRecursiveDepth)
+{
+    World w = DefaultWorld(DefaultWorldLight, DefaultWorldMaterial1WithRefraction(1.f, 1.5f));
+    const Shape *shape = w.Shapes()[0];
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    auto xs = Intersections({{shape, 4}, {shape, 6}});
+    Computations comps{xs[0], r, xs};
+    auto c = w.RefractedColor(comps, 0);
+    EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
+}
+
 } // namespace zrt
