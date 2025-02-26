@@ -86,4 +86,11 @@ TEST(MaterialTest, ReflectiveDefaultMaterial)
     EXPECT_EQ(m.Reflective(), 0.f);
 }
 
+TEST(MaterialTest, TransparencyAndRefractiveIndexForDefaultMaterial)
+{
+    Material m{};
+    EXPECT_EQ(m.Transparency(), 0.f);
+    EXPECT_EQ(m.RefractiveIndex(), 1.f);
+}
+
 } // namespace zrt

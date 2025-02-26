@@ -14,13 +14,17 @@ constexpr float MaterialDefaultDiffuse = 0.9f;
 constexpr float MaterialDefaultSpecular = 0.9f;
 constexpr float MaterialDefaultShininess = 200.f;
 constexpr float MaterialDefaultReflective = 0.f;
+constexpr float MaterialDefaultTransparency = 0.f;
+constexpr float MaterialDefaultRefractiveIndex = 1.f;
 
 struct Material
 {
     Material(FXMVECTOR color = MaterialDefaultColor, float ambient = MaterialDefaultAmbient,
              float diffuse = MaterialDefaultDiffuse, float specular = MaterialDefaultSpecular,
              float shininess = MaterialDefaultShininess,
-             float reflective = MaterialDefaultReflective);
+             float reflective = MaterialDefaultReflective,
+             float transparency = MaterialDefaultTransparency,
+             float refractiveIndex = MaterialDefaultRefractiveIndex);
 
     virtual XMVECTOR XM_CALLCONV Lighting(const Shape *object, const PointLight &light,
                                           FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
@@ -61,6 +65,16 @@ struct Material
         return m_reflective;
     }
 
+    inline float Transparency() const
+    {
+        return m_transparency;
+    }
+
+    inline float RefractiveIndex() const
+    {
+        return m_refractiveIndex;
+    }
+
   private:
     XMFLOAT4 m_color;
     float m_ambient;
@@ -68,6 +82,8 @@ struct Material
     float m_specular;
     float m_shininess;
     float m_reflective;
+    float m_transparency;
+    float m_refractiveIndex;
 };
 
 struct NoPattern
