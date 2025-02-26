@@ -41,6 +41,32 @@ inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
     return w;
 }
 
+inline Sphere *GlassSphereP()
+{
+    Material m{MaterialDefaultColor,
+               MaterialDefaultAmbient,
+               MaterialDefaultDiffuse,
+               MaterialDefaultSpecular,
+               MaterialDefaultShininess,
+               MaterialDefaultReflective,
+               1.f,
+               1.5f};
+    return new Sphere{XMMatrixIdentity(), m};
+}
+
+inline Sphere GlassSphere()
+{
+    Material m{MaterialDefaultColor,
+               MaterialDefaultAmbient,
+               MaterialDefaultDiffuse,
+               MaterialDefaultSpecular,
+               MaterialDefaultShininess,
+               MaterialDefaultReflective,
+               1.f,
+               1.5f};
+    return Sphere{XMMatrixIdentity(), m};
+}
+
 /// <summary>
 /// Good-enough epsilon specifically (and only) for the tests.
 /// </summary>
