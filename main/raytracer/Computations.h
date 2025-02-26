@@ -20,6 +20,11 @@ struct Computations
         return XMLoadFloat4(&m_point);
     }
 
+    inline XMVECTOR XM_CALLCONV OverPoint() const
+    {
+        return XMLoadFloat4(&m_overPoint);
+    }
+
     inline XMVECTOR XM_CALLCONV EyeV() const
     {
         return XMLoadFloat4(&m_eyev);
@@ -46,6 +51,7 @@ struct Computations
     bool m_inside;
 
     XMFLOAT4 m_point;
+    XMFLOAT4 m_overPoint;
     XMFLOAT4 m_eyev;
     XMFLOAT4 m_normal;
     XMFLOAT4 m_reflectv;

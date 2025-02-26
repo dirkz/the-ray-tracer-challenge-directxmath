@@ -1,5 +1,7 @@
 #include "Computations.h"
 
+#include "Constants.h"
+
 namespace zrt
 {
 
@@ -26,6 +28,10 @@ Computations::Computations(const Intersection &i, const Ray &r) : m_t{i.T()}, m_
     }
 
     XMStoreFloat4(&m_normal, normal);
+
+    XMVECTOR overNormal = XMVectorScale(normal, Epsilon);
+    XMVECTOR overPoint = XMVectorAdd(point, overNormal);
+    XMStoreFloat4(&m_overPoint, overPoint);
 
     XMVECTOR reflectv = Reflect(r.Direction(), normal);
     XMStoreFloat4(&m_reflectv, reflectv);
