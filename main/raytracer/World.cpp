@@ -45,7 +45,21 @@ std::vector<Intersection> World::Intersect(const Ray &ray) const
     return intersections;
 }
 
-XMVECTOR World::ShadeHit(const Computations &comps) const
+XMVECTOR World::ColorAt(const Ray &ray, unsigned remaining) const
+{
+    auto xs = Intersect(ray);
+    const Intersection *pI = Hit(xs);
+
+    if (!pI)
+    {
+        return XMVectorSet(0, 0, 0, 1);
+    }
+
+    Computations comps{*pI, ray};
+    return ShadeHit(comps, remaining);
+}
+
+XMVECTOR World::ShadeHit(const Computations &comps, unsigned remaining) const
 {
     XMVECTOR surfaceColor = XMVectorZero();
 
@@ -72,34 +86,20 @@ XMVECTOR World::ShadeHit(const Computations &comps) const
         surfaceColor = XMVectorAdd(surfaceColor, c);
     }
 
-    XMVECTOR reflected = ReflectedColor(comps);
+    XMVECTOR reflected = ReflectedColor(comps, remaining);
 
     return XMVectorClamp(surfaceColor + reflected, XMVectorZero(), XMVectorSplatOne());
 }
 
-XMVECTOR World::ColorAt(const Ray &ray) const
+XMVECTOR World::ReflectedColor(const Computations &comps, unsigned remaining) const
 {
-    auto xs = Intersect(ray);
-    const Intersection *pI = Hit(xs);
-
-    if (!pI)
-    {
-        return XMVectorSet(0, 0, 0, 1);
-    }
-
-    Computations comps{*pI, ray};
-    return ShadeHit(comps);
-}
-
-XMVECTOR World::ReflectedColor(const Computations &comps) const
-{
-    if (comps.Object()->Material().Reflective() == 0.f)
+    if (remaining == 0 || comps.Object()->Material().Reflective() == 0.f)
     {
         return Color(0, 0, 0);
     }
 
     Ray reflectRay{comps.OverPoint(), comps.ReflectV()};
-    XMVECTOR color = ColorAt(reflectRay);
+    XMVECTOR color = ColorAt(reflectRay, remaining - 1);
 
     return ScaleColor(color, comps.Object()->Material().Reflective());
 }
