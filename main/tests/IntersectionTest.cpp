@@ -99,4 +99,25 @@ TEST(IntersectionTest, PrecomputingReflectionVector)
     EXPECT_EQ(Floats(comps.ReflectV()), Floats(Vector(0, HalfSqrt, HalfSqrt)));
 }
 
+struct IndexN1N2
+{
+    unsigned index;
+    float n1;
+    float n2;
+};
+
+struct IndexN1N2Test : public testing::TestWithParam<IndexN1N2>
+{
+};
+
+TEST_P(IndexN1N2Test, FindingN1AndN2AtVariousIntersections)
+{
+    IndexN1N2 param = GetParam();
+}
+
+INSTANTIATE_TEST_CASE_P(HardCoded, IndexN1N2Test,
+                        testing::Values(IndexN1N2{0, 1.f, 1.5f}, IndexN1N2{1, 1.5f, 2.f},
+                                        IndexN1N2{2, 2.f, 2.5f}, IndexN1N2{3, 2.5f, 2.5f},
+                                        IndexN1N2{4, 2.5f, 1.5f}, IndexN1N2{5, 1.5f, 1.0f}));
+
 } // namespace zrt
