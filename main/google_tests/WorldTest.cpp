@@ -4,6 +4,7 @@
 
 #include "Material.h"
 #include "Matrix.h"
+#include "Plane.h"
 #include "PointLight.h"
 #include "Sphere.h"
 #include "TestConstants.h"
@@ -102,6 +103,14 @@ TEST(WorldTest, ReflectedColorForNonReflectiveMaterial)
     Computations comps{i, r};
     auto color = w.ReflectedColor(comps);
     EXPECT_EQ(Floats(color), Floats(Color()));
+}
+
+TEST(WorldTest, ReflectedColorForReflectiveMaterial)
+{
+    auto w = DefaultWorld();
+    Material m{MaterialDefaultColor,    MaterialDefaultAmbient,   MaterialDefaultDiffuse,
+               MaterialDefaultSpecular, MaterialDefaultShininess, 0.5f};
+    Plane shape{Translation(0, -1, 0), m};
 }
 
 } // namespace zrt

@@ -8,10 +8,19 @@ namespace zrt
 
 struct Intersectable;
 
+const XMVECTOR MaterialDefaultColor = zrt::Color(1, 1, 1);
+constexpr float MaterialDefaultAmbient = 0.1f;
+constexpr float MaterialDefaultDiffuse = 0.9f;
+constexpr float MaterialDefaultSpecular = 0.9f;
+constexpr float MaterialDefaultShininess = 200.f;
+constexpr float MaterialDefaultReflective = 0.f;
+
 struct Material
 {
-    Material(FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1f, float diffuse = 0.9f,
-             float specular = 0.9f, float shininess = 200.f, float reflective = 0.f);
+    Material(FXMVECTOR color = MaterialDefaultColor, float ambient = MaterialDefaultAmbient,
+             float diffuse = MaterialDefaultDiffuse, float specular = MaterialDefaultSpecular,
+             float shininess = MaterialDefaultShininess,
+             float reflective = MaterialDefaultReflective);
 
     virtual XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
                                           FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
