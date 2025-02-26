@@ -11,8 +11,10 @@ namespace zrt
 struct World
 {
     World();
-    World(PointLight light, std::initializer_list<Shape *> objects);
+    World(PointLight light, std::initializer_list<Shape *> shapes);
     World(World &&world) noexcept;
+
+    void Add(const Shape *shape);
 
     std::vector<Intersection> Intersect(const Ray &ray) const;
     XMVECTOR ShadeHit(const Computations &comps) const;

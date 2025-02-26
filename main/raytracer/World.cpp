@@ -10,9 +10,9 @@ World::World()
 {
 }
 
-World::World(PointLight light, std::initializer_list<Shape *> objects) : m_lights{light}
+World::World(PointLight light, std::initializer_list<Shape *> shapes) : m_lights{light}
 {
-    for (auto shape : objects)
+    for (auto shape : shapes)
     {
         m_ownedShapes.push_back(std::make_unique<const Shape *>(shape));
         m_shapes.push_back(shape);
@@ -22,6 +22,12 @@ World::World(PointLight light, std::initializer_list<Shape *> objects) : m_light
 World::World(World &&world) noexcept : m_lights{world.m_lights}
 {
     m_ownedShapes.swap(world.m_ownedShapes);
+}
+
+void World::Add(const Shape *shape)
+{
+    m_ownedShapes.push_back(std::make_unique<const Shape *>(shape));
+    m_shapes.push_back(shape);
 }
 
 std::vector<Intersection> World::Intersect(const Ray &ray) const

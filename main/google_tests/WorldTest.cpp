@@ -110,7 +110,8 @@ TEST(WorldTest, ReflectedColorForReflectiveMaterial)
     auto w = DefaultWorld();
     Material m{MaterialDefaultColor,    MaterialDefaultAmbient,   MaterialDefaultDiffuse,
                MaterialDefaultSpecular, MaterialDefaultShininess, 0.5f};
-    Plane shape{Translation(0, -1, 0), m};
+    auto shape = new Plane{Translation(0, -1, 0), m};
+    w.Add(shape);
 }
 
 } // namespace zrt
