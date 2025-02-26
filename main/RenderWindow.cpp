@@ -60,7 +60,6 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         CirclePattern pattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
         NoisePattern noise{};
         AddPattern added{pattern, noise};
-        ModulatedPattern modulated{pattern, noise};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
         auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess, Reflective};
