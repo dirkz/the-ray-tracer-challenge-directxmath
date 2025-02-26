@@ -39,8 +39,21 @@ inline World DefaultWorld(const PointLight &light = PL, const Material &m1 = M1,
     return w;
 }
 
+/// <summary>
+/// Good-enough epsilon specifically (and only) for the tests.
+/// </summary>
 constexpr float Epsilon = 0.0001f;
 
+/// <summary>
+/// This by no means a good way to compare float values, but good enough for these specific tests.
+/// <a
+/// href="https://www.boost.org/doc/libs/1_87_0/libs/math/doc/html/math_toolkit/float_comparison.html">
+/// See here for real tooling
+/// </a> (just to give an example).
+/// </summary>
+/// <param name="f1"></param>
+/// <param name="f2"></param>
+/// <returns></returns>
 inline bool IsEqual(float f1, float f2)
 {
     return abs(f1 - f2) < Epsilon;
