@@ -50,9 +50,9 @@ const Material GlassMaterial{MaterialDefaultColor,
                              1.f,
                              1.5f};
 
-inline std::unique_ptr<Sphere> GlassSphere()
+inline std::unique_ptr<Sphere> GlassSphere(FXMMATRIX transform = XMMatrixIdentity())
 {
-    return std::make_unique<Sphere>(XMMatrixIdentity(), GlassMaterial);
+    return std::make_unique<Sphere>(transform, GlassMaterial);
 }
 
 /// <summary>
