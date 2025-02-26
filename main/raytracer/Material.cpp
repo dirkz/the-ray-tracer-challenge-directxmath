@@ -11,7 +11,7 @@ Material::Material(FXMVECTOR color, float ambient, float diffuse, float specular
     XMStoreFloat4(&m_color, color);
 }
 
-XMVECTOR XM_CALLCONV Material::Lighting(const Intersectable *object, const PointLight &light,
+XMVECTOR XM_CALLCONV Material::Lighting(const Shape *object, const PointLight &light,
                                         FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
                                         bool isInLight) const
 {

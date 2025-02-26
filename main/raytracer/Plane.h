@@ -5,9 +5,9 @@
 namespace zrt
 {
 
-struct Plane : public Intersectable
+struct Plane : public Shape
 {
-    using Intersectable::Intersectable;
+    using Shape::Shape;
 
     std::vector<Intersection> Intersect(const Ray &ray) const override;
     XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) const override;

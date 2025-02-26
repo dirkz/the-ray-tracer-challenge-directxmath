@@ -6,7 +6,7 @@
 namespace zrt
 {
 
-struct Intersectable;
+struct Shape;
 
 const XMVECTOR MaterialDefaultColor = zrt::Color(1, 1, 1);
 constexpr float MaterialDefaultAmbient = 0.1f;
@@ -22,7 +22,7 @@ struct Material
              float shininess = MaterialDefaultShininess,
              float reflective = MaterialDefaultReflective);
 
-    virtual XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
+    virtual XMVECTOR XM_CALLCONV Lighting(const Shape *object, const PointLight &light,
                                           FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
                                           bool isInLight = true) const;
 
@@ -72,15 +72,14 @@ struct Material
 
 struct NoPattern
 {
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         return color;
     }
 };
 
 template <class T>
-XMVECTOR XM_CALLCONV Lighting(const Material &material, const Intersectable *object,
+XMVECTOR XM_CALLCONV Lighting(const Material &material, const Shape *object,
                               const PointLight &light, FXMVECTOR position, FXMVECTOR eyev,
                               FXMVECTOR normal, bool isInLight, const T &pattern = NoPattern)
 {
@@ -135,8 +134,8 @@ template <class T> struct PatternedMaterial : public Material
     {
     }
 
-    XMVECTOR XM_CALLCONV Lighting(const Intersectable *object, const PointLight &light,
-                                  FXMVECTOR position, FXMVECTOR eyev, FXMVECTOR normal,
+    XMVECTOR XM_CALLCONV Lighting(const Shape *object, const PointLight &light, FXMVECTOR position,
+                                  FXMVECTOR eyev, FXMVECTOR normal,
                                   bool isInLight = true) const override
     {
         return zrt::Lighting(*this, object, light, position, eyev, normal, isInLight, m_pattern);

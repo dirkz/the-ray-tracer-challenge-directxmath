@@ -17,7 +17,7 @@ struct Pattern
         XMStoreFloat4x4(&m_inverseTransform, XMMatrixInverse(nullptr, transform));
     };
 
-    XMVECTOR WorldToObjectPosition(const Intersectable *object, FXMVECTOR position) const
+    XMVECTOR WorldToObjectPosition(const Shape *object, FXMVECTOR position) const
     {
         XMMATRIX m = object->InverseTransform();
         return XMVector4Transform(position, m);
@@ -28,7 +28,7 @@ struct Pattern
         return XMVector4Transform(objectPosition, InverseTransform());
     }
 
-    XMVECTOR PatternPosition(const Intersectable *object, FXMVECTOR position) const
+    XMVECTOR PatternPosition(const Shape *object, FXMVECTOR position) const
     {
         XMVECTOR objectPosition = WorldToObjectPosition(object, position);
         return ObjectToPatternPosition(objectPosition);
@@ -56,8 +56,7 @@ struct StripePattern : public Pattern
         XMStoreFloat4(&m_color, color);
     }
 
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         XMVECTOR patternPosition = PatternPosition(object, position);
 
@@ -85,8 +84,7 @@ struct CirclePattern : public Pattern
         XMStoreFloat4(&m_color, color);
     }
 
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         XMVECTOR patternPosition = PatternPosition(object, position);
 
@@ -119,8 +117,7 @@ struct NoisePattern : public Pattern
     {
     }
 
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         XMVECTOR patternPosition = PatternPosition(object, position);
 
@@ -146,8 +143,7 @@ template <class A, class B> struct AddPattern
     {
     }
 
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         XMVECTOR c1 = m_pattern1(object, position, color);
         XMVECTOR c2 = m_pattern2(object, position, color);
@@ -167,8 +163,7 @@ template <class A, class B> struct ModulatedPattern
     {
     }
 
-    XMVECTOR XM_CALLCONV operator()(const Intersectable *object, FXMVECTOR position,
-                                    FXMVECTOR color) const
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
     {
         XMVECTOR c1 = m_pattern1(object, position, color);
         XMVECTOR c2 = m_pattern2(object, position, color);

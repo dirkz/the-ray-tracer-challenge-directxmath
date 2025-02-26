@@ -3,14 +3,13 @@
 namespace zrt
 {
 
-struct Intersectable;
+struct Shape;
 
 struct Intersection
 {
-    Intersection(const Intersectable *pIntersectable, float t);
-    Intersection(const Intersection &other) = default;
+    Intersection(const Shape *pIntersectable, float t);
 
-    inline const Intersectable *Object() const
+    inline const Shape *Object() const
     {
         return m_pIntersectable;
     }
@@ -29,7 +28,7 @@ struct Intersection
     }
 
   private:
-    const Intersectable *m_pIntersectable;
+    const Shape *m_pIntersectable;
     float m_t;
 };
 

@@ -24,8 +24,8 @@ inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
                           const Material &m1 = DefaultWorldMaterial1,
                           const Material &m2 = Material{})
 {
-    Intersectable *s1 = new Sphere{XMMatrixIdentity(), m1};
-    Intersectable *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
+    Shape *s1 = new Sphere{XMMatrixIdentity(), m1};
+    Shape *s2 = new Sphere{Scaling(0.5f, 0.5f, 0.5f), m2};
 
     World w{light, {s1, s2}};
 

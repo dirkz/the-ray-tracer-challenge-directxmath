@@ -5,7 +5,7 @@
 namespace zrt
 {
 
-Intersection::Intersection(const Intersectable *pIntersectable, float t)
+Intersection::Intersection(const Shape *pIntersectable, float t)
     : m_pIntersectable{pIntersectable}, m_t{t}
 {
 }

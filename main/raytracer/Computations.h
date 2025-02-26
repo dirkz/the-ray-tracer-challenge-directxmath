@@ -11,7 +11,7 @@ struct Computations
 {
     Computations(const Intersection &i, const Ray &r);
 
-    inline const Intersectable *Object() const
+    inline const Shape *Object() const
     {
         return m_pIntersectable;
     }
@@ -43,7 +43,7 @@ struct Computations
 
   private:
     float m_t;
-    const Intersectable *m_pIntersectable;
+    const Shape *m_pIntersectable;
     bool m_inside;
 
     XMFLOAT4 m_point;

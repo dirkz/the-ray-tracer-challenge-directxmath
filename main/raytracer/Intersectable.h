@@ -7,16 +7,16 @@
 namespace zrt
 {
 
-struct Intersectable
+struct Shape
 {
-    Intersectable();
-    Intersectable(CXMMATRIX transform, const Material &material = zrt::Material{});
+    Shape();
+    Shape(CXMMATRIX transform, const Material &material = zrt::Material{});
 
     // Can't copy
-    Intersectable(const Intersectable &other) = delete;
+    Shape(const Shape &other) = delete;
 
     // Can't copy
-    void operator=(const Intersectable &other) = delete;
+    void operator=(const Shape &other) = delete;
 
     virtual std::vector<Intersection> Intersect(const Ray &ray) const = 0;
 
@@ -65,6 +65,6 @@ struct Intersectable
 /// <param name="i1"></param>
 /// <param name="i2"></param>
 /// <returns></returns>
-bool operator==(const Intersectable &i1, const Intersectable &i2);
+bool operator==(const Shape &i1, const Shape &i2);
 
 } // namespace zrt

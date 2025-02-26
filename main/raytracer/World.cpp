@@ -10,11 +10,11 @@ World::World()
 {
 }
 
-World::World(PointLight light, std::initializer_list<Intersectable *> objects) : m_lights{light}
+World::World(PointLight light, std::initializer_list<Shape *> objects) : m_lights{light}
 {
     for (auto intersectable : objects)
     {
-        m_ownedIntersectables.push_back(std::make_unique<const Intersectable *>(intersectable));
+        m_ownedIntersectables.push_back(std::make_unique<const Shape *>(intersectable));
         m_objects.push_back(intersectable);
     }
 }
@@ -28,7 +28,7 @@ std::vector<Intersection> World::Intersect(const Ray &ray) const
 {
     std::vector<Intersection> intersections{};
 
-    for (const Intersectable *pIntersectable : Objects())
+    for (const Shape *pIntersectable : Objects())
     {
         std::vector<Intersection> objIntersections = pIntersectable->Intersect(ray);
         intersections.insert(intersections.end(), objIntersections.begin(), objIntersections.end());
