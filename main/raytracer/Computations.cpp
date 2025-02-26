@@ -7,7 +7,7 @@ namespace zrt
 
 Computations::Computations(const Intersection &hit, const Ray &r,
                            std::vector<Intersection> intersections)
-    : m_t{hit.T()}, m_pShape{hit.Object()}
+    : m_t{hit.T()}, m_pShape{hit.Object()}, m_n1{0.f}, m_n2{0.f}
 {
     XMVECTOR point = r.Position(m_t);
     XMStoreFloat4(&m_point, point);
