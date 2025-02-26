@@ -112,6 +112,11 @@ TEST(WorldTest, ReflectedColorForReflectiveMaterial)
                MaterialDefaultSpecular, MaterialDefaultShininess, 0.5f};
     auto shape = new Plane{Translation(0, -1, 0), m};
     w.Add(shape);
+    Ray r{Point(0, 0, -3), Vector(0, -HalfSqrt, HalfSqrt)};
+    Intersection i{shape, HalfSqrt};
+    Computations comps{i, r};
+    auto color = w.ReflectedColor(comps);
+    EXPECT_EQ(Floats(color), Floats(Color(0.19032f, 0.2379f, 0.14274f)));
 }
 
 } // namespace zrt
