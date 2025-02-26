@@ -142,4 +142,16 @@ INSTANTIATE_TEST_CASE_P(HardCoded, IndexN1N2Test,
                                         IndexN1N2{2, 2.f, 2.5f}, IndexN1N2{3, 2.5f, 2.5f},
                                         IndexN1N2{4, 2.5f, 1.5f}, IndexN1N2{5, 1.5f, 1.0f}));
 
+TEST(IntersectionTest, UnderPointOffsetBelowSurface)
+{
+    Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
+    std::unique_ptr<Sphere> sphere = GlassSphere(Translation(0, 0, 1));
+    Sphere *shape = sphere.get();
+    Intersection i{shape, 5};
+    auto xs = Intersections({i});
+    Computations comps{i, r, xs};
+    EXPECT_FLOAT_EQ(XMVectorGetZ(comps.UnderPoint()), Epsilon);
+    EXPECT_LT(XMVectorGetZ(comps.Point()), XMVectorGetZ(comps.UnderPoint()));
+}
+
 } // namespace zrt
