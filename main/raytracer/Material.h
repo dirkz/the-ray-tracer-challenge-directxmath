@@ -129,8 +129,9 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const Shape *object,
 template <class T> struct PatternedMaterial : public Material
 {
     PatternedMaterial(const T &pattern, FXMVECTOR color = zrt::Color(1, 1, 1), float ambient = 0.1,
-                      float diffuse = 0.9, float specular = 0.9, float shininess = 200)
-        : Material{color, ambient, diffuse, specular, shininess}, m_pattern{pattern}
+                      float diffuse = 0.9, float specular = 0.9, float shininess = 200,
+                      float reflective = 0.f)
+        : Material{color, ambient, diffuse, specular, shininess, reflective}, m_pattern{pattern}
     {
     }
 

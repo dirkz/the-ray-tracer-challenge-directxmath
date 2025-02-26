@@ -55,6 +55,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         constexpr float Diffuse = 0.7f;
         constexpr float Specular = 0.3f;
         constexpr float Shininess = 10.f;
+        constexpr float Reflective = 0.5f;
 
         CirclePattern pattern{Color(0, 0.7f, 0.7f), Scaling(5, 5, 5)};
         NoisePattern noise{};
@@ -62,7 +63,7 @@ void RenderWindow::OnInit(HWND hwnd, unsigned width, unsigned height)
         ModulatedPattern modulated{pattern, noise};
 
         auto t1 = XMMatrixMultiply(Scaling(10, 10, 10), Translation(8, 0, 0));
-        auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess};
+        auto mat1 = Material{Colors::Aquamarine, Ambient, Diffuse, Specular, Shininess, Reflective};
         Sphere s1{t1, mat1};
 
         auto t2 = XMMatrixMultiply(Scaling(5, 5, 5), Translation(-12, 0, 0));
