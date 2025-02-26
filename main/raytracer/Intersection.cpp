@@ -1,12 +1,11 @@
 #include "Intersection.h"
 
-#include "Intersectable.h"
+#include "Shape.h"
 
 namespace zrt
 {
 
-Intersection::Intersection(const Shape *pIntersectable, float t)
-    : m_pIntersectable{pIntersectable}, m_t{t}
+Intersection::Intersection(const Shape *pShape, float t) : m_pShape{pShape}, m_t{t}
 {
 }
 

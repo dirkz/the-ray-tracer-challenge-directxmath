@@ -19,16 +19,16 @@ TEST(WorldTest, CreatingWorld)
 {
     World w{};
     EXPECT_TRUE(w.Lights().empty());
-    EXPECT_TRUE(w.Objects().empty());
+    EXPECT_TRUE(w.Shapes().empty());
 }
 
 TEST(WorldTest, DefaultWorld)
 {
     auto w = DefaultWorld();
 
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Ambient(), WorldMaterial1DefaultAmbient);
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Diffuse(), WorldMaterial1DefaultDiffuse);
-    EXPECT_FLOAT_EQ(w.Objects()[0]->Material().Specular(), WorldMaterial1DefaultSpecular);
+    EXPECT_FLOAT_EQ(w.Shapes()[0]->Material().Ambient(), WorldMaterial1DefaultAmbient);
+    EXPECT_FLOAT_EQ(w.Shapes()[0]->Material().Diffuse(), WorldMaterial1DefaultDiffuse);
+    EXPECT_FLOAT_EQ(w.Shapes()[0]->Material().Specular(), WorldMaterial1DefaultSpecular);
 }
 
 TEST(WorldTest, IntersectWorldRay)
@@ -47,7 +47,7 @@ TEST(WorldTest, ShadingIntersection)
 {
     auto w = DefaultWorld();
     Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
-    auto shape = w.Objects()[0];
+    auto shape = w.Shapes()[0];
     Intersection i{shape, 4};
     Computations comps{i, r};
     auto c = w.ShadeHit(comps);
@@ -58,7 +58,7 @@ TEST(WorldTest, ShadingIntersectionFromOutside)
 {
     auto w = DefaultWorld(PointLight{Point(0, 0.25f, 0), Color(1, 1, 1)});
     Ray r{Point(0, 0, 0), Vector(0, 0, 1)};
-    auto shape = w.Objects()[1];
+    auto shape = w.Shapes()[1];
     Intersection i{shape, 0.5};
     Computations comps{i, r};
     auto c = w.ShadeHit(comps);
@@ -98,7 +98,7 @@ TEST(WorldTest, ReflectedColorForNonReflectiveMaterial)
     Material m2{Color(1, 1, 1), 1};
     auto w = DefaultWorld(DefaultWorldLight, DefaultWorldMaterial1, m2);
     Ray r{Point(), Vector(0, 0, 1)};
-    auto shape = w.Objects()[1];
+    auto shape = w.Shapes()[1];
     Intersection i{shape, 1};
     Computations comps{i, r};
     auto color = w.ReflectedColor(comps);

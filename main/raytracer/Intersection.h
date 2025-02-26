@@ -7,11 +7,11 @@ struct Shape;
 
 struct Intersection
 {
-    Intersection(const Shape *pIntersectable, float t);
+    Intersection(const Shape *pShape, float t);
 
     inline const Shape *Object() const
     {
-        return m_pIntersectable;
+        return m_pShape;
     }
 
     inline float T() const
@@ -21,14 +21,14 @@ struct Intersection
 
     inline Intersection &operator=(const Intersection &other)
     {
-        m_pIntersectable = other.m_pIntersectable;
+        m_pShape = other.m_pShape;
         m_t = other.m_t;
 
         return *this;
     }
 
   private:
-    const Shape *m_pIntersectable;
+    const Shape *m_pShape;
     float m_t;
 };
 

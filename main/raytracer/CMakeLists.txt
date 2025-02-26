@@ -3,12 +3,12 @@ add_library(raytracer OBJECT
 	Ray.h
 	Ray.cpp
 	Vector.h
-	Intersectable.h
+	Shape.h
+	Shape.cpp
 	Sphere.h
 	Sphere.cpp
 	Intersection.h
 	Intersection.cpp
-	Intersectable.cpp
 	Vector.cpp
 	Matrix.h
 	Matrix.cpp

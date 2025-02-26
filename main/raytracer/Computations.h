@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Intersectable.h"
-#include "Intersection.h"
 #include "Ray.h"
+#include "Shape.h"
 
 namespace zrt
 {
@@ -13,7 +12,7 @@ struct Computations
 
     inline const Shape *Object() const
     {
-        return m_pIntersectable;
+        return m_pShape;
     }
 
     inline XMVECTOR XM_CALLCONV Point() const
@@ -43,7 +42,7 @@ struct Computations
 
   private:
     float m_t;
-    const Shape *m_pIntersectable;
+    const Shape *m_pShape;
     bool m_inside;
 
     XMFLOAT4 m_point;

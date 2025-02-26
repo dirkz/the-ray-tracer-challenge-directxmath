@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Computations.h"
-#include "Intersectable.h"
 #include "PointLight.h"
 #include "Ray.h"
+#include "Shape.h"
 
 namespace zrt
 {
@@ -24,15 +24,15 @@ struct World
         return m_lights;
     }
 
-    inline const std::vector<const Shape *> &Objects() const
+    inline const std::vector<const Shape *> &Shapes() const
     {
-        return m_objects;
+        return m_shapes;
     }
 
   private:
     std::vector<PointLight> m_lights;
-    std::vector<const Shape *> m_objects;
-    std::vector<std::unique_ptr<const Shape *>> m_ownedIntersectables;
+    std::vector<const Shape *> m_shapes;
+    std::vector<std::unique_ptr<const Shape *>> m_ownedShapes;
 };
 
 } // namespace zrt

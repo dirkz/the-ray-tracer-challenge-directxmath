@@ -1,4 +1,4 @@
-#include "Intersectable.h"
+#include "Shape.h"
 
 namespace zrt
 {

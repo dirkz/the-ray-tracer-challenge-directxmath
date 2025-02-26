@@ -2,9 +2,9 @@
 
 #include "stdafx.h"
 
-#include "Intersectable.h"
 #include "Material.h"
 #include "Matrix.h"
+#include "Shape.h"
 #include "Sphere.h"
 #include "World.h"
 
@@ -33,10 +33,10 @@ inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
     PointLight light2 = w.Lights()[0];
     EXPECT_EQ(light2, light);
 
-    auto itS1 = std::find(w.Objects().begin(), w.Objects().end(), s1);
-    auto itS2 = std::find(w.Objects().begin(), w.Objects().end(), s2);
+    auto itS1 = std::find(w.Shapes().begin(), w.Shapes().end(), s1);
+    auto itS2 = std::find(w.Shapes().begin(), w.Shapes().end(), s2);
 
-    EXPECT_TRUE(itS1 != w.Objects().end());
+    EXPECT_TRUE(itS1 != w.Shapes().end());
 
     return w;
 }

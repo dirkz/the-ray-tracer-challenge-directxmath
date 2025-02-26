@@ -2,9 +2,9 @@
 
 #include "stdafx.h"
 
-#include "Intersectable.h"
 #include "Material.h"
 #include "PerlinNoise.h"
+#include "Shape.h"
 
 namespace zrt
 {

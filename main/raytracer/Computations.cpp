@@ -3,8 +3,7 @@
 namespace zrt
 {
 
-Computations::Computations(const Intersection &i, const Ray &r)
-    : m_t{i.T()}, m_pIntersectable{i.Object()}
+Computations::Computations(const Intersection &i, const Ray &r) : m_t{i.T()}, m_pShape{i.Object()}
 {
     XMVECTOR point = r.Position(m_t);
     XMStoreFloat4(&m_point, point);
@@ -13,7 +12,7 @@ Computations::Computations(const Intersection &i, const Ray &r)
     XMVECTOR eyev = XMVectorScale(direction, -1);
     XMStoreFloat4(&m_eyev, eyev);
 
-    XMVECTOR normal = m_pIntersectable->Normal(point);
+    XMVECTOR normal = m_pShape->Normal(point);
 
     float dotNormalEye = XMVectorGetX(XMVector4Dot(normal, eyev));
     if (dotNormalEye < 0)
