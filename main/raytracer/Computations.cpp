@@ -35,6 +35,10 @@ Computations::Computations(const Intersection &hit, const Ray &r,
     XMVECTOR overPoint = XMVectorAdd(point, overNormal);
     XMStoreFloat4(&m_overPoint, overPoint);
 
+    XMVECTOR underNormal = XMVectorScale(normal, -Epsilon);
+    XMVECTOR underPoint = XMVectorAdd(point, underNormal);
+    XMStoreFloat4(&m_underPoint, underPoint);
+
     XMVECTOR reflectv = Reflect(r.Direction(), normal);
     XMStoreFloat4(&m_reflectv, reflectv);
 
