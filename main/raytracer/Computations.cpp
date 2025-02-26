@@ -5,9 +5,9 @@
 namespace zrt
 {
 
-Computations::Computations(const Intersection &i, const Ray &r,
+Computations::Computations(const Intersection &hit, const Ray &r,
                            std::vector<Intersection> intersections)
-    : m_t{i.T()}, m_pShape{i.Object()}
+    : m_t{hit.T()}, m_pShape{hit.Object()}
 {
     XMVECTOR point = r.Position(m_t);
     XMStoreFloat4(&m_point, point);
@@ -37,6 +37,46 @@ Computations::Computations(const Intersection &i, const Ray &r,
 
     XMVECTOR reflectv = Reflect(r.Direction(), normal);
     XMStoreFloat4(&m_reflectv, reflectv);
+
+    std::vector<const Shape *> containers{};
+    for (const Intersection &i : intersections)
+    {
+        if (hit == i)
+        {
+            if (containers.empty())
+            {
+                m_n1 = 1.f;
+            }
+            else
+            {
+                m_n1 = containers[containers.size() - 1]->Material().RefractiveIndex();
+            }
+        }
+
+        auto it = std::find(containers.begin(), containers.end(), i.Object());
+        if (it != containers.end())
+        {
+            std::erase(containers, i.Object());
+        }
+        else
+        {
+            containers.push_back(i.Object());
+        }
+
+        if (hit == i)
+        {
+            if (containers.empty())
+            {
+                m_n2 = 1.f;
+            }
+            else
+            {
+                m_n2 = containers[containers.size() - 1]->Material().RefractiveIndex();
+            }
+
+            break;
+        }
+    }
 }
 
 } // namespace zrt

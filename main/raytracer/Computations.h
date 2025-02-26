@@ -8,7 +8,7 @@ namespace zrt
 
 struct Computations
 {
-    Computations(const Intersection &i, const Ray &r, std::vector<Intersection> intersections);
+    Computations(const Intersection &hit, const Ray &r, std::vector<Intersection> intersections);
 
     inline const Shape *Object() const
     {
@@ -45,6 +45,16 @@ struct Computations
         return XMLoadFloat4(&m_reflectv);
     }
 
+    inline float N1() const
+    {
+        return m_n1;
+    }
+
+    inline float N2() const
+    {
+        return m_n2;
+    }
+
   private:
     float m_t;
     const Shape *m_pShape;
@@ -55,6 +65,9 @@ struct Computations
     XMFLOAT4 m_eyev;
     XMFLOAT4 m_normal;
     XMFLOAT4 m_reflectv;
+
+    float m_n1;
+    float m_n2;
 };
 
 } // namespace zrt
