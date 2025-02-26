@@ -8,7 +8,7 @@ namespace zrt
 
 struct Computations
 {
-    Computations(const Intersection &i, const Ray &r);
+    Computations(const Intersection &i, const Ray &r, std::vector<Intersection> intersections);
 
     inline const Shape *Object() const
     {

@@ -49,7 +49,7 @@ TEST(WorldTest, ShadingIntersection)
     Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
     auto shape = w.Shapes()[0];
     Intersection i{shape, 4};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     auto c = w.ShadeHit(comps, 1);
     EXPECT_EQ(Floats(c), Floats(Color(0.38066f, 0.47583f, 0.2855f)));
 }
@@ -60,7 +60,7 @@ TEST(WorldTest, ShadingIntersectionFromOutside)
     Ray r{Point(0, 0, 0), Vector(0, 0, 1)};
     auto shape = w.Shapes()[1];
     Intersection i{shape, 0.5};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     auto c = w.ShadeHit(comps, 1);
     EXPECT_EQ(Floats(c), Floats(Color(0.90498f, 0.90498f, 0.90498f)));
 }
@@ -100,7 +100,7 @@ TEST(WorldTest, ReflectedColorForNonReflectiveMaterial)
     Ray r{Point(), Vector(0, 0, 1)};
     auto shape = w.Shapes()[1];
     Intersection i{shape, 1};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     auto color = w.ReflectedColor(comps, 1);
     EXPECT_EQ(Floats(color), Floats(Color()));
 }
@@ -118,7 +118,7 @@ TEST(WorldTest, ReflectedColorForReflectiveMaterial)
     Ray r{Point(0, 0, -3), Vector(0, -HalfSqrt, HalfSqrt)};
 
     Intersection i{shape, sqrt(2.f)};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     auto color = w.ReflectedColor(comps, 1);
 
     EXPECT_EQ(Floats(color), Floats(Color(0.19032f, 0.2379f, 0.14274f)));
@@ -137,7 +137,7 @@ TEST(WorldTest, ShadeHitForReflectiveMaterial)
     Ray r{Point(0, 0, -3), Vector(0, -HalfSqrt, HalfSqrt)};
 
     Intersection i{shape, sqrt(2.f)};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     auto color = w.ShadeHit(comps, 1);
 
     EXPECT_EQ(Floats(color), Floats(Color(0.87677f, 0.92436f, 0.82918f)));

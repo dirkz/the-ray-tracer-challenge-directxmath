@@ -47,15 +47,15 @@ std::vector<Intersection> World::Intersect(const Ray &ray) const
 
 XMVECTOR World::ColorAt(const Ray &ray, unsigned remaining) const
 {
-    auto xs = Intersect(ray);
-    const Intersection *pI = Hit(xs);
+    auto intersections = Intersect(ray);
+    const Intersection *pI = Hit(intersections);
 
     if (!pI)
     {
         return XMVectorSet(0, 0, 0, 1);
     }
 
-    Computations comps{*pI, ray};
+    Computations comps{*pI, ray, intersections};
     return ShadeHit(comps, remaining);
 }
 

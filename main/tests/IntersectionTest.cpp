@@ -62,7 +62,7 @@ TEST(IntersectionTest, PrecomputingStateOfIntersection)
     Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
     Sphere shape{};
     Intersection i{&shape, 4};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     EXPECT_EQ(comps.Object(), i.Object());
     EXPECT_EQ(Floats(comps.Point()), Floats(Point(0, 0, -1)));
     EXPECT_EQ(Floats(comps.EyeV()), Floats(Vector(0, 0, -1)));
@@ -74,7 +74,7 @@ TEST(IntersectionTest, HitWhenIntersectionOccursOutside)
     Ray r{Point(0, 0, -5), Vector(0, 0, 1)};
     Sphere shape{};
     Intersection i{&shape, 4};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     EXPECT_FALSE(comps.IsInside());
 }
 
@@ -83,7 +83,7 @@ TEST(IntersectionTest, HitWhenIntersectionOccursInside)
     Ray r{Point(0, 0, 0), Vector(0, 0, 1)};
     Sphere shape{};
     Intersection i{&shape, 1};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     EXPECT_TRUE(comps.IsInside());
     EXPECT_EQ(Floats(comps.Point()), Floats(Point(0, 0, 1)));
     EXPECT_EQ(Floats(comps.EyeV()), Floats(Vector(0, 0, -1)));
@@ -95,7 +95,7 @@ TEST(IntersectionTest, PrecomputingReflectionVector)
     Plane shape{};
     Ray r{Point(0, 1, -1), Vector(0, -HalfSqrt, HalfSqrt)};
     Intersection i{&shape, HalfSqrt};
-    Computations comps{i, r};
+    Computations comps{i, r, {i}};
     EXPECT_EQ(Floats(comps.ReflectV()), Floats(Vector(0, HalfSqrt, HalfSqrt)));
 }
 
