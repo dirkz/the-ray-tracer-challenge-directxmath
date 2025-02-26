@@ -86,4 +86,14 @@ XMVECTOR World::ColorAt(const Ray &ray) const
     return ShadeHit(comps);
 }
 
+XMVECTOR World::ReflectedColor(const Computations &comps) const
+{
+    if (comps.Object()->Material().Reflective() == 0.f)
+    {
+        return Color(0, 0, 0);
+    }
+
+    return XMVECTOR();
+}
+
 } // namespace zrt

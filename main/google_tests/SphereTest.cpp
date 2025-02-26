@@ -109,7 +109,7 @@ TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
 {
     const float ThirdSqrt3 = sqrt(3.f) / 3.f;
     Sphere s{};
-    auto p = Point(ThirdSqrt3);
+    auto p = Point(ThirdSqrt3, ThirdSqrt3, ThirdSqrt3);
     auto n = s.Normal(p);
     EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
     EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));

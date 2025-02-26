@@ -47,7 +47,7 @@ std::vector<Intersection> Sphere::Intersect(const Ray &ray) const
 XMVECTOR XM_CALLCONV Sphere::Normal(FXMVECTOR p) const
 {
     XMVECTOR objectPoint = XMVector4Transform(p, InverseTransform());
-    XMVECTOR objectNormal = objectPoint - Point(0);
+    XMVECTOR objectNormal = objectPoint - Point();
     XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
     worldNormal = XMVectorSetW(worldNormal, 0);
     return XMVector3Normalize(worldNormal);

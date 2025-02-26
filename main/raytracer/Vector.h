@@ -8,17 +8,17 @@ inline XMVECTOR XM_CALLCONV Tuple(float x, float y, float z, float w)
     return XMVectorSet(x, y, z, w);
 }
 
-inline XMVECTOR XM_CALLCONV Vector(float x, float y, float z)
+inline XMVECTOR XM_CALLCONV Vector(float x = 0.f, float y = 0.f, float z = 0.f)
 {
     return Tuple(x, y, z, 0);
 }
 
-inline XMVECTOR XM_CALLCONV Point(float x, float y, float z)
+inline XMVECTOR XM_CALLCONV Point(float x = 0.f, float y = 0.f, float z = 0.f)
 {
     return Tuple(x, y, z, 1);
 }
 
-inline XMVECTOR XM_CALLCONV Point(float all)
+inline XMVECTOR XM_CALLCONV PointSplat(float all)
 {
     return Tuple(all, all, all, 1);
 }
@@ -72,10 +72,9 @@ inline XMVECTOR XM_CALLCONV Reflect(FXMVECTOR v, FXMVECTOR n)
     return XMVector4Reflect(v, n);
 }
 
-inline XMVECTOR XM_CALLCONV Color(float r, float g, float b)
+inline XMVECTOR XM_CALLCONV Color(float r = 0.f, float g = 0.f, float b = 0.f)
 {
     return Tuple(r, g, b, 1);
 }
 
 } // namespace zrt
-

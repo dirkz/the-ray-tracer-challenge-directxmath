@@ -92,4 +92,16 @@ TEST(WorldTest, ColorWithIntersectionBehindRay)
     EXPECT_EQ(Floats(c), Floats(m2.Color()));
 }
 
+TEST(WorldTest, ReflectedColorForNonReflectiveMaterial)
+{
+    Material m2{Color(1, 1, 1), 1};
+    auto w = DefaultWorld(PL, M1, m2);
+    Ray r{Point(), Vector(0, 0, 1)};
+    auto shape = w.Objects()[1];
+    Intersection i{shape, 1};
+    Computations comps{i, r};
+    auto color = w.ReflectedColor(comps);
+    EXPECT_EQ(Floats(color), Floats(Color()));
+}
+
 } // namespace zrt
