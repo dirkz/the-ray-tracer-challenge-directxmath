@@ -93,4 +93,18 @@ TEST(MaterialTest, TransparencyAndRefractiveIndexForDefaultMaterial)
     EXPECT_EQ(m.RefractiveIndex(), 1.f);
 }
 
+TEST(MaterialTest, GlassSphereTransparentMaterial)
+{
+    Material m{MaterialDefaultColor,
+               MaterialDefaultAmbient,
+               MaterialDefaultDiffuse,
+               MaterialDefaultSpecular,
+               MaterialDefaultShininess,
+               MaterialDefaultReflective,
+               1.f,
+               1.5f};
+    EXPECT_FLOAT_EQ(m.Transparency(), 1.f);
+    EXPECT_FLOAT_EQ(m.RefractiveIndex(), 1.5f);
+}
+
 } // namespace zrt
