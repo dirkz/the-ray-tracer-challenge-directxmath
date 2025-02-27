@@ -3,6 +3,7 @@ add_executable(rt_tests
   TestUtil.h
   RayTest.cpp
   SphereTest.cpp
+  CubeTest.cpp
   IntersectionTest.cpp
   TransformationTest.cpp
   VectorTest.cpp
