@@ -95,9 +95,15 @@ float Computations::Schlick() const
         {
             return 1.f;
         }
+
+        float cosT = std::sqrt(1.f - sin2T);
+        cosine = cosT;
     }
 
-    return 0.0f;
+    float r0a = (N1() - N2()) / (N1() + N2());
+    float r0 = r0a * r0a;
+
+    return r0 + (1.f - r0) * std::pow(1.f - cosine, 5.f);
 }
 
 } // namespace zrt

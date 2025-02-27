@@ -165,4 +165,26 @@ TEST(IntersectionTest, SchlickUnderTotalInternalReflection)
     EXPECT_EQ(reflectance, 1.f);
 }
 
+TEST(IntersectionTest, SchlickWithPerpendicularViewingAngle)
+{
+    auto p = GlassSphere();
+    Sphere *shape = p.get();
+    Ray r{Point(0, 0, 0), Vector(0, 1, 0)};
+    auto xs = Intersections({{shape, -1.f}, {shape, 1.f}});
+    Computations comps{xs[1], r, xs};
+    float reflectance = comps.Schlick();
+    EXPECT_FLOAT_EQ(reflectance, 0.04f);
+}
+
+TEST(IntersectionTest, SchlickWithSmallAngleAndN1GTN2)
+{
+    auto p = GlassSphere();
+    Sphere *shape = p.get();
+    Ray r{Point(0, 0.99f, -2), Vector(0, 0, 1)};
+    auto xs = Intersections({{shape, 1.8589f}});
+    Computations comps{xs[0], r, xs};
+    float reflectance = comps.Schlick();
+    EXPECT_FLOAT_EQ(reflectance, 0.4887307f);
+}
+
 } // namespace zrt
