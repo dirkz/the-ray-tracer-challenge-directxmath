@@ -197,6 +197,8 @@ TEST(WorldTest, RefractedColorUnderTotalInternalReflection)
 
 TEST(WorldTest, RefractedColorWithRefractedRay)
 {
+    Material m1 = DefaultWorldMaterial1WithAmbientAndPattern(1.f, TestPattern{});
+    Material m2 = DefaultWorldMaterial1WithRefraction(1.f, 1.5f);
 }
 
 } // namespace zrt
