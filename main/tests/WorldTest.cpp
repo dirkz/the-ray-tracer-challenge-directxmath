@@ -211,4 +211,11 @@ TEST(WorldTest, RefractedColorWithRefractedRay)
     EXPECT_EQ(Floats(c), Floats(Color(0, 0.99888f, 0.04725f)));
 }
 
+TEST(WorldTest, ShadeHitWithTransparentMaterial)
+{
+    World w = DefaultWorld();
+    //Material floorMaterial = Material{};
+    //std::unique_ptr<Plane> floor{new Plane{}};
+}
+
 } // namespace zrt
