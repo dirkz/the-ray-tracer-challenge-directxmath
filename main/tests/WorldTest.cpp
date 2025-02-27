@@ -199,6 +199,16 @@ TEST(WorldTest, RefractedColorWithRefractedRay)
 {
     Material m1 = DefaultWorldMaterial1WithAmbientAndPattern(1.f, TestPattern{});
     Material m2 = DefaultWorldMaterial1WithRefraction(1.f, 1.5f);
+    World w = DefaultWorld(DefaultWorldLight, m1, m2);
+
+    const Shape *a = w.Shapes()[0];
+    const Shape *b = w.Shapes()[1];
+
+    Ray r{Point(0, 0, 0.1f), Vector(0, 1, 0)};
+    auto xs = Intersections({{a, -0.9899f}, {b, -0.4899}, {a, 0.9899f}});
+    Computations comps{xs[2], r, xs};
+    auto c = w.RefractedColor(comps, 5);
+    EXPECT_EQ(Floats(c), Floats(Color(0, 0.99888f, 0.04725f)));
 }
 
 } // namespace zrt
