@@ -137,7 +137,7 @@ TEST_P(IndexN1N2Test, FindingN1AndN2AtVariousIntersections)
     EXPECT_EQ(comps.N2(), param.n2);
 }
 
-INSTANTIATE_TEST_CASE_P(HardCoded, IndexN1N2Test,
+INSTANTIATE_TEST_CASE_P(IntersectionTest, IndexN1N2Test,
                         testing::Values(IndexN1N2{0, 1.f, 1.5f}, IndexN1N2{1, 1.5f, 2.f},
                                         IndexN1N2{2, 2.f, 2.5f}, IndexN1N2{3, 2.5f, 2.5f},
                                         IndexN1N2{4, 2.5f, 1.5f}, IndexN1N2{5, 1.5f, 1.0f}));
