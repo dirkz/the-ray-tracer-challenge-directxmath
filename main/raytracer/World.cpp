@@ -90,10 +90,23 @@ XMVECTOR World::ShadeHit(const Computations &comps, unsigned remaining) const
 
     XMVECTOR refracted = RefractedColor(comps, remaining);
 
-    XMVECTOR colorSum = XMVectorAdd(surfaceColor, reflected);
-    colorSum = XMVectorAdd(colorSum, refracted);
+    const Material &m = comps.Object()->Material();
+    if (m.Reflective() > 0.f && m.Transparency() > 0.f)
+    {
+        float reflectance = comps.Schlick();
+        XMVECTOR reflected2 = XMVectorScale(reflected, reflectance);
+        XMVECTOR refracted2 = XMVectorScale(refracted, 1.f - reflectance);
 
-    return XMVectorClamp(colorSum, XMVectorZero(), XMVectorSplatOne());
+        XMVECTOR colorSum = XMVectorAdd(surfaceColor, reflected2);
+        colorSum = XMVectorAdd(colorSum, refracted2);
+        return XMVectorClamp(colorSum, XMVectorZero(), XMVectorSplatOne());
+    }
+    else
+    {
+        XMVECTOR colorSum = XMVectorAdd(surfaceColor, reflected);
+        colorSum = XMVectorAdd(colorSum, refracted);
+        return XMVectorClamp(colorSum, XMVectorZero(), XMVectorSplatOne());
+    }
 }
 
 XMVECTOR World::ReflectedColor(const Computations &comps, unsigned remaining) const

@@ -239,4 +239,32 @@ TEST(WorldTest, ShadeHitWithTransparentMaterial)
     EXPECT_EQ(Floats(color), Floats(Color(0.93642f, 0.68642f, 0.68642f)));
 }
 
+TEST(WorldTest, ShadeHitWithReflectiveTransparentMaterial)
+{
+    World w = DefaultWorld();
+
+    Material floorMaterial = Material{MaterialDefaultColor,
+                                      MaterialDefaultAmbient,
+                                      MaterialDefaultDiffuse,
+                                      MaterialDefaultSpecular,
+                                      MaterialDefaultShininess,
+                                      0.5f,
+                                      0.5f,
+                                      1.5f};
+    Plane *floor = new Plane{Translation(0, -1, 0), floorMaterial};
+
+    Material ballMaterial = Material{Color(1, 0, 0), 0.5f};
+    Sphere *ball = new Sphere{Translation(0, -3.5f, -0.5f), ballMaterial};
+
+    w.Add(floor);
+    w.Add(ball);
+
+    Ray r{Point(0, 0, -3), Vector(0, -HalfSqrt, HalfSqrt)};
+    auto xs = Intersections({{floor, std::sqrt(2.f)}});
+    Computations comps{xs[0], r, xs};
+    auto color = w.ShadeHit(comps, 5);
+
+    EXPECT_EQ(Floats(color), Floats(Color(0.93391f, 0.69643f, 0.69243f)));
+}
+
 } // namespace zrt
