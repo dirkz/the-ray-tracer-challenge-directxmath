@@ -49,6 +49,16 @@ struct IntersectionTest : public testing::TestWithParam<IntersectionData>
 
 TEST_P(IntersectionTest, CubeIntersection)
 {
+    IntersectionData param = GetParam();
+
+    Cube c{};
+    Ray r{param.Origin(), param.Direction()};
+
+    auto xs = c.Intersect(r);
+
+    ASSERT_EQ(xs.size(), 2);
+    EXPECT_FLOAT_EQ(xs[0].T(), param.T1());
+    EXPECT_FLOAT_EQ(xs[1].T(), param.T2());
 }
 
 INSTANTIATE_TEST_CASE_P(CubeTest, IntersectionTest,
