@@ -195,4 +195,8 @@ TEST(WorldTest, RefractedColorUnderTotalInternalReflection)
     EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
 }
 
+TEST(WorldTest, RefractedColorWithRefractedRay)
+{
+}
+
 } // namespace zrt
