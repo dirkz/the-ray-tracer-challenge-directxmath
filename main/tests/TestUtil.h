@@ -4,6 +4,7 @@
 
 #include "Material.h"
 #include "Matrix.h"
+#include "Pattern.h"
 #include "Shape.h"
 #include "Sphere.h"
 #include "World.h"
@@ -16,6 +17,8 @@ constexpr float WorldMaterial1DefaultDiffuse = 0.7f;
 constexpr float WorldMaterial1DefaultSpecular = 0.2f;
 constexpr float WorldMaterialDefaultShininess = 200.f;
 constexpr float WorldMaterialDefaultReflective = 0.f;
+constexpr float WorldMaterialDefaultTransparency = 0.f;
+constexpr float WorldMaterialDefaultDefaultRefractiveIndex = 0.f;
 
 const Material DefaultWorldMaterial1{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
                                      WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
@@ -32,6 +35,19 @@ inline Material DefaultWorldMaterial1WithRefraction(float transparency, float re
                     WorldMaterialDefaultReflective,
                     transparency,
                     refractiveIndex};
+}
+
+inline Material DefaultWorldMaterial1WithAmbientAndPattern(float ambient, const Pattern &pattern)
+{
+    return PatternedMaterial{pattern,
+                             Color(0.8f, 1, 0.6f),
+                             ambient,
+                             WorldMaterial1DefaultDiffuse,
+                             WorldMaterial1DefaultSpecular,
+                             WorldMaterialDefaultShininess,
+                             WorldMaterialDefaultReflective,
+                             WorldMaterialDefaultTransparency,
+                             WorldMaterialDefaultDefaultRefractiveIndex};
 }
 
 inline World DefaultWorld(const PointLight &light = DefaultWorldLight,
@@ -117,6 +133,18 @@ inline XMFLOAT4X4 XM_CALLCONV Floats(FXMMATRIX m)
 
     return floats;
 }
+
+struct TestPattern : public Pattern
+{
+    TestPattern(FXMMATRIX transform = XMMatrixIdentity()) : Pattern{transform}
+    {
+    }
+
+    XMVECTOR XM_CALLCONV operator()(const Shape *object, FXMVECTOR position, FXMVECTOR color) const
+    {
+        return position;
+    }
+};
 
 } // namespace zrt
 
