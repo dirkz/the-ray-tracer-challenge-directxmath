@@ -37,7 +37,8 @@ inline Material DefaultWorldMaterial1WithRefraction(float transparency, float re
                     refractiveIndex};
 }
 
-inline Material DefaultWorldMaterial1WithAmbientAndPattern(float ambient, const Pattern &pattern)
+template <class T>
+inline Material DefaultWorldMaterial1WithAmbientAndPattern(float ambient, const T &pattern)
 {
     return PatternedMaterial{pattern,
                              Color(0.8f, 1, 0.6f),
