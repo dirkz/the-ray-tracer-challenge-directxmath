@@ -111,6 +111,15 @@ XMVECTOR World::RefractedColor(const Computations &comps, unsigned remaining) co
         return Color(0, 0, 0);
     }
 
+    float nRatio = comps.N1() / comps.N2();
+    float cosI = XMVectorGetX(XMVector4Dot(comps.EyeV(), comps.Normal()));
+    float sinT2 = nRatio * nRatio * (1 - cosI * cosI);
+
+    if (sinT2 > 1.f)
+    {
+        return Color(0, 0, 0);
+    }
+
     return Color(1, 1, 1);
 }
 
