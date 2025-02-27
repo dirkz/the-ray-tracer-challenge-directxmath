@@ -154,4 +154,15 @@ TEST(IntersectionTest, UnderPointOffsetBelowSurface)
     EXPECT_LT(XMVectorGetZ(comps.Point()), XMVectorGetZ(comps.UnderPoint()));
 }
 
+TEST(IntersectionTest, SchlickUnderTotalInternalReflection)
+{
+    auto shapep = GlassSphere();
+    Sphere *shape = shapep.get();
+    Ray r{Point(0, 0, HalfSqrt), Vector(0, 1, 0)};
+    auto xs = Intersections({{shape, -HalfSqrt}, {shape, HalfSqrt}});
+    Computations comps{xs[1], r, xs};
+    float reflectance = comps.Schlick();
+    EXPECT_EQ(reflectance, 1.f);
+}
+
 } // namespace zrt

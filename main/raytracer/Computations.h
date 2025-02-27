@@ -60,6 +60,8 @@ struct Computations
         return m_n2;
     }
 
+    float Schlick() const;
+
   private:
     float m_t;
     const Shape *m_pShape;

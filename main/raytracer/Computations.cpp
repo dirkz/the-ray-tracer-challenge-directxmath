@@ -83,4 +83,21 @@ Computations::Computations(const Intersection &hit, const Ray &r,
     }
 }
 
+float Computations::Schlick() const
+{
+    float cosine = XMVectorGetX(XMVector3Dot(EyeV(), Normal()));
+
+    if (N1() > N2())
+    {
+        float n = N1() / N2();
+        float sin2T = n * n * (1.f - cosine * cosine);
+        if (sin2T > 1.f)
+        {
+            return 1.f;
+        }
+    }
+
+    return 0.0f;
+}
+
 } // namespace zrt
