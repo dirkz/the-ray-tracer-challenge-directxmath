@@ -120,7 +120,19 @@ XMVECTOR World::RefractedColor(const Computations &comps, unsigned remaining) co
         return Color(0, 0, 0);
     }
 
-    return Color(1, 1, 1);
+    float cosT = std::sqrt(1.f - sinT2);
+
+    XMVECTOR directionPlus = XMVectorScale(comps.Normal(), nRatio * cosI - cosT);
+    XMVECTOR directionMinus = XMVectorScale(comps.EyeV(), nRatio);
+
+    XMVECTOR direction = XMVectorSubtract(directionPlus, directionMinus);
+
+    Ray refractedRay{comps.UnderPoint(), direction};
+
+    XMVECTOR colorPure = ColorAt(refractedRay, remaining - 1);
+    XMVECTOR colorScaled = XMVectorScale(colorPure, comps.Object()->Material().Transparency());
+
+    return colorScaled;
 }
 
 } // namespace zrt
