@@ -88,7 +88,12 @@ XMVECTOR World::ShadeHit(const Computations &comps, unsigned remaining) const
 
     XMVECTOR reflected = ReflectedColor(comps, remaining);
 
-    return XMVectorClamp(surfaceColor + reflected, XMVectorZero(), XMVectorSplatOne());
+    XMVECTOR refracted = RefractedColor(comps, remaining);
+
+    XMVECTOR colorSum = XMVectorAdd(surfaceColor, reflected);
+    colorSum = XMVectorAdd(colorSum, refracted);
+
+    return XMVectorClamp(colorSum, XMVectorZero(), XMVectorSplatOne());
 }
 
 XMVECTOR World::ReflectedColor(const Computations &comps, unsigned remaining) const
