@@ -184,4 +184,15 @@ TEST(WorldTest, RefractedColorAtMaximumRecursiveDepth)
     EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
 }
 
+TEST(WorldTest, RefractedColorUnderTotalInternalReflection)
+{
+    World w = DefaultWorld(DefaultWorldLight, DefaultWorldMaterial1WithRefraction(1.f, 1.5f));
+    const Shape *shape = w.Shapes()[0];
+    Ray r{Point(0, 0, HalfSqrt), Vector(0, 1, 0)};
+    auto xs = Intersections({{shape, -HalfSqrt}, {shape, HalfSqrt}});
+    Computations comps{xs[1], r, xs}; // inside sphere, so 2nd intersections
+    auto c = w.RefractedColor(comps, 5);
+    EXPECT_EQ(Floats(c), Floats(Color(0, 0, 0)));
+}
+
 } // namespace zrt
