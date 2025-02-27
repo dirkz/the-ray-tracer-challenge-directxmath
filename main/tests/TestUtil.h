@@ -18,7 +18,7 @@ constexpr float WorldMaterial1DefaultSpecular = 0.2f;
 constexpr float WorldMaterialDefaultShininess = 200.f;
 constexpr float WorldMaterialDefaultReflective = 0.f;
 constexpr float WorldMaterialDefaultTransparency = 0.f;
-constexpr float WorldMaterialDefaultDefaultRefractiveIndex = 0.f;
+constexpr float WorldMaterialDefaultDefaultRefractiveIndex = 1.f;
 
 const Material DefaultWorldMaterial1{Color(0.8f, 1, 0.6f), WorldMaterial1DefaultAmbient,
                                      WorldMaterial1DefaultDiffuse, WorldMaterial1DefaultSpecular};
@@ -38,7 +38,8 @@ inline Material DefaultWorldMaterial1WithRefraction(float transparency, float re
 }
 
 template <class T>
-inline Material DefaultWorldMaterial1WithAmbientAndPattern(float ambient, const T &pattern)
+inline PatternedMaterial<T> DefaultWorldMaterial1WithAmbientAndPattern(float ambient,
+                                                                       const T &pattern)
 {
     return PatternedMaterial{pattern,
                              Color(0.8f, 1, 0.6f),
