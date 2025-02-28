@@ -5,6 +5,11 @@
 namespace zrt
 {
 
+Cylinder::Cylinder(CXMMATRIX transform, const zrt::Material &material, float minimum, float maximum)
+    : Shape{transform, material}, m_minimum{minimum}, m_maximum{maximum}
+{
+}
+
 std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
 {
     XMFLOAT4 origin;
