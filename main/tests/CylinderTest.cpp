@@ -140,6 +140,10 @@ struct CylinderCapped : public testing::TestWithParam<CylinderConstrainedOrCappe
 {
 };
 
+struct CylinderCappedNormal : public testing::TestWithParam<CylinderNormalData>
+{
+};
+
 TEST_P(CylinderRayMiss, RayMisses)
 {
     CylinderRayMissData param = GetParam();
@@ -205,6 +209,17 @@ TEST_P(CylinderCapped, CappedIntersections)
     EXPECT_EQ(xs.size(), param.Count());
 }
 
+TEST_P(CylinderCappedNormal, CappedNormal)
+{
+    CylinderNormalData param = GetParam();
+
+    Material m{};
+    Cylinder cyl{XMMatrixIdentity(), m, 1, 2, true};
+
+    auto normal = cyl.LocalNormal(param.Point());
+    EXPECT_EQ(Floats(param.Normal()), Floats(normal));
+}
+
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
                         testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)},
                                         CylinderRayMissData{Point(0, 0, 0), Vector(0, 1, 0)},
@@ -239,5 +254,13 @@ INSTANTIATE_TEST_CASE_P(
                     CylinderConstrainedOrCappedData{Point(0, 4, -2), Vector(0, -1, 1), 2},
                     CylinderConstrainedOrCappedData{Point(0, 0, -2), Vector(0, 1, 2), 2},
                     CylinderConstrainedOrCappedData{Point(0, -1, -2), Vector(0, 1, 1), 2}));
+
+INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderCappedNormal,
+                        testing::Values(CylinderNormalData{Point(0, 1, 0), Vector(0, -1, 0)},
+                                        CylinderNormalData{Point(0.5f, 1, 0), Vector(0, -1, 0)},
+                                        CylinderNormalData{Point(0, 1, 0.5f), Vector(0, -1, 0)},
+                                        CylinderNormalData{Point(0, 2, 0), Vector(0, 1, 0)},
+                                        CylinderNormalData{Point(0.5f, 2, 0), Vector(0, 1, 0)},
+                                        CylinderNormalData{Point(0, 2, 0.5f), Vector(0, 1, 0)}));
 
 } // namespace zrt
