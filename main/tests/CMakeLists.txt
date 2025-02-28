@@ -11,7 +11,9 @@ add_executable(rt_tests
   MaterialTest.cpp
   WorldTest.cpp
   CameraTest.cpp
-  RenderTest.cpp)
+  RenderTest.cpp
+  #CylinderTest.cpp
+)
 
 target_link_libraries(
   rt_tests
