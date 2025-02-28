@@ -11,6 +11,20 @@ Cylinder::Cylinder(CXMMATRIX transform, const zrt::Material &material, float min
 {
 }
 
+static bool CheckRay(const Ray &ray, float t)
+{
+    XMFLOAT4 origin;
+    XMStoreFloat4(&origin, ray.Origin());
+
+    XMFLOAT4 direction;
+    XMStoreFloat4(&direction, ray.Direction());
+
+    float x = origin.x + t * direction.x;
+    float z = origin.z + t * direction.z;
+
+    return (x * x + z * z < 1.f);
+}
+
 std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
 {
     XMFLOAT4 origin;
