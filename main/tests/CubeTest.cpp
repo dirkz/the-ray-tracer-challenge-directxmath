@@ -111,4 +111,13 @@ INSTANTIATE_TEST_CASE_P(
                     IntersectionDataHit{Point(0.5, 0, -5), Vector(0, 0, 1), 4, 6},
                     IntersectionDataHit{Point(0, 0.5, 0), Vector(0, 0, 1), -1, 1}));
 
+INSTANTIATE_TEST_CASE_P(
+    CubeTest, IntersectionTestMiss,
+    testing::Values(IntersectionDataMiss{Point(-2, 0, 0), Vector(0.2673f, 0.5345f, 0.8018f)},
+                    IntersectionDataMiss{Point(0, -2, 0), Vector(0.8018f, 0.2673f, 0.5345f)},
+                    IntersectionDataMiss{Point(0, 0, -2), Vector(0.5345f, 0.8018f, 0.2673f)},
+                    IntersectionDataMiss{Point(2, 0, 2), Vector(0, 0, -1)},
+                    IntersectionDataMiss{Point(0, 2, 2), Vector(0, -1, 0)},
+                    IntersectionDataMiss{Point(2, 2, 0), Vector(-1, 0, 0)}));
+
 } // namespace zrt
