@@ -38,7 +38,23 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
     float t0 = (-b - std::sqrt(disc)) / (2.f * a);
     float t1 = (-b + std::sqrt(disc)) / (2.f * a);
 
-    return {Intersection{this, t0}, Intersection{this, t1}};
+    std::vector<Intersection> xs{};
+
+    float y0 = origin.y + t0 * direction.y;
+
+    if (m_minimum < y0 && y0 < m_maximum)
+    {
+        xs.push_back(Intersection{this, t0});
+    }
+
+    float y1 = origin.y + t1 * direction.y;
+
+    if (m_minimum < y1 && y1 < m_maximum)
+    {
+        xs.push_back(Intersection{this, t1});
+    }
+
+    return xs;
 }
 
 XMVECTOR XM_CALLCONV Cylinder::LocalNormal(FXMVECTOR p) const
