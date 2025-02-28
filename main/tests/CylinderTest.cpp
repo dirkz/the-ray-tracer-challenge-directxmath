@@ -193,6 +193,16 @@ TEST_P(CylinderConstrained, ConstrainedIntersections)
 
 TEST_P(CylinderCapped, CappedIntersections)
 {
+    CylinderConstrainedOrCappedData param = GetParam();
+    XMVECTOR direction = XMVector4Normalize(param.Direction());
+
+    Material m{};
+    Cylinder cyl{XMMatrixIdentity(), m, 1, 2, true};
+    Ray r{param.Point(), direction};
+
+    auto xs = cyl.Intersect(r);
+
+    EXPECT_EQ(xs.size(), param.Count());
 }
 
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
@@ -221,5 +231,13 @@ INSTANTIATE_TEST_CASE_P(
                     CylinderConstrainedOrCappedData{Point(0, 2, -5), Vector(0, 0, 1), 0},
                     CylinderConstrainedOrCappedData{Point(0, 1, -5), Vector(0, 0, 1), 0},
                     CylinderConstrainedOrCappedData{Point(0, 1.5f, -2), Vector(0, 0, 1), 2}));
+
+INSTANTIATE_TEST_CASE_P(
+    CylinderTest, CylinderCapped,
+    testing::Values(CylinderConstrainedOrCappedData{Point(0, 3, 0), Vector(0, -1, 0), 2},
+                    CylinderConstrainedOrCappedData{Point(0, 3, -2), Vector(0, -1, 2), 2},
+                    CylinderConstrainedOrCappedData{Point(0, 4, -2), Vector(0, -1, 1), 2},
+                    CylinderConstrainedOrCappedData{Point(0, 0, -2), Vector(0, 1, 2), 2},
+                    CylinderConstrainedOrCappedData{Point(0, -1, -2), Vector(0, 1, 1), 2}));
 
 } // namespace zrt
