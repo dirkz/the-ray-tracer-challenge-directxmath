@@ -44,7 +44,34 @@ struct IntersectionDataHit
     float m_t2;
 };
 
+struct IntersectionDataMiss
+{
+    IntersectionDataMiss(FXMVECTOR origin, FXMVECTOR direction)
+    {
+        XMStoreFloat4(&m_origin, origin);
+        XMStoreFloat4(&m_direction, direction);
+    };
+
+    XMVECTOR XM_CALLCONV Origin() const
+    {
+        return XMLoadFloat4(&m_origin);
+    }
+
+    XMVECTOR XM_CALLCONV Direction() const
+    {
+        return XMLoadFloat4(&m_direction);
+    }
+
+  private:
+    XMFLOAT4 m_origin;
+    XMFLOAT4 m_direction;
+};
+
 struct IntersectionTestHit : public testing::TestWithParam<IntersectionDataHit>
+{
+};
+
+struct IntersectionTestMiss : public testing::TestWithParam<IntersectionDataMiss>
 {
 };
 
@@ -60,6 +87,18 @@ TEST_P(IntersectionTestHit, CubeIntersection)
     ASSERT_EQ(xs.size(), 2);
     EXPECT_FLOAT_EQ(xs[0].T(), param.T1());
     EXPECT_FLOAT_EQ(xs[1].T(), param.T2());
+}
+
+TEST_P(IntersectionTestMiss, RayMisses)
+{
+    IntersectionDataMiss param = GetParam();
+
+    Cube c{};
+    Ray r{param.Origin(), param.Direction()};
+
+    auto xs = c.Intersect(r);
+
+    EXPECT_EQ(xs.size(), 0);
 }
 
 INSTANTIATE_TEST_CASE_P(
