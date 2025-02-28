@@ -9,8 +9,7 @@ namespace zrt
 
 struct Shape
 {
-    Shape();
-    Shape(CXMMATRIX transform, const Material &material = zrt::Material{});
+    Shape(CXMMATRIX transform = XMMatrixIdentity(), const Material &material = zrt::Material{});
 
     // Can't copy
     Shape(const Shape &other) = delete;
