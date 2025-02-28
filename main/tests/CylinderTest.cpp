@@ -90,6 +90,35 @@ struct CylinderNormalData
     XMFLOAT4 m_normal;
 };
 
+struct CylinderConstrainedData
+{
+    CylinderConstrainedData(FXMVECTOR point, FXMVECTOR direction, size_t count) : m_count{count}
+    {
+        XMStoreFloat4(&m_point, point);
+        XMStoreFloat4(&m_direction, direction);
+    }
+
+    inline XMVECTOR XM_CALLCONV Point() const
+    {
+        return XMLoadFloat4(&m_point);
+    }
+
+    inline XMVECTOR XM_CALLCONV Direction() const
+    {
+        return XMLoadFloat4(&m_direction);
+    }
+
+    inline float Count() const
+    {
+        return m_count;
+    }
+
+  private:
+    XMFLOAT4 m_point;
+    XMFLOAT4 m_direction;
+    size_t m_count;
+};
+
 struct CylinderRayMiss : public testing::TestWithParam<CylinderRayMissData>
 {
 };
@@ -99,6 +128,10 @@ struct CylinderRayHits : public testing::TestWithParam<CylinderRayHitsData>
 };
 
 struct CylinderNormal : public testing::TestWithParam<CylinderNormalData>
+{
+};
+
+struct CylinderConstrained : public testing::TestWithParam<CylinderConstrainedData>
 {
 };
 
@@ -139,6 +172,10 @@ TEST_P(CylinderNormal, Normal)
     EXPECT_EQ(Floats(expectedNormal), Floats(normal));
 }
 
+TEST_P(CylinderConstrained, Intersections)
+{
+}
+
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
                         testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)},
                                         CylinderRayMissData{Point(0, 0, 0), Vector(0, 1, 0)},
@@ -156,5 +193,14 @@ INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderNormal,
                                         CylinderNormalData{Point(0, 5, -1), Vector(0, 0, -1)},
                                         CylinderNormalData{Point(0, -2, 1), Vector(0, 0, 1)},
                                         CylinderNormalData{Point(-1, 1, 0), Vector(-1, 0, 0)}));
+
+INSTANTIATE_TEST_CASE_P(
+    CylinderTest, CylinderConstrained,
+    testing::Values(CylinderConstrainedData{Point(0, 1.5f, 0), Vector(0.1f, 1, 0), 0},
+                    CylinderConstrainedData{Point(0, 3, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedData{Point(0, 0, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedData{Point(0, 2, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedData{Point(0, 1, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedData{Point(0, 1.5f, -2), Vector(0, 0, 1), 2}));
 
 } // namespace zrt
