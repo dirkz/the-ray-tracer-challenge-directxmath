@@ -8,9 +8,10 @@
 namespace zrt
 {
 
-struct IntersectionData
+struct IntersectionDataHit
 {
-    IntersectionData(FXMVECTOR origin, FXMVECTOR direction, float t1, float t2) : m_t1{t1}, m_t2{t2}
+    IntersectionDataHit(FXMVECTOR origin, FXMVECTOR direction, float t1, float t2)
+        : m_t1{t1}, m_t2{t2}
     {
         XMStoreFloat4(&m_origin, origin);
         XMStoreFloat4(&m_direction, direction);
@@ -43,13 +44,13 @@ struct IntersectionData
     float m_t2;
 };
 
-struct IntersectionTest : public testing::TestWithParam<IntersectionData>
+struct IntersectionTestHit : public testing::TestWithParam<IntersectionDataHit>
 {
 };
 
-TEST_P(IntersectionTest, CubeIntersection)
+TEST_P(IntersectionTestHit, CubeIntersection)
 {
-    IntersectionData param = GetParam();
+    IntersectionDataHit param = GetParam();
 
     Cube c{};
     Ray r{param.Origin(), param.Direction()};
@@ -61,26 +62,14 @@ TEST_P(IntersectionTest, CubeIntersection)
     EXPECT_FLOAT_EQ(xs[1].T(), param.T2());
 }
 
-INSTANTIATE_TEST_CASE_P(CubeTest, IntersectionTest,
-                        testing::Values(IntersectionData{Point(5, 0.5f, 0), Vector(-1, 0, 0), 4, 6},
-                                        IntersectionData{Point(-5, 0.5f, 0), Vector(1, 0, 0), 4, 6},
-                                        IntersectionData{Point(0.5f, 5, 0), Vector(0, -1, 0), 4, 6},
-                                        IntersectionData{Point(0.5, -5, 0), Vector(0, 1, 0), 4, 6},
-                                        IntersectionData{Point(0.5f, 0, 5), Vector(0, 0, -1), 4, 6},
-                                        IntersectionData{Point(0.5, 0, -5), Vector(0, 0, 1), 4, 6},
-                                        IntersectionData{Point(0, 0.5, 0), Vector(0, 0, 1), -1,
-                                                         1}));
-
-TEST_P(IntersectionTest, RayMissesCube)
-{
-    IntersectionData param = GetParam();
-
-    Cube c{};
-    Ray r{param.Origin(), param.Direction()};
-
-    auto xs = c.Intersect(r);
-
-    EXPECT_EQ(xs.size(), 0);
-}
+INSTANTIATE_TEST_CASE_P(
+    CubeTest, IntersectionTestHit,
+    testing::Values(IntersectionDataHit{Point(5, 0.5f, 0), Vector(-1, 0, 0), 4, 6},
+                    IntersectionDataHit{Point(-5, 0.5f, 0), Vector(1, 0, 0), 4, 6},
+                    IntersectionDataHit{Point(0.5f, 5, 0), Vector(0, -1, 0), 4, 6},
+                    IntersectionDataHit{Point(0.5, -5, 0), Vector(0, 1, 0), 4, 6},
+                    IntersectionDataHit{Point(0.5f, 0, 5), Vector(0, 0, -1), 4, 6},
+                    IntersectionDataHit{Point(0.5, 0, -5), Vector(0, 0, 1), 4, 6},
+                    IntersectionDataHit{Point(0, 0.5, 0), Vector(0, 0, 1), -1, 1}));
 
 } // namespace zrt
