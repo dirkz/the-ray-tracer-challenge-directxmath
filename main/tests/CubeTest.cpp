@@ -71,4 +71,16 @@ INSTANTIATE_TEST_CASE_P(CubeTest, IntersectionTest,
                                         IntersectionData{Point(0, 0.5, 0), Vector(0, 0, 1), -1,
                                                          1}));
 
+TEST_P(IntersectionTest, RayMissesCube)
+{
+    IntersectionData param = GetParam();
+
+    Cube c{};
+    Ray r{param.Origin(), param.Direction()};
+
+    auto xs = c.Intersect(r);
+
+    EXPECT_EQ(xs.size(), 0);
+}
+
 } // namespace zrt
