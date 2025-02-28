@@ -13,6 +13,12 @@ Shape::Shape(CXMMATRIX transform, const zrt::Material &material) : m_material{ma
     CreateDerivedTransforms(transform);
 }
 
+std::vector<Intersection> Shape::Intersect(const Ray &ray) const
+{
+    Ray ray2 = ray.Transform(InverseTransform());
+    return LocalIntersect(ray2);
+}
+
 void XM_CALLCONV Shape::Transform(CXMMATRIX transform)
 {
     XMStoreFloat4x4(&m_transform, transform);

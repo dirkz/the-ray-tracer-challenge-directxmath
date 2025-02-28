@@ -18,7 +18,9 @@ struct Shape
     // Can't copy
     void operator=(const Shape &other) = delete;
 
-    virtual std::vector<Intersection> Intersect(const Ray &ray) const = 0;
+    std::vector<Intersection> Intersect(const Ray &ray) const;
+
+    virtual std::vector<Intersection> LocalIntersect(const Ray &ray) const = 0;
 
     /// <summary>
     /// The normal vector at the given point, assumed to be part of the object's surface.

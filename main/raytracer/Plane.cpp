@@ -6,18 +6,16 @@
 namespace zrt
 {
 
-std::vector<Intersection> Plane::Intersect(const Ray &ray) const
+std::vector<Intersection> Plane::LocalIntersect(const Ray &ray) const
 {
-    Ray ray2 = ray.Transform(InverseTransform());
-
-    float directionY = XMVectorGetY(ray2.Direction());
+    float directionY = XMVectorGetY(ray.Direction());
 
     if (std::abs(directionY) < Epsilon)
     {
         return {};
     }
 
-    float originY = XMVectorGetY(ray2.Origin());
+    float originY = XMVectorGetY(ray.Origin());
 
     float t = -originY / directionY;
     Intersection sect{this, t};

@@ -31,7 +31,7 @@ static std::pair<float, float> CheckAxis(float origin, float direction)
     return {tmin, tmax};
 }
 
-std::vector<Intersection> Cube::Intersect(const Ray &ray) const
+std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
 {
     XMFLOAT4 origin;
     XMStoreFloat4(&origin, ray.Origin());
