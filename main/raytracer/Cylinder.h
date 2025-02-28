@@ -18,7 +18,7 @@ struct Cylinder : public Shape
     XMVECTOR XM_CALLCONV LocalNormal(FXMVECTOR p) const override;
 
   private:
-    void IntersectCaps(const Ray &ray, std::vector<Intersection> &xs);
+    void IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const;
 
     float m_minimum;
     float m_maximum;

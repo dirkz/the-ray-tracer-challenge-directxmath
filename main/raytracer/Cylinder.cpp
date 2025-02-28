@@ -21,9 +21,12 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
 
     float a = direction.x * direction.x + direction.z * direction.z;
 
+    std::vector<Intersection> xs{};
+
     if (std::abs(a) < Epsilon)
     {
-        return {};
+        IntersectCaps(ray, xs);
+        return xs;
     }
 
     float b = 2.f * origin.x * direction.x + 2.f * origin.z * direction.z;
@@ -39,8 +42,6 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
     float t0 = (-b - std::sqrt(disc)) / (2.f * a);
     float t1 = (-b + std::sqrt(disc)) / (2.f * a);
 
-    std::vector<Intersection> xs{};
-
     float y0 = origin.y + t0 * direction.y;
 
     if (m_minimum < y0 && y0 < m_maximum)
@@ -54,6 +55,8 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
     {
         xs.push_back(Intersection{this, t1});
     }
+
+    IntersectCaps(ray, xs);
 
     return xs;
 }
@@ -80,7 +83,7 @@ static bool CheckCap(const Ray &ray, float t)
     return (x * x + z * z < 1.f);
 }
 
-void Cylinder::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs)
+void Cylinder::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
 {
     if (!m_closed)
     {
