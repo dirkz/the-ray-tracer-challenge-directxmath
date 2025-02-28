@@ -80,7 +80,7 @@ static bool CheckCap(const Ray &ray, float t)
     float x2 = point.x * point.x;
     float z2 = point.z * point.z;
 
-    return (x2 + z2) <= 1.f;
+    return (x2 + z2) <= 1.f + Epsilon;
 }
 
 void Cylinder::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
