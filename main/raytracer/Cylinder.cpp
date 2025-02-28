@@ -13,9 +13,6 @@ Cylinder::Cylinder(CXMMATRIX transform, const zrt::Material &material, float min
 
 std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
 {
-    XMFLOAT4 origin;
-    XMStoreFloat4(&origin, ray.Origin());
-
     XMFLOAT4 direction;
     XMStoreFloat4(&direction, ray.Direction());
 
@@ -28,6 +25,9 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
         IntersectCaps(ray, xs);
         return xs;
     }
+
+    XMFLOAT4 origin;
+    XMStoreFloat4(&origin, ray.Origin());
 
     float b = 2.f * origin.x * direction.x + 2.f * origin.z * direction.z;
     float c = origin.x * origin.x + origin.z * origin.z - 1.f;
@@ -71,16 +71,16 @@ XMVECTOR XM_CALLCONV Cylinder::LocalNormal(FXMVECTOR p) const
 
 static bool CheckCap(const Ray &ray, float t)
 {
-    XMFLOAT4 origin;
-    XMStoreFloat4(&origin, ray.Origin());
+    XMVECTOR scaled = XMVectorScale(ray.Direction(), t);
+    XMVECTOR p = XMVectorAdd(ray.Origin(), scaled);
 
-    XMFLOAT4 direction;
-    XMStoreFloat4(&direction, ray.Direction());
+    XMFLOAT4 point;
+    XMStoreFloat4(&point, p);
 
-    float x = origin.x + t * direction.x;
-    float z = origin.z + t * direction.z;
+    float x2 = point.x * point.x;
+    float z2 = point.z * point.z;
 
-    return (x * x + z * z < 1.f);
+    return (x2 + z2) <= 1.f;
 }
 
 void Cylinder::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
