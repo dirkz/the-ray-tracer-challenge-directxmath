@@ -33,7 +33,9 @@ add_library(raytracer OBJECT
 	PerlinNoise.cpp
 	PerlinNoise.h
 	Cube.h
-	Cube.cpp)
+	Cube.cpp
+	Cylinder.h
+	Cylinder.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
