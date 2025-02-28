@@ -30,8 +30,10 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
         return {};
     }
 
-    // dummy
-    return {Intersection{this, 1.f}};
+    float t0 = (-b - std::sqrt(disc)) / (2.f * a);
+    float t1 = (-b + std::sqrt(disc)) / (2.f * a);
+
+    return {Intersection{this, t0}, Intersection{this, t1}};
 }
 
 XMVECTOR XM_CALLCONV Cylinder::Normal(FXMVECTOR p) const
