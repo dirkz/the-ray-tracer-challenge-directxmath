@@ -5,8 +5,9 @@
 namespace zrt
 {
 
-Cylinder::Cylinder(CXMMATRIX transform, const zrt::Material &material, float minimum, float maximum)
-    : Shape{transform, material}, m_minimum{minimum}, m_maximum{maximum}
+Cylinder::Cylinder(CXMMATRIX transform, const zrt::Material &material, float minimum, float maximum,
+                   bool closed)
+    : Shape{transform, material}, m_minimum{minimum}, m_maximum{maximum}, m_closed{closed}
 {
 }
 

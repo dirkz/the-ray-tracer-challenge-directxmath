@@ -90,9 +90,10 @@ struct CylinderNormalData
     XMFLOAT4 m_normal;
 };
 
-struct CylinderConstrainedData
+struct CylinderConstrainedOrCappedData
 {
-    CylinderConstrainedData(FXMVECTOR point, FXMVECTOR direction, size_t count) : m_count{count}
+    CylinderConstrainedOrCappedData(FXMVECTOR point, FXMVECTOR direction, size_t count)
+        : m_count{count}
     {
         XMStoreFloat4(&m_point, point);
         XMStoreFloat4(&m_direction, direction);
@@ -131,7 +132,11 @@ struct CylinderNormal : public testing::TestWithParam<CylinderNormalData>
 {
 };
 
-struct CylinderConstrained : public testing::TestWithParam<CylinderConstrainedData>
+struct CylinderConstrained : public testing::TestWithParam<CylinderConstrainedOrCappedData>
+{
+};
+
+struct CylinderCapped : public testing::TestWithParam<CylinderConstrainedOrCappedData>
 {
 };
 
@@ -172,7 +177,11 @@ TEST_P(CylinderNormal, Normal)
     EXPECT_EQ(Floats(expectedNormal), Floats(normal));
 }
 
-TEST_P(CylinderConstrained, Intersections)
+TEST_P(CylinderConstrained, ConstrainedIntersections)
+{
+}
+
+TEST_P(CylinderCapped, CappedIntersections)
 {
 }
 
@@ -196,11 +205,11 @@ INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderNormal,
 
 INSTANTIATE_TEST_CASE_P(
     CylinderTest, CylinderConstrained,
-    testing::Values(CylinderConstrainedData{Point(0, 1.5f, 0), Vector(0.1f, 1, 0), 0},
-                    CylinderConstrainedData{Point(0, 3, -5), Vector(0, 0, 1), 0},
-                    CylinderConstrainedData{Point(0, 0, -5), Vector(0, 0, 1), 0},
-                    CylinderConstrainedData{Point(0, 2, -5), Vector(0, 0, 1), 0},
-                    CylinderConstrainedData{Point(0, 1, -5), Vector(0, 0, 1), 0},
-                    CylinderConstrainedData{Point(0, 1.5f, -2), Vector(0, 0, 1), 2}));
+    testing::Values(CylinderConstrainedOrCappedData{Point(0, 1.5f, 0), Vector(0.1f, 1, 0), 0},
+                    CylinderConstrainedOrCappedData{Point(0, 3, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedOrCappedData{Point(0, 0, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedOrCappedData{Point(0, 2, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedOrCappedData{Point(0, 1, -5), Vector(0, 0, 1), 0},
+                    CylinderConstrainedOrCappedData{Point(0, 1.5f, -2), Vector(0, 0, 1), 2}));
 
 } // namespace zrt
