@@ -18,16 +18,28 @@ struct Shape
     // Can't copy
     void operator=(const Shape &other) = delete;
 
+    /// <summary>
+    /// Calculate the intersections points of a given ray, all in world coordinates.
+    /// </summary>
+    /// <param name="ray"></param>
+    /// <returns></returns>
     std::vector<Intersection> Intersect(const Ray &ray) const;
 
+    /// <summary>
+    /// Intersection in object-local coordinates, should not be called from the outside
+    /// except for tests.
+    /// </summary>
+    /// <param name="ray"></param>
+    /// <returns></returns>
     virtual std::vector<Intersection> LocalIntersect(const Ray &ray) const = 0;
 
     /// <summary>
-    /// The normal vector at the given point, assumed to be part of the object's surface.
+    /// The normal vector at the given point, assumed to be part of the object's surface,
+    /// all in world's coordinates.
     /// </summary>
     /// <param name="worldPoint"></param>
     /// <returns></returns>
-    virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) const = 0;
+    virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR worldPoint) const = 0;
 
     void XM_CALLCONV Transform(CXMMATRIX transform);
 
