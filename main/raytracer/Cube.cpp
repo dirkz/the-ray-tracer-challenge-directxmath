@@ -19,7 +19,7 @@ static std::pair<float, float> CheckAxis(float origin, float direction)
     }
     else
     {
-        tmin = tminNumerator / std::numeric_limits<float>::infinity();
+        tmin = tminNumerator * std::numeric_limits<float>::infinity();
         tmax = tmaxNumerator * std::numeric_limits<float>::infinity();
     }
 
