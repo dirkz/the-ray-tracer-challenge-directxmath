@@ -25,7 +25,7 @@ struct Shape
     /// <summary>
     /// The normal vector at the given point, assumed to be part of the object's surface.
     /// </summary>
-    /// <param name="p"></param>
+    /// <param name="worldPoint"></param>
     /// <returns></returns>
     virtual XMVECTOR XM_CALLCONV Normal(FXMVECTOR p) const = 0;
 
@@ -44,6 +44,18 @@ struct Shape
     inline const zrt::Material &Material() const
     {
         return m_material;
+    }
+
+    inline XMVECTOR XM_CALLCONV ObjectPoint(FXMVECTOR worldPoint) const
+    {
+        return XMVector4Transform(worldPoint, InverseTransform());
+    }
+
+    inline XMVECTOR XM_CALLCONV WorldNormal(FXMVECTOR objectNormal) const
+    {
+        XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
+        worldNormal = XMVectorSetW(worldNormal, 0);
+        return XMVector3Normalize(worldNormal);
     }
 
   protected:
