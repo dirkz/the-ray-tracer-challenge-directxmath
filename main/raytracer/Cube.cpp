@@ -66,12 +66,10 @@ std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
     }
 }
 
-XMVECTOR XM_CALLCONV Cube::Normal(FXMVECTOR p) const
+XMVECTOR XM_CALLCONV Cube::LocalNormal(FXMVECTOR p) const
 {
-    XMVECTOR objectPoint = ObjectPoint(p);
-
     XMFLOAT4 point;
-    XMStoreFloat4(&point, objectPoint);
+    XMStoreFloat4(&point, p);
 
     float x = std::abs(point.x);
     float y = std::abs(point.y);
@@ -81,15 +79,15 @@ XMVECTOR XM_CALLCONV Cube::Normal(FXMVECTOR p) const
 
     if (maxc == x)
     {
-        return WorldNormal(Vector(point.x, 0, 0));
+        return Vector(point.x, 0, 0);
     }
     else if (maxc == y)
     {
-        return WorldNormal(Vector(0, point.y, 0));
+        return Vector(0, point.y, 0);
     }
     else
     {
-        return WorldNormal(Vector(0, 0, point.z));
+        return Vector(0, 0, point.z);
     }
 }
 

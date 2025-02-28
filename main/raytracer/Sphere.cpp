@@ -42,12 +42,9 @@ std::vector<Intersection> Sphere::LocalIntersect(const Ray &ray) const
     }
 }
 
-XMVECTOR XM_CALLCONV Sphere::Normal(FXMVECTOR p) const
+XMVECTOR XM_CALLCONV Sphere::LocalNormal(FXMVECTOR p) const
 {
-    XMVECTOR objectPoint = ObjectPoint(p);
-    XMVECTOR objectNormal = objectPoint - Point();
-    XMVECTOR worldNormal = WorldNormal(objectNormal);
-    return worldNormal;
+    return XMVectorSubtract(p, Point());
 }
 
 } // namespace zrt

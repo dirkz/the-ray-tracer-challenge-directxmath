@@ -36,17 +36,12 @@ std::vector<Intersection> Cylinder::LocalIntersect(const Ray &ray) const
     return {Intersection{this, t0}, Intersection{this, t1}};
 }
 
-XMVECTOR XM_CALLCONV Cylinder::Normal(FXMVECTOR p) const
+XMVECTOR XM_CALLCONV Cylinder::LocalNormal(FXMVECTOR p) const
 {
-    XMVECTOR objectPoint = ObjectPoint(p);
-
     XMFLOAT4 point;
-    XMStoreFloat4(&point, objectPoint);
+    XMStoreFloat4(&point, p);
 
-    XMVECTOR objectNormal = Vector(point.x, 0, point.z);
-    XMVECTOR worldNormal = WorldNormal(objectNormal);
-
-    return worldNormal;
+    return Vector(point.x, 0, point.z);
 }
 
 } // namespace zrt

@@ -19,6 +19,13 @@ std::vector<Intersection> Shape::Intersect(const Ray &ray) const
     return LocalIntersect(ray2);
 }
 
+XMVECTOR XM_CALLCONV Shape::Normal(FXMVECTOR worldPoint) const
+{
+    XMVECTOR point = ObjectPoint(worldPoint);
+    XMVECTOR objectNormal = LocalNormal(point);
+    return WorldNormal(objectNormal);
+}
+
 void XM_CALLCONV Shape::Transform(CXMMATRIX transform)
 {
     XMStoreFloat4x4(&m_transform, transform);

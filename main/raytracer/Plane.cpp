@@ -23,11 +23,9 @@ std::vector<Intersection> Plane::LocalIntersect(const Ray &ray) const
     return {sect};
 }
 
-XMVECTOR XM_CALLCONV Plane::Normal(FXMVECTOR p) const
+XMVECTOR XM_CALLCONV Plane::LocalNormal(FXMVECTOR p) const
 {
-    XMVECTOR objectNormal = Vector(0, 1, 0);
-    XMVECTOR worldNormal = WorldNormal(objectNormal);
-    return worldNormal;
+    return Vector(0, 1, 0);
 }
 
 } // namespace zrt
