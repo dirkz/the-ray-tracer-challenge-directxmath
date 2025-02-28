@@ -179,6 +179,16 @@ TEST_P(CylinderNormal, Normal)
 
 TEST_P(CylinderConstrained, ConstrainedIntersections)
 {
+    CylinderConstrainedOrCappedData param = GetParam();
+    XMVECTOR direction = XMVector4Normalize(param.Direction());
+
+    Material m{};
+    Cylinder cyl{XMMatrixIdentity(), m, 1, 2};
+    Ray r{param.Point(), direction};
+
+    auto xs = cyl.Intersect(r);
+
+    EXPECT_EQ(xs.size(), param.Count());
 }
 
 TEST_P(CylinderCapped, CappedIntersections)
