@@ -7,9 +7,12 @@
 namespace zrt
 {
 
-struct RayMissData
+namespace CylinderTest
 {
-    RayMissData(FXMVECTOR origin, FXMVECTOR direction)
+
+struct CylinderRayMissData
+{
+    CylinderRayMissData(FXMVECTOR origin, FXMVECTOR direction)
     {
         XMStoreFloat4(&m_origin, origin);
         XMStoreFloat4(&m_direction, direction);
@@ -30,15 +33,18 @@ struct RayMissData
     XMFLOAT4 m_direction;
 };
 
-struct RayMiss : public testing::TestWithParam<RayMissData>
+struct CylinderRayMiss : public testing::TestWithParam<CylinderRayMissData>
 {
 };
 
-TEST_P(RayMiss, RayMisses)
+TEST_P(CylinderRayMiss, RayMisses)
 {
+    CylinderRayMissData param = GetParam();
 }
 
-INSTANTIATE_TEST_CASE_P(CylinderTest, RayMiss,
-    testing::Values(RayMissData{Point(), Point()}));
+INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
+                        testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)}));
+
+} // namespace CylinderTest
 
 } // namespace zrt
