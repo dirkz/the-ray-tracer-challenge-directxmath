@@ -7,9 +7,6 @@
 namespace zrt
 {
 
-namespace CylinderTest
-{
-
 struct CylinderRayMissData
 {
     CylinderRayMissData(FXMVECTOR origin, FXMVECTOR direction)
@@ -44,7 +41,5 @@ TEST_P(CylinderRayMiss, RayMisses)
 
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
                         testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)}));
-
-} // namespace CylinderTest
 
 } // namespace zrt

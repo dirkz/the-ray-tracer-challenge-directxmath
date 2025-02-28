@@ -9,9 +9,6 @@
 namespace zrt
 {
 
-namespace CubeTest
-{
-
 struct RayHitData
 {
     RayHitData(FXMVECTOR origin, FXMVECTOR direction, float t1, float t2) : m_t1{t1}, m_t2{t2}
@@ -171,7 +168,5 @@ INSTANTIATE_TEST_CASE_P(CubeTest, Normal,
                                         NormalData{Point(0.4f, 0.4f, -1), Vector(0, 0, -1)},
                                         NormalData{Point(1, 1, 1), Vector(1, 0, 0)},
                                         NormalData{Point(-1, -1, -1), Vector(-1, 0, 0)}));
-
-} // namespace CubeTest
 
 } // namespace zrt
