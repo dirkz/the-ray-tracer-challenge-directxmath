@@ -31,6 +31,16 @@ static std::pair<float, float> CheckAxis(float origin, float direction)
     return {tmin, tmax};
 }
 
+template <class T> static inline T max(const T a, const T b, const T c)
+{
+    return std::max(std::max(a, b), c);
+}
+
+template <class T> static inline T min(const T a, const T b, const T c)
+{
+    return std::min(std::min(a, b), c);
+}
+
 std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
 {
     XMFLOAT4 origin;
@@ -43,8 +53,8 @@ std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
     auto [ytmin, ytmax] = CheckAxis(origin.y, direction.y);
     auto [ztmin, ztmax] = CheckAxis(origin.z, direction.z);
 
-    float tmin = std::max(std::max(xtmin, ytmin), ztmin);
-    float tmax = std::min(std::min(xtmax, ytmax), ztmax);
+    float tmin = max(xtmin, ytmin, ztmin);
+    float tmax = min(xtmax, ytmax, ztmax);
 
     if (tmin > tmax)
     {
@@ -58,7 +68,29 @@ std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
 
 XMVECTOR XM_CALLCONV Cube::Normal(FXMVECTOR p) const
 {
-    return XMVectorZero();
+    XMVECTOR objectPoint = ObjectPoint(p);
+
+    XMFLOAT4 point;
+    XMStoreFloat4(&point, objectPoint);
+
+    float x = std::abs(point.x);
+    float y = std::abs(point.y);
+    float z = std::abs(point.z);
+
+    float maxc = max(x, y, z);
+
+    if (maxc == x)
+    {
+        return WorldNormal(Vector(point.x, 0, 0));
+    }
+    else if (maxc == y)
+    {
+        return WorldNormal(Vector(0, point.y, 0));
+    }
+    else
+    {
+        return WorldNormal(Vector(0, 0, point.z));
+    }
 }
 
 } // namespace zrt
