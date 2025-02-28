@@ -66,6 +66,19 @@ XMVECTOR XM_CALLCONV Cylinder::LocalNormal(FXMVECTOR p) const
     XMFLOAT4 point;
     XMStoreFloat4(&point, p);
 
+    float dist = point.x * point.x + point.z * point.z;
+    if (dist < 1.f)
+    {
+        if (point.y >= m_maximum - Epsilon)
+        {
+            return Vector(0, 1, 0);
+        }
+        else if (point.y <= m_minimum + Epsilon)
+        {
+            return Vector(0, -1, 0);
+        }
+    }
+
     return Vector(point.x, 0, point.z);
 }
 
