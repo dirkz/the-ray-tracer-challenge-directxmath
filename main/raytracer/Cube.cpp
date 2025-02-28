@@ -46,7 +46,14 @@ std::vector<Intersection> Cube::LocalIntersect(const Ray &ray) const
     float tmin = std::max(std::max(xtmin, ytmin), ztmin);
     float tmax = std::min(std::min(xtmax, ytmax), ztmax);
 
-    return {Intersection{this, tmin}, Intersection{this, tmax}};
+    if (tmin > tmax)
+    {
+        return {};
+    }
+    else
+    {
+        return {Intersection{this, tmin}, Intersection{this, tmax}};
+    }
 }
 
 XMVECTOR XM_CALLCONV Cube::Normal(FXMVECTOR p) const
