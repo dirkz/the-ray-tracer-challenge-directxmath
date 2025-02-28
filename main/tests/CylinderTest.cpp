@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "Cube.h"
+#include "Cylinder.h"
 #include "TestUtil.h"
 #include "Vector.h"
 
@@ -37,9 +38,15 @@ struct CylinderRayMiss : public testing::TestWithParam<CylinderRayMissData>
 TEST_P(CylinderRayMiss, RayMisses)
 {
     CylinderRayMissData param = GetParam();
+    Cylinder cyl{};
+    Ray r{param.Origin(), param.Direction()};
+    auto xs = cyl.Intersect(r);
+    EXPECT_TRUE(xs.empty());
 }
 
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
-                        testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)}));
+                        testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)},
+                                        CylinderRayMissData{Point(0, 0, 0), Vector(0, 1, 0)},
+                                        CylinderRayMissData{Point(0, 0, -5), Vector(1, 1, 1)}));
 
 } // namespace zrt

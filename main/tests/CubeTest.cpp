@@ -125,7 +125,7 @@ TEST_P(CubeRayMiss, RayMisses)
 
     auto xs = c.Intersect(r);
 
-    EXPECT_EQ(xs.size(), 0);
+    EXPECT_TRUE(xs.empty());
 }
 
 TEST_P(CubeNormal, Normals)
