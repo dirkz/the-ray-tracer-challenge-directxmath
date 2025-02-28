@@ -67,11 +67,38 @@ struct CylinderRayHitsData
     float m_t1;
 };
 
+struct CylinderNormalData
+{
+    CylinderNormalData(FXMVECTOR point, FXMVECTOR normal)
+    {
+        XMStoreFloat4(&m_point, point);
+        XMStoreFloat4(&m_normal, normal);
+    }
+
+    inline XMVECTOR XM_CALLCONV Point() const
+    {
+        return XMLoadFloat4(&m_point);
+    }
+
+    inline XMVECTOR XM_CALLCONV Normal() const
+    {
+        return XMLoadFloat4(&m_normal);
+    }
+
+  private:
+    XMFLOAT4 m_point;
+    XMFLOAT4 m_normal;
+};
+
 struct CylinderRayMiss : public testing::TestWithParam<CylinderRayMissData>
 {
 };
 
 struct CylinderRayHits : public testing::TestWithParam<CylinderRayHitsData>
+{
+};
+
+struct CylinderNormal : public testing::TestWithParam<CylinderNormalData>
 {
 };
 
@@ -100,6 +127,18 @@ TEST_P(CylinderRayHits, RayHits)
     EXPECT_FLOAT_EQ(xs[1].T(), param.T1());
 }
 
+TEST_P(CylinderNormal, Normal)
+{
+    CylinderNormalData param = GetParam();
+    XMVECTOR point = param.Point();
+    XMVECTOR expectedNormal = param.Normal();
+
+    Cylinder cyl{};
+    XMVECTOR normal = cyl.Normal(point);
+
+    EXPECT_EQ(Floats(expectedNormal), Floats(normal));
+}
+
 INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayMiss,
                         testing::Values(CylinderRayMissData{Point(1, 0, 0), Vector(0, 1, 0)},
                                         CylinderRayMissData{Point(0, 0, 0), Vector(0, 1, 0)},
@@ -111,5 +150,11 @@ INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderRayHits,
                                         CylinderRayHitsData{Point(0.5f, 0, -5.f),
                                                             Vector(0.1f, 1, 1), 6.8080058f,
                                                             7.0886984f}));
+
+INSTANTIATE_TEST_CASE_P(CylinderTest, CylinderNormal,
+                        testing::Values(CylinderNormalData{Point(1, 0, 0), Vector(1, 0, 0)},
+                                        CylinderNormalData{Point(0, 5, -1), Vector(0, 0, -1)},
+                                        CylinderNormalData{Point(0, -2, 1), Vector(0, 0, 1)},
+                                        CylinderNormalData{Point(-1, 1, 0), Vector(-1, 0, 0)}));
 
 } // namespace zrt
