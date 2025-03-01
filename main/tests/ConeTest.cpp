@@ -166,4 +166,10 @@ TEST_P(ConeNormal, ConeNormalVector)
     EXPECT_EQ(Floats(param.Normal()), Floats(n));
 }
 
+INSTANTIATE_TEST_CASE_P(ConeTest, ConeNormal,
+                        testing::Values(ConeNormalData{Point(0, 0, 0), Vector(0, 0, 0)},
+                                        ConeNormalData{Point(1, 1, 1),
+                                                       Vector(1, -std::sqrt(2.f), 1)},
+                                        ConeNormalData{Point(-1, -1, 0), Vector(-1, 1, 0)}));
+
 } // namespace zrt
