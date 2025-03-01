@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include "Cube.h"
 #include "Cylinder.h"
 #include "TestUtil.h"
 #include "Vector.h"
