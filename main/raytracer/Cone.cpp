@@ -97,7 +97,7 @@ XMVECTOR XM_CALLCONV Cone::LocalNormal(FXMVECTOR p) const
     return Vector(point.x, 0, point.z);
 }
 
-static bool CheckCap(const Ray &ray, float t)
+static bool CheckCap(const Ray &ray, float t, float y)
 {
     XMVECTOR scaled = XMVectorScale(ray.Direction(), t);
     XMVECTOR p = XMVectorAdd(ray.Origin(), scaled);
@@ -108,7 +108,7 @@ static bool CheckCap(const Ray &ray, float t)
     float x2 = point.x * point.x;
     float z2 = point.z * point.z;
 
-    return (x2 + z2) <= 1.f + Epsilon;
+    return (x2 + z2) <= y + Epsilon;
 }
 
 void Cone::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
@@ -130,13 +130,13 @@ void Cone::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
     XMStoreFloat4(&origin, ray.Origin());
 
     float t = (m_minimum - origin.y) / direction.y;
-    if (CheckCap(ray, t))
+    if (CheckCap(ray, t, m_minimum))
     {
         xs.push_back({Intersection{this, t}});
     }
 
     t = (m_maximum - origin.y) / direction.y;
-    if (CheckCap(ray, t))
+    if (CheckCap(ray, t, m_maximum))
     {
         xs.push_back({Intersection{this, t}});
     }
