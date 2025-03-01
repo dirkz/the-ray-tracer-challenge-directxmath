@@ -42,7 +42,40 @@ struct ConeRayHitsData
     float m_t1;
 };
 
+struct ConeCapData
+{
+    ConeCapData(FXMVECTOR origin, FXMVECTOR direction, size_t count) : m_count{count}
+    {
+        XMStoreFloat4(&m_origin, origin);
+        XMStoreFloat4(&m_direction, direction);
+    }
+
+    inline XMVECTOR XM_CALLCONV Origin() const
+    {
+        return XMLoadFloat4(&m_origin);
+    }
+
+    inline XMVECTOR XM_CALLCONV Direction() const
+    {
+        return XMLoadFloat4(&m_direction);
+    }
+
+    inline size_t Count() const
+    {
+        return m_count;
+    }
+
+  private:
+    XMFLOAT4 m_origin;
+    XMFLOAT4 m_direction;
+    size_t m_count;
+};
+
 struct ConeRayHits : public testing::TestWithParam<ConeRayHitsData>
+{
+};
+
+struct ConeCap : public testing::TestWithParam<ConeCapData>
 {
 };
 
@@ -77,5 +110,24 @@ TEST(ConeTest, IntersectingConeWithRayParallelToOneOfItsHalves)
     ASSERT_EQ(xs.size(), 1);
     EXPECT_EQ(xs[0].T(), 0.35355f);
 }
+
+TEST_P(ConeCap, ConeCappedRay)
+{
+    ConeCapData param = GetParam();
+
+    Material m{};
+    Cone shape{XMMatrixIdentity(), m, -0.5f, 0.5f, true};
+
+    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    Ray r{param.Origin(), direction};
+
+    auto xs = shape.LocalIntersect(r);
+    EXPECT_EQ(xs.size(), param.Count());
+}
+
+INSTANTIATE_TEST_CASE_P(ConeTest, ConeCap,
+                        testing::Values(ConeCapData{Point(0, 0, -5), Vector(0, 1, 0), 0},
+                                        ConeCapData{Point(0, 0, -0.25f), Vector(0, 1, 1), 2},
+                                        ConeCapData{Point(0, 0, -0.25f), Vector(0, 1, 0), 4}));
 
 } // namespace zrt
