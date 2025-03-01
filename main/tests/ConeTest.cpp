@@ -71,11 +71,38 @@ struct ConeCapData
     size_t m_count;
 };
 
+struct ConeNormalData
+{
+    ConeNormalData(FXMVECTOR point, FXMVECTOR normal)
+    {
+        XMStoreFloat4(&m_point, point);
+        XMStoreFloat4(&m_normal, normal);
+    }
+
+    inline XMVECTOR XM_CALLCONV Point() const
+    {
+        return XMLoadFloat4(&m_point);
+    }
+
+    inline XMVECTOR XM_CALLCONV Normal() const
+    {
+        return XMLoadFloat4(&m_normal);
+    }
+
+  private:
+    XMFLOAT4 m_point;
+    XMFLOAT4 m_normal;
+};
+
 struct ConeRayHits : public testing::TestWithParam<ConeRayHitsData>
 {
 };
 
 struct ConeCap : public testing::TestWithParam<ConeCapData>
+{
+};
+
+struct ConeNormal : public testing::TestWithParam<ConeNormalData>
 {
 };
 
@@ -129,5 +156,14 @@ INSTANTIATE_TEST_CASE_P(ConeTest, ConeCap,
                         testing::Values(ConeCapData{Point(0, 0, -5), Vector(0, 1, 0), 0},
                                         ConeCapData{Point(0, 0, -0.25f), Vector(0, 1, 1), 2},
                                         ConeCapData{Point(0, 0, -0.25f), Vector(0, 1, 0), 4}));
+
+TEST_P(ConeNormal, ConeNormalVector)
+{
+    ConeNormalData param = GetParam();
+
+    Cone shape{};
+    auto n = shape.LocalNormal(param.Point());
+    EXPECT_EQ(Floats(param.Normal()), Floats(n));
+}
 
 } // namespace zrt
