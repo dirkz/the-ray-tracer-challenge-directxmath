@@ -43,7 +43,7 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
 
     float disc = b * b - 4.f * a * c;
 
-    if (disc < 0)
+    if (disc < 0 && std::abs(disc) >= Epsilon)
     {
         return {};
     }
