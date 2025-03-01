@@ -12,7 +12,8 @@ add_executable(rt_tests
   WorldTest.cpp
   CameraTest.cpp
   RenderTest.cpp
-  CylinderTest.cpp)
+  CylinderTest.cpp
+  ConeTest.cpp)
 
 target_link_libraries(
   rt_tests
