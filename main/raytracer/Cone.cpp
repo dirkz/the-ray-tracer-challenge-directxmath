@@ -28,7 +28,7 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
 
     if (std::abs(a) < Epsilon)
     {
-        if (std::abs(b) > Epsilon)
+        if (std::abs(b) >= Epsilon)
         {
             float t = -c / (2.f * b);
             return {Intersection{this, t}};
