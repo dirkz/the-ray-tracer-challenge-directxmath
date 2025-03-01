@@ -41,12 +41,6 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
 
     std::vector<Intersection> xs{};
 
-    if (std::abs(a) < Epsilon)
-    {
-        IntersectCaps(ray, xs);
-        return xs;
-    }
-
     float disc = b * b - 4.f * a * c;
 
     if (disc < 0)
