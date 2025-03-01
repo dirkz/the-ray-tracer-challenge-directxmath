@@ -16,7 +16,28 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
     XMFLOAT4 direction;
     XMStoreFloat4(&direction, ray.Direction());
 
-    float a = direction.x * direction.x + direction.z * direction.z;
+    XMFLOAT4 origin;
+    XMStoreFloat4(&origin, ray.Origin());
+
+    float a = direction.x * direction.x - direction.y * direction.y + direction.z * direction.z;
+
+    float b =
+        2.f * origin.x * direction.x - 2.f * origin.y * direction.y + 2.f * origin.z * direction.z;
+
+    float c = origin.x * origin.x - origin.y * origin.y + origin.z * origin.z;
+
+    if (std::abs(a) < Epsilon)
+    {
+        if (std::abs(b) > Epsilon)
+        {
+            float t = -c / (2.f * b);
+            return {Intersection{this, t}};
+        }
+        else
+        {
+            return {};
+        }
+    }
 
     std::vector<Intersection> xs{};
 
@@ -25,12 +46,6 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
         IntersectCaps(ray, xs);
         return xs;
     }
-
-    XMFLOAT4 origin;
-    XMStoreFloat4(&origin, ray.Origin());
-
-    float b = 2.f * origin.x * direction.x + 2.f * origin.z * direction.z;
-    float c = origin.x * origin.x + origin.z * origin.z - 1.f;
 
     float disc = b * b - 4.f * a * c;
 

@@ -135,7 +135,7 @@ TEST(ConeTest, IntersectingConeWithRayParallelToOneOfItsHalves)
     Ray r{Point(0, 0, -1), direction};
     auto xs = shape.LocalIntersect(r);
     ASSERT_EQ(xs.size(), 1);
-    EXPECT_EQ(xs[0].T(), 0.35355f);
+    EXPECT_FLOAT_EQ(xs[0].T(), 0.35355338f);
 }
 
 TEST_P(ConeCap, ConeCappedRay)
