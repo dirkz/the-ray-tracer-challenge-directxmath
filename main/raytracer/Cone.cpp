@@ -26,20 +26,23 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
 
     float c = origin.x * origin.x - origin.y * origin.y + origin.z * origin.z;
 
+    std::vector<Intersection> xs{};
+
     if (std::abs(a) < Epsilon)
     {
-        if (std::abs(b) >= Epsilon)
+        if (std::abs(b) < Epsilon)
         {
-            float t = -c / (2.f * b);
-            return {Intersection{this, t}};
+            // Ray misses when both a and b are zero.
+            return xs;
         }
         else
         {
-            return {};
+            float t = -c / (2.f * b);
+            xs.push_back(Intersection{this, t});
+            IntersectCaps(ray, xs);
+            return xs;
         }
     }
-
-    std::vector<Intersection> xs{};
 
     float disc = b * b - 4.f * a * c;
 
