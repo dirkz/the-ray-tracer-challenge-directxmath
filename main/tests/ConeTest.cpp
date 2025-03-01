@@ -68,4 +68,14 @@ INSTANTIATE_TEST_CASE_P(
                     ConeRayHitsData{Point(0, 0, -5), Vector(1, 1, 1), 8.66025f, 8.66025f},
                     ConeRayHitsData{Point(1, 1, -5), Vector(-0.5, -1, 1), 4.55006f, 49.44994f}));
 
+TEST(ConeTest, IntersectingConeWithRayParallelToOneOfItsHalves)
+{
+    Cone shape{};
+    XMVECTOR direction = XMVector4Normalize(Vector(0, 1, 1));
+    Ray r{Point(0, 0, -1), direction};
+    auto xs = shape.LocalIntersect(r);
+    ASSERT_EQ(xs.size(), 1);
+    EXPECT_EQ(xs[0].T(), 0.35355f);
+}
+
 } // namespace zrt
