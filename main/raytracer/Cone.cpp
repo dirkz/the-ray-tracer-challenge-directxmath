@@ -98,7 +98,13 @@ XMVECTOR XM_CALLCONV Cone::LocalNormal(FXMVECTOR p) const
         }
     }
 
-    return Vector(point.x, 0, point.z);
+    float y = std::sqrt(point.x * point.x + point.z * point.z);
+    if (point.y > 0)
+    {
+        y = -y;
+    }
+
+    return Vector(point.x, y, point.z);
 }
 
 static bool CheckCap(const Ray &ray, float t, float yAsRadius)
