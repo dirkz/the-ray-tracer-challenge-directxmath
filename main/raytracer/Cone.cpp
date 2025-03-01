@@ -43,9 +43,16 @@ std::vector<Intersection> Cone::LocalIntersect(const Ray &ray) const
 
     float disc = b * b - 4.f * a * c;
 
-    if (disc < 0 && std::abs(disc) >= Epsilon)
+    if (disc < 0)
     {
-        return {};
+        if (std::abs(disc) >= Epsilon)
+        {
+            return {};
+        }
+        else
+        {
+            disc = 0.f;
+        }
     }
 
     float t0 = (-b - std::sqrt(disc)) / (2.f * a);

@@ -125,8 +125,8 @@ TEST_P(ConeRayHits, RayHits)
 INSTANTIATE_TEST_CASE_P(
     ConeTest, ConeRayHits,
     testing::Values(ConeRayHitsData{Point(0, 0, -5), Vector(0, 0, 1), 5, 5},
-                    ConeRayHitsData{Point(0, 0, -5), Vector(1, 1, 1), 8.66025f, 8.66025f},
-                    ConeRayHitsData{Point(1, 1, -5), Vector(-0.5, -1, 1), 4.55006f, 49.44994f}));
+                    ConeRayHitsData{Point(0, 0, -5), Vector(1, 1, 1), 8.6602545f, 8.6602545f},
+                    ConeRayHitsData{Point(1, 1, -5), Vector(-0.5, -1, 1), 4.5500546f, 49.44994f}));
 
 TEST(ConeTest, IntersectingConeWithRayParallelToOneOfItsHalves)
 {
