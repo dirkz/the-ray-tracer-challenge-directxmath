@@ -135,13 +135,13 @@ void Cone::IntersectCaps(const Ray &ray, std::vector<Intersection> &xs) const
     XMStoreFloat4(&origin, ray.Origin());
 
     float t = (m_minimum - origin.y) / direction.y;
-    if (CheckCap(ray, t, m_minimum))
+    if (CheckCap(ray, t, std::abs(m_minimum)))
     {
         xs.push_back({Intersection{this, t}});
     }
 
     t = (m_maximum - origin.y) / direction.y;
-    if (CheckCap(ray, t, m_maximum))
+    if (CheckCap(ray, t, std::abs(m_maximum)))
     {
         xs.push_back({Intersection{this, t}});
     }
