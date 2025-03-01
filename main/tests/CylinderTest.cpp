@@ -158,7 +158,7 @@ TEST_P(CylinderRayHits, RayHits)
 
     Cylinder cyl{};
 
-    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    XMVECTOR direction = XMVector3Normalize(param.Direction());
     Ray r{param.Origin(), direction};
 
     auto xs = cyl.LocalIntersect(r);
@@ -183,7 +183,7 @@ TEST_P(CylinderNormal, Normal)
 TEST_P(CylinderConstrained, ConstrainedIntersections)
 {
     CylinderConstrainedOrCappedData param = GetParam();
-    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    XMVECTOR direction = XMVector3Normalize(param.Direction());
 
     Material m{};
     Cylinder cyl{XMMatrixIdentity(), m, 1, 2};
@@ -197,7 +197,7 @@ TEST_P(CylinderConstrained, ConstrainedIntersections)
 TEST_P(CylinderCapped, CappedIntersections)
 {
     CylinderConstrainedOrCappedData param = GetParam();
-    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    XMVECTOR direction = XMVector3Normalize(param.Direction());
 
     Material m{};
     Cylinder cyl{XMMatrixIdentity(), m, 1, 2, true};

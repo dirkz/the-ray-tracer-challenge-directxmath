@@ -105,7 +105,7 @@ XMVECTOR XM_CALLCONV Lighting(const Material &material, const Shape *object,
     XMVECTOR color = pattern(object, position, material.Color());
 
     XMVECTOR effectiveColor = XMColorModulate(color, light.Intensity());
-    XMVECTOR lightv = XMVector4Normalize(XMVectorSubtract(light.Position(), position));
+    XMVECTOR lightv = XMVector3Normalize(XMVectorSubtract(light.Position(), position));
     XMVECTOR ambient = XMVectorScale(effectiveColor, material.Ambient());
 
     float lightDotNormal = XMVectorGetX(XMVector4Dot(lightv, normal));

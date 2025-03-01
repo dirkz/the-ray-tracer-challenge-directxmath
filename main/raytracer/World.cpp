@@ -67,7 +67,7 @@ XMVECTOR World::ShadeHit(const Computations &comps, unsigned remaining) const
     {
         XMVECTOR lightPosition = light.Position();
         XMVECTOR pointToLightVector = XMVectorSubtract(lightPosition, comps.OverPoint());
-        Ray lightRay = Ray{comps.OverPoint(), XMVector4Normalize(pointToLightVector)};
+        Ray lightRay = Ray{comps.OverPoint(), XMVector3Normalize(pointToLightVector)};
         auto intersections = Intersect(lightRay);
         const Intersection *pNearestIntersection = Hit(intersections);
         bool isInLight = true;

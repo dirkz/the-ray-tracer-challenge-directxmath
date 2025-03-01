@@ -112,7 +112,7 @@ TEST_P(ConeRayHits, RayHits)
 
     Cone cone{};
 
-    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    XMVECTOR direction = XMVector3Normalize(param.Direction());
     Ray r{param.Origin(), direction};
 
     auto xs = cone.LocalIntersect(r);
@@ -131,7 +131,7 @@ INSTANTIATE_TEST_CASE_P(
 TEST(ConeTest, IntersectingConeWithRayParallelToOneOfItsHalves)
 {
     Cone shape{};
-    XMVECTOR direction = XMVector4Normalize(Vector(0, 1, 1));
+    XMVECTOR direction = XMVector3Normalize(Vector(0, 1, 1));
     Ray r{Point(0, 0, -1), direction};
     auto xs = shape.LocalIntersect(r);
     ASSERT_EQ(xs.size(), 1);
@@ -145,7 +145,7 @@ TEST_P(ConeCap, ConeCappedRay)
     Material m{};
     Cone shape{XMMatrixIdentity(), m, -0.5f, 0.5f, true};
 
-    XMVECTOR direction = XMVector4Normalize(param.Direction());
+    XMVECTOR direction = XMVector3Normalize(param.Direction());
     Ray r{param.Origin(), direction};
 
     auto xs = shape.LocalIntersect(r);

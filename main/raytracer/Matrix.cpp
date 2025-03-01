@@ -5,9 +5,9 @@ namespace zrt
 
 XMMATRIX XM_CALLCONV ViewTransform(FXMVECTOR from, FXMVECTOR to, FXMVECTOR up)
 {
-    XMVECTOR forward = XMVector4Normalize(XMVectorSubtract(to, from));
+    XMVECTOR forward = XMVector3Normalize(XMVectorSubtract(to, from));
     XMVECTOR backward = XMVectorScale(forward, -1);
-    XMVECTOR upn = XMVector4Normalize(up);
+    XMVECTOR upn = XMVector3Normalize(up);
     XMVECTOR left = XMVector3Cross(forward, upn);
     XMVECTOR trueUp = XMVector3Cross(left, forward);
 

@@ -102,7 +102,7 @@ TEST(SphereTest, NormalOnSphereAtPointOnZAxis)
     auto p = Point(0, 0, 1);
     auto n = s.Normal(p);
     EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
-    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+    EXPECT_EQ(Floats(n), Floats(XMVector3Normalize(n)));
 }
 
 TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
@@ -112,7 +112,7 @@ TEST(SphereTest, NormalOnSphereAtNonaxialPoint)
     auto p = Point(ThirdSqrt3, ThirdSqrt3, ThirdSqrt3);
     auto n = s.Normal(p);
     EXPECT_EQ(Floats(n), Floats(PointToVector(p)));
-    EXPECT_EQ(Floats(n), Floats(XMVector4Normalize(n)));
+    EXPECT_EQ(Floats(n), Floats(XMVector3Normalize(n)));
 }
 
 TEST(SphereTest, ComputingEasyNormalOnTranslatedSphere)
