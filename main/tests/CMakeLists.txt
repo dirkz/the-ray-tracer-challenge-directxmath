@@ -14,7 +14,7 @@ add_executable(rt_tests
   RenderTest.cpp
   CylinderTest.cpp
   ConeTest.cpp
-  GroupTest.cpp)
+  GroupTest.cpp "ShapeTest.cpp")
 
 target_link_libraries(
   rt_tests

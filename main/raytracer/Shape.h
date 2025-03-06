@@ -56,7 +56,10 @@ struct Shape
         return XMVector3Normalize(worldNormal);
     }
 
-    inline Group *Parent() const;
+    inline Group* Parent() const
+    {
+        return m_parent;
+    }
 
   protected:
     inline XMMATRIX XM_CALLCONV TransposedInverseTransform() const

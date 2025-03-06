@@ -28,11 +28,6 @@ void XM_CALLCONV Shape::Transform(CXMMATRIX transform)
     CreateDerivedTransforms(transform);
 }
 
-inline Group *Shape::Parent() const
-{
-    return m_parent;
-}
-
 void Shape::CreateDerivedTransforms(CXMMATRIX transform)
 {
     XMMATRIX inverse = XMMatrixInverse(nullptr, transform);
