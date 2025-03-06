@@ -18,4 +18,10 @@ bool Group::Empty() const
     return m_children.empty();
 }
 
+void Group::Add(Shape *shape)
+{
+    m_children.push_back(shape);
+    shape->Parent(this);
+}
+
 } // namespace zrt

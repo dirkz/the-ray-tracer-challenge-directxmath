@@ -15,6 +15,7 @@ struct Group : public Shape
     XMVECTOR XM_CALLCONV LocalNormal(FXMVECTOR p) const override;
 
     bool Empty() const;
+    void Add(Shape *shape);
 
   private:
     std::vector<Shape *> m_children;

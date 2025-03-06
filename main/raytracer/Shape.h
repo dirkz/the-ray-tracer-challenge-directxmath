@@ -56,6 +56,8 @@ struct Shape
         return XMVector3Normalize(worldNormal);
     }
 
+    void Parent(Group *group);
+
     inline Group* Parent() const
     {
         return m_parent;

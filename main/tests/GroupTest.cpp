@@ -14,4 +14,13 @@ TEST(GroupTest, CreateGroup)
     EXPECT_TRUE(g.Empty());
 }
 
+TEST(GroupTest, AddChildToGroup)
+{
+    Group g{};
+    Sphere s{};
+    g.Add(&s);
+    EXPECT_FALSE(g.Empty());
+    EXPECT_EQ(s.Parent(), &g);
+}
+
 } // namespace zrt
