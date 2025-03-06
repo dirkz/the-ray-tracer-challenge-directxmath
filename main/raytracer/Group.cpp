@@ -24,4 +24,16 @@ void Group::Add(Shape *shape)
     shape->Parent(this);
 }
 
+bool Group::Contains(const Shape *shape) const
+{
+    for (const auto *s : m_children)
+    {
+        if (s == shape)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 } // namespace zrt

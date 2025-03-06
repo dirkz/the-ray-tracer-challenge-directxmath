@@ -16,6 +16,7 @@ struct Group : public Shape
 
     bool Empty() const;
     void Add(Shape *shape);
+    bool Contains(const Shape *shape) const;
 
   private:
     std::vector<Shape *> m_children;

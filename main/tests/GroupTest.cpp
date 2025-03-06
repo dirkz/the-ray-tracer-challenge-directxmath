@@ -21,6 +21,7 @@ TEST(GroupTest, AddChildToGroup)
     g.Add(&s);
     EXPECT_FALSE(g.Empty());
     EXPECT_EQ(s.Parent(), &g);
+    EXPECT_TRUE(g.Contains(&s));
 }
 
 } // namespace zrt
