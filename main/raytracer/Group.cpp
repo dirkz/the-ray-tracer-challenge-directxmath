@@ -15,7 +15,7 @@ XMVECTOR XM_CALLCONV Group::LocalNormal(FXMVECTOR p) const
 
 bool Group::Empty() const
 {
-    return true;
+    return m_children.empty();
 }
 
 } // namespace zrt
