@@ -1,11 +1,23 @@
 #include "Group.h"
 
+#include "Intersection.h"
+
 namespace zrt
 {
 
 std::vector<Intersection> Group::LocalIntersect(const Ray &ray) const
 {
-    return {};
+    std::vector<Intersection> hits;
+
+    for (const Shape *s : m_shapes)
+    {
+        auto xs = s->Intersect(ray);
+        hits.insert(hits.end(), xs.begin(), xs.end());
+    }
+
+    std::sort(hits.begin(), hits.end(), IntersectionLess{});
+
+    return hits;
 }
 
 XMVECTOR XM_CALLCONV Group::LocalNormal(FXMVECTOR p) const
