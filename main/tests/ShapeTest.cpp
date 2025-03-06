@@ -25,7 +25,7 @@ TEST(ShapeTest, ConvertingPointFromWorldToObjectSpace)
     Sphere s{Translation(5, 0, 0)};
     g2.Add(&s);
     auto p = s.WorldToObjectPoint(Point(-2, 0, -10));
-    EXPECT_EQ(Floats(p), Floats(0, 0, -1));
+    EXPECT_EQ(Floats(p), Floats(Point(0, 0, -1)));
 }
 
 } // namespace zrt

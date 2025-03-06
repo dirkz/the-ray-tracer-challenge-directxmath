@@ -128,11 +128,6 @@ inline XMFLOAT4 XM_CALLCONV Floats(FXMVECTOR v)
     return floats;
 }
 
-inline XMFLOAT4 Floats(float x, float y, float z)
-{
-    return Floats(Point(x, y, z));
-}
-
 inline XMFLOAT4X4 XM_CALLCONV Floats(FXMMATRIX m)
 {
     XMFLOAT4X4 floats;
