@@ -7,6 +7,8 @@
 namespace zrt
 {
 
+struct Group;
+
 struct Shape
 {
     Shape(CXMMATRIX transform = XMMatrixIdentity(), const Material &material = zrt::Material{});
@@ -54,6 +56,8 @@ struct Shape
         return XMVector3Normalize(worldNormal);
     }
 
+    inline Group *Parent() const;
+
   protected:
     inline XMMATRIX XM_CALLCONV TransposedInverseTransform() const
     {
@@ -65,6 +69,7 @@ struct Shape
     XMFLOAT4X4 m_inverseTransform;
     XMFLOAT4X4 m_transposedInverseTransform;
     const zrt::Material &m_material;
+    Group *m_parent;
 
     void CreateDerivedTransforms(CXMMATRIX transform);
 };
