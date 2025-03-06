@@ -39,4 +39,15 @@ TEST(ShapeTest, ConvertingNormalFromObjectToWorldSpace)
     EXPECT_EQ(Floats(n), Floats(Vector(0.2857f, 0.4286f, -0.8571f)));
 }
 
+TEST(ShapeTest, FindingTheNormalOnChildObject)
+{
+    Group g1{RotationY(HalfPI)};
+    Group g2{Scaling(1, 2, 3)};
+    g1.Add(&g2);
+    Sphere s{Translation(5, 0, 0)};
+    g2.Add(&s);
+    auto n = s.Normal(Point(1.7321f, 1.1547f, -5.5774f));
+    EXPECT_EQ(Floats(n), Floats(Vector(0.2857f, 0.4286f, -0.8571f)));
+}
+
 } // namespace zrt
