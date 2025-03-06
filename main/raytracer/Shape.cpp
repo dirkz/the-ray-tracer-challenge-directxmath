@@ -1,5 +1,7 @@
 #include "Shape.h"
 
+#include "Group.h"
+
 namespace zrt
 {
 
@@ -26,6 +28,26 @@ void XM_CALLCONV Shape::Transform(CXMMATRIX transform)
 {
     XMStoreFloat4x4(&m_transform, transform);
     CreateDerivedTransforms(transform);
+}
+
+XMVECTOR XM_CALLCONV Shape::WorldToObjectPoint(FXMVECTOR worldPoint) const
+{
+    if (HasParent())
+    {
+        XMVECTOR point = m_parent->WorldToObjectPoint(worldPoint);
+        XMVector4Transform(point, InverseTransform());
+    }
+    else
+    {
+        return XMVector4Transform(worldPoint, InverseTransform());
+    }
+}
+
+XMVECTOR XM_CALLCONV Shape::ObjectToWorldNormal(FXMVECTOR objectNormal) const
+{
+    XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
+    worldNormal = XMVectorSetW(worldNormal, 0);
+    return XMVector3Normalize(worldNormal);
 }
 
 void Shape::Parent(Group *group)

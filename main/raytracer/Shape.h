@@ -44,23 +44,19 @@ struct Shape
         return m_material;
     }
 
-    inline XMVECTOR XM_CALLCONV WorldToObjectPoint(FXMVECTOR worldPoint) const
-    {
-        return XMVector4Transform(worldPoint, InverseTransform());
-    }
-
-    inline XMVECTOR XM_CALLCONV ObjectToWorldNormal(FXMVECTOR objectNormal) const
-    {
-        XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
-        worldNormal = XMVectorSetW(worldNormal, 0);
-        return XMVector3Normalize(worldNormal);
-    }
+    XMVECTOR XM_CALLCONV WorldToObjectPoint(FXMVECTOR worldPoint) const;
+    XMVECTOR XM_CALLCONV ObjectToWorldNormal(FXMVECTOR objectNormal) const;
 
     void Parent(Group *group);
 
     inline Group *Parent() const
     {
         return m_parent;
+    }
+
+    inline bool HasParent() const
+    {
+        return m_parent != nullptr;
     }
 
   protected:
