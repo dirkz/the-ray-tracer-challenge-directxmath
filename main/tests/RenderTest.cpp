@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 
+#include "TestConstants.h"
+#include "TestUtil.h"
+
 #include "Canvas.h"
 #include "CoordinateProvider.h"
 #include "Render.h"
-#include "TestConstants.h"
-#include "TestUtil.h"
 
 namespace zrt
 {

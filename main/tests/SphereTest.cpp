@@ -1,12 +1,11 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
+
+#include "TestConstants.h"
+#include "TestUtil.h"
 
 #include "Matrix.h"
 #include "Ray.h"
 #include "Sphere.h"
-#include "TestConstants.h"
-#include "TestUtil.h"
 #include "Vector.h"
 
 namespace zrt

@@ -1,9 +1,8 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
 
 #include "TestConstants.h"
 #include "TestUtil.h"
+
 #include "Vector.h"
 
 namespace zrt

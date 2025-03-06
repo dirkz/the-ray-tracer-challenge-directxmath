@@ -1,10 +1,9 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
 
-#include "Material.h"
 #include "TestConstants.h"
 #include "TestUtil.h"
+
+#include "Material.h"
 #include "Vector.h"
 
 namespace zrt

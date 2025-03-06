@@ -1,9 +1,8 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
 
-#include "Cube.h"
 #include "TestUtil.h"
+
+#include "Cube.h"
 #include "Vector.h"
 
 namespace zrt

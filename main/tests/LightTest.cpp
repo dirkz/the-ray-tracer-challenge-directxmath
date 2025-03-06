@@ -1,9 +1,8 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
 
-#include "PointLight.h"
 #include "TestUtil.h"
+
+#include "PointLight.h"
 #include "Vector.h"
 
 namespace zrt

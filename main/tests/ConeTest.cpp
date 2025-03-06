@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "Cone.h"
 #include "TestUtil.h"
+
+#include "Cone.h"
 #include "Vector.h"
 
 namespace zrt

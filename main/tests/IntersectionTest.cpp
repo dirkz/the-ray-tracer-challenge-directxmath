@@ -1,13 +1,12 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
+
+#include "TestConstants.h"
+#include "TestUtil.h"
 
 #include "Computations.h"
 #include "Intersection.h"
 #include "Plane.h"
 #include "Sphere.h"
-#include "TestConstants.h"
-#include "TestUtil.h"
 
 namespace zrt
 {

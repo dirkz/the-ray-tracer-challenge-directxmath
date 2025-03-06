@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "Cylinder.h"
 #include "TestUtil.h"
+
+#include "Cylinder.h"
 #include "Vector.h"
 
 namespace zrt

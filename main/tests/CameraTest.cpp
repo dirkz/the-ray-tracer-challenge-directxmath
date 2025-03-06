@@ -1,12 +1,11 @@
-#include "stdafx.h"
-
 #include <gtest/gtest.h>
+
+#include "TestConstants.h"
+#include "TestUtil.h"
 
 #include "Camera.h"
 #include "Matrix.h"
 #include "Render.h"
-#include "TestConstants.h"
-#include "TestUtil.h"
 #include "Vector.h"
 
 namespace zrt

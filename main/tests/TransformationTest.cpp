@@ -2,9 +2,10 @@
 
 #include <gtest/gtest.h>
 
-#include "Matrix.h"
 #include "TestConstants.h"
 #include "TestUtil.h"
+
+#include "Matrix.h"
 #include "Vector.h"
 
 namespace zrt
