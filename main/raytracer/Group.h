@@ -19,7 +19,7 @@ struct Group : public Shape
     bool Contains(const Shape *shape) const;
 
   private:
-    std::vector<Shape *> m_children;
+    std::vector<Shape *> m_shapes;
 };
 
 } // namespace zrt

@@ -15,18 +15,18 @@ XMVECTOR XM_CALLCONV Group::LocalNormal(FXMVECTOR p) const
 
 bool Group::Empty() const
 {
-    return m_children.empty();
+    return m_shapes.empty();
 }
 
 void Group::Add(Shape *shape)
 {
-    m_children.push_back(shape);
+    m_shapes.push_back(shape);
     shape->Parent(this);
 }
 
 bool Group::Contains(const Shape *shape) const
 {
-    for (const auto *s : m_children)
+    for (const auto *s : m_shapes)
     {
         if (s == shape)
         {
