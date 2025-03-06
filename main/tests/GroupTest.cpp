@@ -51,4 +51,14 @@ TEST(GroupTest, IntersectingRayWithNonemptyGroup)
     EXPECT_EQ(xs[3].Object(), &s1);
 }
 
+TEST(GroupTest, IntersectingTransformedGroup)
+{
+    Group g{Scaling(2, 2, 2)};
+    Sphere s{Translation(5, 0, 0)};
+    g.Add(&s);
+    Ray r{Point(10, 0, -10), Vector(0, 0, 1)};
+    auto xs = g.Intersect(r);
+    EXPECT_EQ(xs.size(), 2);
+}
+
 } // namespace zrt
