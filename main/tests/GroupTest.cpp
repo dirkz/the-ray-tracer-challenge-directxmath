@@ -28,6 +28,9 @@ TEST(GroupTest, AddChildToGroup)
 TEST(GroupTest, IntersectingRayWithEmptyGroup)
 {
     Group g{};
+    Ray r{Point(0, 0, 0), Vector(0, 0, 1)};
+    auto xs = g.LocalIntersect(r);
+    EXPECT_TRUE(xs.empty());
 }
 
 } // namespace zrt
