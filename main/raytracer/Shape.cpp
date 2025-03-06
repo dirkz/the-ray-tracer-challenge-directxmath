@@ -35,7 +35,7 @@ XMVECTOR XM_CALLCONV Shape::WorldToObjectPoint(FXMVECTOR worldPoint) const
     if (HasParent())
     {
         XMVECTOR point = m_parent->WorldToObjectPoint(worldPoint);
-        XMVector4Transform(point, InverseTransform());
+        return XMVector4Transform(point, InverseTransform());
     }
     else
     {
@@ -47,7 +47,15 @@ XMVECTOR XM_CALLCONV Shape::ObjectToWorldNormal(FXMVECTOR objectNormal) const
 {
     XMVECTOR worldNormal = XMVector4Transform(objectNormal, TransposedInverseTransform());
     worldNormal = XMVectorSetW(worldNormal, 0);
-    return XMVector3Normalize(worldNormal);
+    worldNormal = XMVector3Normalize(worldNormal);
+    if (HasParent())
+    {
+        return m_parent->ObjectToWorldNormal(worldNormal);
+    }
+    else
+    {
+        return worldNormal;
+    }
 }
 
 void Shape::Parent(Group *group)

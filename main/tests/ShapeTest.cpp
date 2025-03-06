@@ -28,4 +28,15 @@ TEST(ShapeTest, ConvertingPointFromWorldToObjectSpace)
     EXPECT_EQ(Floats(p), Floats(Point(0, 0, -1)));
 }
 
+TEST(ShapeTest, ConvertingNormalFromObjectToWorldSpace)
+{
+    Group g1{RotationY(HalfPI)};
+    Group g2{Scaling(1, 2, 3)};
+    g1.Add(&g2);
+    Sphere s{Translation(5, 0, 0)};
+    g2.Add(&s);
+    auto n = s.ObjectToWorldNormal(Vector(ThirdSqrt, ThirdSqrt, ThirdSqrt));
+    EXPECT_EQ(Floats(n), Floats(Vector(0.2857f, 0.4286f, -0.8571f)));
+}
+
 } // namespace zrt
