@@ -22,6 +22,9 @@ std::vector<Intersection> Group::LocalIntersect(const Ray &ray) const
 
 XMVECTOR XM_CALLCONV Group::LocalNormal(FXMVECTOR p) const
 {
+    // This should not get called.
+    assert(false);
+
     return XMVectorZero();
 }
 
