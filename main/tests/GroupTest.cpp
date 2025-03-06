@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "Group.h"
-
 #include "TestUtil.h"
+
+#include "Group.h"
+#include "Ray.h"
 
 namespace zrt
 {
@@ -22,6 +23,11 @@ TEST(GroupTest, AddChildToGroup)
     EXPECT_FALSE(g.Empty());
     EXPECT_EQ(s.Parent(), &g);
     EXPECT_TRUE(g.Contains(&s));
+}
+
+TEST(GroupTest, IntersectingRayWithEmptyGroup)
+{
+    Group g{};
 }
 
 } // namespace zrt
