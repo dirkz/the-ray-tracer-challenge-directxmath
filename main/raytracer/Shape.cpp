@@ -3,7 +3,7 @@
 namespace zrt
 {
 
-Shape::Shape(CXMMATRIX transform, const zrt::Material &material) : m_material{material}
+Shape::Shape(CXMMATRIX transform, const zrt::Material &material) : m_material{material}, m_parent{}
 {
     XMStoreFloat4x4(&m_transform, transform);
     CreateDerivedTransforms(transform);
