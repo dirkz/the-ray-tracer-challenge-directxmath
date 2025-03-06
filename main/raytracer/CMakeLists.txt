@@ -37,7 +37,9 @@ add_library(raytracer OBJECT
 	Cylinder.h
 	Cylinder.cpp
 	Cone.h
-	Cone.cpp)
+	Cone.cpp
+	Group.h
+	Group.cpp)
 
 target_include_directories(raytracer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
