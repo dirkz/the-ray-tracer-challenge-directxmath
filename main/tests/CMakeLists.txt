@@ -13,7 +13,8 @@ add_executable(rt_tests
   CameraTest.cpp
   RenderTest.cpp
   CylinderTest.cpp
-  ConeTest.cpp "GroupTest.cpp")
+  ConeTest.cpp
+  GroupTest.cpp)
 
 target_link_libraries(
   rt_tests
