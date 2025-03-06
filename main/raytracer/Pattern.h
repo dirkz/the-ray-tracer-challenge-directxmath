@@ -17,10 +17,9 @@ struct Pattern
         XMStoreFloat4x4(&m_inverseTransform, XMMatrixInverse(nullptr, transform));
     };
 
-    XMVECTOR WorldToObjectPosition(const Shape *object, FXMVECTOR position) const
+    XMVECTOR WorldToObjectPosition(const Shape *shape, FXMVECTOR position) const
     {
-        XMMATRIX m = object->InverseTransform();
-        return XMVector4Transform(position, m);
+        return shape->WorldToObjectPoint(position);
     }
 
     XMVECTOR ObjectToPatternPosition(FXMVECTOR objectPosition) const
