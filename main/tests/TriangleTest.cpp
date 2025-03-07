@@ -45,4 +45,12 @@ TEST(TriangleTest, IntersectingRayParallelToTriangle)
     EXPECT_TRUE(xs.empty());
 }
 
+TEST(TriangleTest, RayMissesP1P3Edge)
+{
+    Triangle t{Point(0, 1, 0), Point(-1, 0, 0), Point(1, 0, 0)};
+    Ray r{Point(1, 1, -2), Vector(0, 0, 1)};
+    auto xs = t.LocalIntersect(r);
+    EXPECT_TRUE(xs.empty());
+}
+
 } // namespace zrt
