@@ -26,7 +26,10 @@ Triangle::Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3, CXMMATRIX transform
 
 std::vector<Intersection> Triangle::LocalIntersect(const Ray &ray) const
 {
-    return {};
+    XMVECTOR dirCrossE2 = XMVector3Cross(ray.Direction(), E2());
+    XMVECTOR detv = XMVector3Dot(E1(), dirCrossE2);
+
+    return {Intersection{this, 1}};
 }
 
 XMVECTOR XM_CALLCONV Triangle::LocalNormal(FXMVECTOR p) const
