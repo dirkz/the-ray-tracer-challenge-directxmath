@@ -24,4 +24,17 @@ TEST(TriangleTest, ConstructingTriangle)
     EXPECT_EQ(Floats(t.Normal()), Floats(Vector(0, 0, -1)));
 }
 
+TEST(TriangleTest, FindingNormal)
+{
+    Triangle t{Point(0, 1, 0), Point(-1, 0, 0), Point(1, 0, 0)};
+
+    auto n1 = t.LocalNormal(Point(0, 0.5f, 0));
+    auto n2 = t.LocalNormal(Point(-0.5f, 0.75f, 0));
+    auto n3 = t.LocalNormal(Point(0.5f, 0.25f, 0));
+
+    EXPECT_EQ(Floats(n1), Floats(t.Normal()));
+    EXPECT_EQ(Floats(n2), Floats(t.Normal()));
+    EXPECT_EQ(Floats(n3), Floats(t.Normal()));
+}
+
 } // namespace zrt
