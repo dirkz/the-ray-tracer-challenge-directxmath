@@ -49,6 +49,15 @@ std::vector<Intersection> Triangle::LocalIntersect(const Ray &ray) const
         return {};
     }
 
+    XMVECTOR originCrossE1 = XMVector3Cross(p1ToOrigin, E1());
+    XMVECTOR vv = XMVector3Dot(ray.Direction(), originCrossE1);
+    float v = XMVectorGetX(vv) * f;
+
+    if (v < 0 || (u + v) > 1)
+    {
+        return {};
+    }
+
     return {Intersection{this, 1}};
 }
 
