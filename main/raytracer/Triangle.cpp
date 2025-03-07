@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+#include "Constants.h"
+
 namespace zrt
 {
 
@@ -28,6 +30,12 @@ std::vector<Intersection> Triangle::LocalIntersect(const Ray &ray) const
 {
     XMVECTOR dirCrossE2 = XMVector3Cross(ray.Direction(), E2());
     XMVECTOR detv = XMVector3Dot(E1(), dirCrossE2);
+    float det = XMVectorGetX(detv);
+
+    if (std::abs(det) < Epsilon)
+    {
+        return {};
+    }
 
     return {Intersection{this, 1}};
 }
