@@ -3,7 +3,9 @@
 namespace zrt
 {
 
-Triangle::Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3)
+Triangle::Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3, CXMMATRIX transform,
+                   const zrt::Material &material)
+    : Shape{transform, material}
 {
     XMStoreFloat4(&m_p1, p1);
     XMStoreFloat4(&m_p2, p2);
@@ -20,6 +22,16 @@ Triangle::Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3)
     XMVECTOR normal = XMVector3Cross(e2, e1);
     normal = XMVector3Normalize(normal);
     XMStoreFloat4(&m_normal, normal);
+}
+
+std::vector<Intersection> Triangle::LocalIntersect(const Ray &ray) const
+{
+    return {};
+}
+
+XMVECTOR XM_CALLCONV Triangle::LocalNormal(FXMVECTOR p) const
+{
+    return XMLoadFloat4(&m_normal);
 }
 
 } // namespace zrt

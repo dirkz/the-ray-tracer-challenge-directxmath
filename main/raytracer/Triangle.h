@@ -2,14 +2,20 @@
 
 #include "stdafx.h"
 
+#include "Material.h"
+#include "Shape.h"
 #include "Vector.h"
 
 namespace zrt
 {
 
-struct Triangle
+struct Triangle : public Shape
 {
-    Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3);
+    Triangle(FXMVECTOR p1, FXMVECTOR p2, FXMVECTOR p3, CXMMATRIX transform = XMMatrixIdentity(),
+             const zrt::Material &material = zrt::Material{});
+
+    std::vector<Intersection> LocalIntersect(const Ray &ray) const override;
+    XMVECTOR XM_CALLCONV LocalNormal(FXMVECTOR p) const override;
 
     inline XMVECTOR XM_CALLCONV P1() const
     {
