@@ -58,7 +58,10 @@ std::vector<Intersection> Triangle::LocalIntersect(const Ray &ray) const
         return {};
     }
 
-    return {Intersection{this, 1}};
+    XMVECTOR dotv2 = XMVector3Dot(E2(), originCrossE1);
+    float t = XMVectorGetX(dotv2) * f;
+
+    return {Intersection{this, t}};
 }
 
 XMVECTOR XM_CALLCONV Triangle::LocalNormal(FXMVECTOR p) const

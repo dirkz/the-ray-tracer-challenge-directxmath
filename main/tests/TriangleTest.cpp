@@ -69,4 +69,13 @@ TEST(TriangleTest, RayMissesP2P3Edge)
     EXPECT_TRUE(xs.empty());
 }
 
+TEST(TriangleTest, RayStrikesTriangle)
+{
+    Triangle t{Point(0, 1, 0), Point(-1, 0, 0), Point(1, 0, 0)};
+    Ray r{Point(0, 0.5f, -2), Vector(0, 0, 1)};
+    auto xs = t.LocalIntersect(r);
+    EXPECT_EQ(xs.size(), 1);
+    EXPECT_EQ(xs[0].T(), 2);
+}
+
 } // namespace zrt
