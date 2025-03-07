@@ -37,4 +37,12 @@ TEST(TriangleTest, FindingNormal)
     EXPECT_EQ(Floats(n3), Floats(t.Normal()));
 }
 
+TEST(TriangleTest, IntersectingRayParallelToTriangle)
+{
+    Triangle t{Point(0, 1, 0), Point(-1, 0, 0), Point(1, 0, 0)};
+    Ray r{Point(0, -1, -2), Vector(0, 1, 0)};
+    auto xs = t.LocalIntersect(r);
+    EXPECT_TRUE(xs.empty());
+}
+
 } // namespace zrt
